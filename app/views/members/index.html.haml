@@ -1,0 +1,9 @@
+%h1.page-header SRC Members
+
+=render partial: 'members_table', locals: { members: @members }
+
+-if current_user
+  .form-actions
+    =link_to 'Competitive', competitive_members_path, class: 'btn'
+    =link_to 'Non Competitive', non_competitive_members_path, class: 'btn'
+    =link_to 'Officers', officers_path, class: 'btn'

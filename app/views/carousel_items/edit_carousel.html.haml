@@ -1,0 +1,22 @@
+%h1.page-header Edit the home page carousel
+
+%table.table.table-striped.display.thumbnail
+	%thead
+		%tr
+			%th Image
+			%th Primary Caption
+			%th Secondary Caption
+			%th Actions
+	%tbody
+		-@items.each do |item|
+			%tr
+				%td=image_tag item.image.url(:thumbnail)
+				%td=item.primary_caption
+				%td=item.secondary_caption
+				%td
+					=link_to 'Edit', edit_carousel_item_path(item), class: 'btn btn-mini'
+					=link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger'
+.form-actions
+	=link_to 'Add an image', new_carousel_item_path, class: 'btn btn-primary'
+	=link_to 'Re-order', reorder_carousel_path, class: 'btn btn-primary'
+	=link_to 'Back to panel', admin_panel_path, class: 'btn'

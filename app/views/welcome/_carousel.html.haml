@@ -1,0 +1,21 @@
+.carousel.slide#carousel
+	%ol.carousel-indicators
+		%li{ 'data-target' => '#carousel', 'data-slide-to' => 0, class: 'active' }
+		-for i in 1..items.length
+			%li{ 'data-target' => '#carousel', 'data-slide-to' => i }
+	.carousel-inner
+		.active.item
+			=image_tag active.image.url(:carousel), alt: ''
+			.carousel-caption
+				%h1=active.primary_caption
+				%p=active.secondary_caption
+		-items.each do |item|
+			.item
+				=image_tag item.image.url(:carousel), alt: ''
+				.carousel-caption
+					%h1=item.primary_caption
+					%p=item.secondary_caption
+	%a.carousel-control.left{ href: '#carousel', 'data-slide' => 'prev' }
+		&lsaquo;
+	%a.carousel-control.right{ href: '#carousel', 'data-slide' => 'next' }
+		&rsaquo;

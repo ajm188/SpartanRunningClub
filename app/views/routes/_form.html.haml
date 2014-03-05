@@ -1,0 +1,16 @@
+=form_for @route, html: { class: 'form-horizontal', multipart: true } do |f|
+	.control-group
+		=f.label :title, "Title", class: 'control-label'
+		.controls
+			=f.text_field :title, placeholder: 'My Route'
+	.control-group
+		=f.label :distance, "Distance", class: 'control-label'
+		.controls
+			=f.number_field :distance, placeholder: 2.0
+	.control-group
+		=f.label :map_image, "Map", class: 'control-label'
+		.controls
+			=f.file_field :map_image
+	.form-actions
+		=f.submit 'Save', class: 'btn btn-primary'
+		=link_to 'Cancel', edit_routes_path, class: 'btn'

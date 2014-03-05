@@ -1,0 +1,28 @@
+-ignore_competitive ||= false
+-ignore_officer ||= false
+%table.table.table-striped
+	%thead
+		%tr
+			%th Name
+			-if current_user
+				%th Case ID
+				%th Email
+			%th Year
+			-unless ignore_competitive
+				%th Competitive
+			-unless ignore_officer
+				%th Officer
+	%tbody
+		-members.each do |member|
+			%tr
+				-if current_user
+					%td=link_to member.full_name, member
+					%td=member.case_id
+					%td=member.email
+				-else
+					%td=member.full_name
+				%td=member.year
+				-unless ignore_competitive
+					%td=member.competitive_as_string
+				-unless ignore_officer
+					%td=member.officer_as_string

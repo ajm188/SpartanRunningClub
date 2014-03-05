@@ -1,0 +1,17 @@
+.carousel.slide#carousel
+	%ol.carousel-indicators
+		%li{ 'data-target' => '#carousel', 'data-slide-to' => 0, class: 'active' }
+		%li{ 'data-target' => '#carousel', 'data-slide-to' => 1 }
+	.carousel-inner
+		.active.item
+			%img{ src: 'http://placehold.it/1000x500', alt: '' }
+			.carousel-caption
+				%p My Caption
+		.item
+			%img{ src: 'http://placehold.it/1000x500', alt: '' }
+			.carousel-caption
+				%p This should have faded in
+	%a.carousel-control.left{ href: '#carousel', 'data-slide' => 'prev' }
+		&lsaquo;
+	%a.carousel-control.right{ href: '#carousel', 'data-slide' => 'next' }
+		&rsaquo;

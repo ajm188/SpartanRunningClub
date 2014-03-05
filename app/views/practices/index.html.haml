@@ -1,0 +1,67 @@
+%h1.page-header SRC Practice Schedule
+
+%table.table.table-striped
+	%tbody
+		-if @sundays.empty?
+			%tr
+				%td Sunday
+				%td No Practice
+		-else
+			-@sundays.each do |practice|
+				%tr
+					%td=practice.day
+					%td=practice.time
+		-if @mondays.empty?
+			%tr
+				%td Monday
+				%td No Practice
+		-else
+			-@mondays.each do |practice|
+				%tr
+					%td=practice.day
+					%td=practice.time
+		-if @tuesdays.empty?
+			%tr
+				%td Tuesday
+				%td No Practice
+		-else
+			-@tuesdays.each do |practice|
+				%tr
+					%td=practice.day
+					%td=practice.time
+		-if @wednesdays.empty?
+			%tr
+				%td Wednesday
+				%td No Practice
+		-else
+			-@wednesdays.each do |practice|
+				%tr
+					%td=practice.day
+					%td=practice.time
+		-if @thursdays.empty?
+			%tr
+				%td Thursday
+				%td No Practice
+		-else
+			-@thursdays.each do |practice|
+				%tr
+					%td=practice.day
+					%td=practice.time
+		-if @fridays.empty?
+			%tr
+				%td Friday
+				%td No Practice
+		-else
+			-@fridays.each do |practice|
+				%tr
+					%td=practice.day
+					%td=practice.time
+		-if @saturdays.empty?
+			%tr
+				%td Saturday
+				%td No Practice
+		-else
+			-@saturdays.each do |practice|
+				%tr
+					%td=practice.day
+					%td=practice.time

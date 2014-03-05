@@ -1,0 +1,55 @@
+=form_for @member, html: { class: 'form-horizontal' } do |f|
+	-if @member.errors.any?
+		#error_explanation
+			%h4
+				=pluralize @member.errors.count, 'error'
+				proibitied this member from being saved:
+			%ul
+				-@member.errors.full_messages.each do |msg|
+					%li=msg
+	.control-group
+		=f.label :first_name, 'First Name', class: 'control-label'
+		.controls
+			=f.text_field :first_name, placeholder: 'John'
+	.control-group
+		=f.label :last_name, 'Last Name', class: 'control-label'
+		.controls
+			=f.text_field :last_name, placeholder: 'Smith'
+	.control-group
+		=f.label :case_id, 'Case ID', class: 'control-label'
+		.controls
+			=f.text_field :case_id, placeholder: 'abc123'
+	.control-group
+		=f.label :email, class: 'control-label'
+		.controls
+			=f.email_field :email, placeholder: 'abc123@case.edu'
+	.control-group
+		=f.label :year, class: 'control-label'
+		.controls
+			=f.select :year, Member::YEARS, {}, style: 'width:101px;'
+	.control-group
+		=f.label :competitive, class: 'control-label'
+		.controls
+			=f.check_box :competitive
+	.control-group
+		=f.label :officer, class: 'control-label'
+		.controls
+			=f.check_box :officer, id: 'officer_check_box'
+	.control-group#officer_position{ style: 'display:none;' }
+		=f.label :position, class: 'control-label'
+		.controls
+			=f.select :position, Member::OFFICER_POSITIONS, {}, style: 'width:101px;'
+	=f.hidden_field :password, value: Member::random_password
+	.form-actions
+		=f.submit 'Add Member', class: 'btn btn-primary'
+		=link_to t('.cancel', default: t('helpers.links.cancel')), root_path, class: 'btn'
+:javascript
+	var checkbox = document.getElementById('officer_check_box');
+	var officer_section = document.getElementById('officer_position');
+	checkbox.onchange = function() {
+		if (this.checked) {
+			officer_section.style['display'] = 'block';
+		} else {
+			officer_section.style['display'] = 'none';
+		}
+	};

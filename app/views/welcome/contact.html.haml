@@ -1,0 +1,19 @@
+.page-header
+	%h1 Contact Us
+
+%ul
+	%li
+		Contact this site:
+		%ul
+			%li Email: src@case.edu
+			%li
+				Facebook:
+				=link_to 'SRC Facebook Group', 'https://facebook.com'
+			%li
+				Twitter: 
+				=link_to '@spartanrunningclub', 'https://twitter.com'
+	-@officers.each do |officer|
+		%li
+			="Contact #{officer.full_name}"
+			%ul
+				%li="Email: #{officer.email}"

@@ -1,0 +1,9 @@
+---
+:Route:
+  :map_image:
+  - :show
+  - :thumbnail
+:CarouselItem:
+  :image:
+  - :carousel
+  - :thumbnail
