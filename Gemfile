@@ -40,8 +40,10 @@ gem 'haml-rails'
 gem 'maruku'
 
 group :development do
-    gem 'capistrano', '~> 2.1'
-    gem 'rvm-capistrano'
+    gem 'capistrano', '~> 3.0'
+    gem 'capistrano-rails', '~> 1.1', require: false
+    gem 'capistrano-bundler', '~> 1.1', require: false
+    gem 'capistrano-rvm', '~> 0.1', require: false
 end
 
 # Use ActiveModel has_secure_password

@@ -1,4 +1,8 @@
-require 'rvm/capistrano'
+# config valid only for Capistrano 3.1
+lock '3.1.0'
+
+require 'capistrano/bundler'
+require 'capistrano/rvm'
 set :rvm_ruby_string, '2.1.1'
 set :rvm_type, :user
 
@@ -13,7 +17,6 @@ set :branch, :master
 
 set :user, 'andrew'
 
-set :use_sudo, false
 set :rails_env, 'production'
 
 set :keep_releases, 3
@@ -22,22 +25,25 @@ default_run_options[:pty] = true
 
 server 'running.case.edu', :app, :web, :db, primary: true
 
-# If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
-    task :start do ; end
-    task :stop do ; end
 
-    desc "Restart the application"
-    task :restart, :roles => :app, :except => { :no_release => true } do
-        run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      execute :touch, release_path.join('tmp/restart.txt')
     end
+  end
 
-    desc "Create symlinks"
-    task :create_symlinks do
-        run "#{try_sudo} ln -s /home/andrew/SpartanRunningClub /var/www"
+  after :publishing, :restart
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      within release_path do
+        execute :rake, 'cache:clear'
+      end
     end
+  end
+
 end
-
-#after 'deploy', 'bootstrap:admin'
-after 'deploy', 'deploy:create_symlinks'
-after 'deploy', 'deploy:restart'
