@@ -36,4 +36,4 @@ namespace :deploy do
   after :publishing, :restart
 end
 
-after :deploy, :bootstrap:admin
+after "deploy", "bootstrap:admin"
