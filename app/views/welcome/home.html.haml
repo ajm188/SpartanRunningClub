@@ -2,7 +2,7 @@
 
 .container
 	.col-md-8
-		-unless @active
+		-unless CarouselItem.count > 0
 			=render partial: 'default_carousel'
 		-else
 			=render partial: 'carousel', locals: { active: @active, items: @items }
