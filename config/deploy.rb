@@ -2,7 +2,7 @@ set :application, 'SpartanRunningClub'
 set :repository, 'git@github.com:ajm188/SpartanRunningClub.git'
 
 set :deploy_to, '/home/andrew/SpartanRunningClub'
-set :deploy_via, :remote_cache
+set :deploy_via, :copy
 
 set :scm, :git
 set :branch, :master
