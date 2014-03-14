@@ -35,3 +35,10 @@ namespace :deploy do
 
   after :publishing, :restart
 end
+
+desc "Copy bootstrap tasks to current release on server"
+task :copy_bootstrap do
+    sh "scp lib/tasks/bootstrap.rake andrew@running.case.edu:~/SpartanRunningClub/current/lib/tasks/bootstrap.rake"
+end
+
+after :deploy, :copy_bootstrap
