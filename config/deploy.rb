@@ -21,9 +21,7 @@ set :rails_env, 'production'
 
 set :keep_releases, 3
 
-default_run_options[:pty] = true
-
-server 'running.case.edu', :app, :web, :db, primary: true
+set :pty, true
 
 namespace :deploy do
 
@@ -36,14 +34,6 @@ namespace :deploy do
   end
 
   after :publishing, :restart
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      within release_path do
-        execute :rake, 'cache:clear'
-      end
-    end
-  end
-
 end
+
+after :deploy, :bootstrap:admin
