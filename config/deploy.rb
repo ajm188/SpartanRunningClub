@@ -1,3 +1,6 @@
+require 'rvm/capistrano'
+set :rvm_ruby_string, '2.1.1'
+
 set :application, 'SpartanRunningClub'
 set :repository, 'git@github.com:ajm188/SpartanRunningClub.git'
 

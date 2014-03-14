@@ -41,6 +41,7 @@ gem 'maruku'
 
 group :development do
     gem 'capistrano', '~> 2.1'
+    gem 'rvm-capistrano'
 end
 
 # Use ActiveModel has_secure_password
