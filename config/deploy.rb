@@ -7,7 +7,7 @@ set :rvm_ruby_string, '2.1.1'
 set :rvm_type, :user
 
 set :application, 'SpartanRunningClub'
-set :repository, 'git@github.com:ajm188/SpartanRunningClub.git'
+set :repo_url, 'git@github.com:ajm188/SpartanRunningClub.git'
 
 set :deploy_to, '/home/andrew/SpartanRunningClub'
 set :deploy_via, :copy
