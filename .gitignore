@@ -16,3 +16,4 @@
 /tmp
 /old_cap
 /lib/tasks/bootstrap.rake
+/config/database.yml
