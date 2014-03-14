@@ -44,6 +44,14 @@ class MembersController < ApplicationController
     end
   end
 
+  def update
+    if @member.update member_params
+      redirect_to @member, notice: 'Member was successfully updated'
+    else
+      render action: 'edit'
+    end
+  end
+
   def destroy
     @member.destroy
     respond_to do |format|

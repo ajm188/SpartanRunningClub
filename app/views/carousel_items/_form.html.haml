@@ -1,16 +1,16 @@
-=form_for @carousel_item, html: { class: 'form-horizontal', multipart: true } do |f|
-	.control-group
+=form_for @carousel_item, html: { class: 'form-horizontal', multipart: true, role: 'form' } do |f|
+	.form-group
 		=f.label :primary_caption, 'Primary Caption', class: 'control-label'
 		.controls
 			=f.text_field :primary_caption, placeholder: 'Race Day!'
-	.control-group
+	.form-group
 		=f.label :secondary_caption, 'Secondary Caption', class: 'control-label'
 		.controls
-			=f.text_area :secondary_caption, placeholder: 'SRC competitive members running a local 5k'
-	.control-group
+			=f.text_area :secondary_caption, placeholder: 'SRC members running a local 5k'
+	.form-group
 		=f.label :image, 'Image', class: 'control-label'
 		.controls
 			=f.file_field :image
 	.form-actions
 		=f.submit 'Save', class: 'btn btn-primary'
-		=link_to 'Back', edit_carousel_path, class: 'btn'
+		=link_to 'Back', edit_carousel_path, class: 'btn btn-default'

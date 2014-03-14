@@ -22,6 +22,14 @@ class CarouselItemsController < ApplicationController
 	def edit
 	end
 
+	def update
+		if @carousel_item.update carousel_item_params
+			redirect_to edit_carousel_path, notice: 'CarouselItem was successfully updated'
+		else
+			render action: 'edit'
+		end
+	end
+
 	def destroy
 		location = @carousel_item.place
 		items = CarouselItem.where('place > ?', location)

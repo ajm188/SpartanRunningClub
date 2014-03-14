@@ -37,6 +37,14 @@ class PracticesController < ApplicationController
 	def edit
 	end
 
+	def update
+		if @practice.update practice_params
+			redirect_to edit_practices_path, notice: 'Practice was successfully updated'
+		else
+			render action: 'edit'
+		end
+	end
+
 	def destroy
 		@practice.destroy
 		redirect_to practice_edit_path
