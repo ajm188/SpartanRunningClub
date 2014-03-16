@@ -1,5 +1,5 @@
 class MemberMailer < ActionMailer::Base
-  default from: "src@case.edu"
+  default from: "running-club@case.edu"
 
   def welcome_email member
   	@member = member
