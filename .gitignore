@@ -14,8 +14,14 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
 /old_cap
 /lib/tasks/bootstrap.rake
 /config/database.yml
 /config/initializers/secret_token.rb
 /config/mail_env.rb
+
+# Ignore capistrano stuff
+/config/deploy
+/config/deploy.rb
+Capfile
