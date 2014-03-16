@@ -18,3 +18,4 @@
 /lib/tasks/bootstrap.rake
 /config/database.yml
 /config/initializers/secret_token.rb
+/config/mail_env.rb

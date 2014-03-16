@@ -25,7 +25,7 @@ set :pty, true
 
 set :stage, :production
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/secret_token.rb config/mail_env.rb}
 
 namespace :deploy do
 
