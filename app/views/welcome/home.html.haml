@@ -11,11 +11,13 @@
 			.please-sign-in
 				%p You are not signed in. Please click the sign in button above to be able to access the full site.
 		-else
-			.quick-links
+			.panel-group#accordion
 				.panel.panel-primary
 					.panel-heading
-						.panel-title Quick Links
-					%ul.list-group
+						.panel-title
+							%a{ :href => '#quick-links-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion'}
+								Quick Links
+					%ul.list-group.panel-collapse.collapse#quick-links-collapse
 						%li.list-group-item=link_to 'View Profile', current_user
 						%li.list-group-item=link_to 'View the Routes', routes_path
 						%li.list-group-item=link_to 'View the Practice Schedule', practices_path

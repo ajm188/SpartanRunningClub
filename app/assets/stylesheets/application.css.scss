@@ -11,33 +11,12 @@
  *= require_self
  *= require_tree .
  */
-li.hover-dropdown {
-	ul.hover-dropdown-menu {
-		display: none;
-		list-style: none;
-		margin-left: 15px;
-		text-align: left;
-
-		li {
-			a {
-				text-decoration: none;
-				color: gray;
-				display: block;
-				width: 100%;
-			}
-		}
-
-		li:hover {
-			a {
-				color: white;
-				background-color: gray;
-			}
-		}
-	}
-}
-
-li.hover-dropdown:hover {
-	ul.hover-dropdown-menu {
-		display: block;
-	}
-}
+ .panel {
+ 	.panel-heading {
+ 		.panel-title {
+ 			a:hover {
+ 				text-decoration: none;
+ 			}
+ 		}
+ 	}
+ }
