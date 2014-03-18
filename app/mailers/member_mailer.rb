@@ -4,6 +4,6 @@ class MemberMailer < ActionMailer::Base
   def welcome_email member
   	@member = member
   	@url = 'running.case.edu'
-  	mail(to: @member.email, subject: 'Welcome to Spartan Running Club!')
+  	mail(to: @member.email, from: 'running-club@case.edu' subject: 'Welcome to Spartan Running Club!')
   end
 end
