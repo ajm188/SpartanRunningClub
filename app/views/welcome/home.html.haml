@@ -13,9 +13,10 @@
 		-else
 			.panel-group#accordion
 				.panel.panel-primary
+					-#%a{ :href => '#quick-links-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion'}
 					.panel-heading
-						.panel-title
-							%a{ :href => '#quick-links-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion'}
+						%a{ :href => '#quick-links-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion'}
+							.panel-title
 								Quick Links
 					%ul.list-group.panel-collapse.collapse#quick-links-collapse
 						%li.list-group-item=link_to 'View Profile', current_user
