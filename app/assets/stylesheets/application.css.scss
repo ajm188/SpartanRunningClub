@@ -11,12 +11,61 @@
  *= require_self
  *= require_tree .
  */
- .panel {
- 	.panel-heading {
- 		.panel-title {
- 			a:hover {
- 				text-decoration: none;
- 			}
- 		}
- 	}
- }
+ $primary-panel-title-color: #fff;
+ $success-panel-title-color: #3c763d;
+ $info-panel-title-color:    #31708f;
+ $warning-panel-title-color: #8a6d3b;
+ $danger-panel-title-color:  #a94442;
+ 
+.panel {
+    .panel-heading {
+        .panel-title {
+            a:hover {
+                text-decoration: none;
+            }
+        }
+        a:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.panel.panel-primary {
+    .panel-heading {
+        a {
+            color: $primary-panel-title-color;
+        }
+    }
+}
+
+.panel.panel-success {
+    .panel-heading {
+        a {
+            color: $success-panel-title-color;
+        }
+    }
+}
+
+.panel.panel-info {
+    .panel-heading {
+        a {
+            color: $info-panel-title-color;
+        }
+    }
+}
+
+.panel.panel-warning {
+    .panel-heading {
+        a {
+            color: $warning-panel-title-color;
+        }
+    }
+}
+
+.panel.panel-danger {
+    .panel-heading {
+        a {
+            color: $danger-panel-title-color;
+        }
+    }
+}
