@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140331195754) do
+ActiveRecord::Schema.define(version: 20140401013842) do
 
   create_table "carousel_items", force: true do |t|
     t.string   "primary_caption"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20140331195754) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+  end
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.datetime "time"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "members", force: true do |t|
