@@ -1,0 +1,12 @@
+.password-reset#clearance
+	%h2 Reset your password
+
+	%p To be emailed a link to reset your password, please enter your email address.
+
+	=form_for :password, :url => passwords_path do |f|
+		.input-group.text-field
+			=f.label :email, :class => 'control-label'
+			=f.text_field :email, :type => 'email', :class => 'form-control'
+		%br
+		.form-actions.submit-field
+			=f.submit
