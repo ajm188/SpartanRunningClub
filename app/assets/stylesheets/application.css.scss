@@ -9,8 +9,14 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require bootstrap
+ *= require bootstrap-datetimepicker
  *= require_tree .
  */
+
+//@import 'bootstrap';
+//@import 'bootstrap-datetimepicker';
+
  $primary-panel-title-color: #fff;
  $success-panel-title-color: #3c763d;
  $info-panel-title-color:    #31708f;

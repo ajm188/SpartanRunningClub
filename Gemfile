@@ -45,6 +45,8 @@ gem 'paperclip', '~> 3.0'
 gem 'haml'
 gem 'haml-rails'
 gem 'maruku'
+gem 'momentjs-rails', '~> 2.5.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 
 group :development do
     gem 'capistrano', '~> 3.0'
