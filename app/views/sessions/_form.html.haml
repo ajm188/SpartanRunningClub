@@ -1,11 +1,11 @@
-= form_for :session, :url => session_path, html: { class: 'form-horizontal', role: 'form' } do |form|
-  .text-field
-    = form.label :email
-    = form.text_field :email, :type => 'email'
-  .password-field
-    = form.label :password
-    = form.password_field :password
+=form_for :session, :url => session_path, html: { :class => 'form-horizontal', role: 'form' } do |form|
+  .input-group.text-field
+    =form.label :email, :class => 'control-label'
+    =form.text_field :email, :type => 'email', :class => 'form-control'
+  .input-group.password-field
+    =form.label :password, :class => 'control-label'
+    =form.password_field :password, :class => 'form-control'
+  %br
   .submit-field
-    = form.submit "Sign In", :class => "btn btn-primary"
-
-    = link_to t('.forgot_password'), new_password_path, class: 'btn btn-default'
+    =form.submit "Sign In", :class => "btn btn-primary"
+    =link_to t('.forgot_password'), new_password_path, :class => 'btn btn-default'

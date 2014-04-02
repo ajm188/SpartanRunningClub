@@ -1,4 +1,4 @@
-=form_for @member, html: { class: 'form-horizontal', role: 'form' } do |f|
+=form_for @member, html: { :class => 'form-horizontal', :role => 'form' } do |f|
 	-if @member.errors.any?
 		#error_explanation
 			%h4
@@ -7,42 +7,34 @@
 			%ul
 				-@member.errors.full_messages.each do |msg|
 					%li=msg
-	.form-group
-		=f.label :first_name, 'First Name', class: 'control-label'
-		.controls
-			=f.text_field :first_name, placeholder: 'John'
-	.form-group
-		=f.label :last_name, 'Last Name', class: 'control-label'
-		.controls
-			=f.text_field :last_name, placeholder: 'Smith'
-	.form-group
-		=f.label :case_id, 'Case ID', class: 'control-label'
-		.controls
-			=f.text_field :case_id, placeholder: 'abc123'
-	.form-group
-		=f.label :email, class: 'control-label'
-		.controls
-			=f.email_field :email, placeholder: 'abc123@case.edu'
-	.form-group
-		=f.label :year, class: 'control-label'
-		.controls
-			=f.select :year, Member::YEARS, {}, style: 'width:101px;'
-	.form-group
-		=f.label :competitive, class: 'control-label'
-		.controls
-			=f.check_box :competitive
-	.form-group
-		=f.label :officer, class: 'control-label'
-		.controls
-			=f.check_box :officer, id: 'officer_check_box'
-	.form-group#officer_position{ style: 'display:none;' }
-		=f.label :position, class: 'control-label'
-		.controls
-			=f.select :position, Member::OFFICER_POSITIONS, {}, style: 'width:101px;'
-	=f.hidden_field :password, value: Member::random_password
+	.input-group
+		=f.label :first_name, 'First Name', :class => 'control-label'
+		=f.text_field :first_name, :placeholder => 'John', :class => 'form-control'
+	.input-group
+		=f.label :last_name, 'Last Name', :class => 'control-label'
+		=f.text_field :last_name, :placeholder => 'Smith', :class => 'form-control'
+	.input-group
+		=f.label :case_id, 'Case ID', :class => 'control-label'
+		=f.text_field :case_id, :placeholder => 'abc123', :class => 'form-control'
+	.input-group
+		=f.label :email, :class => 'control-label'
+		=f.email_field :email, :placeholder => 'abc123@case.edu', :class => 'form-control'
+	.input-group
+		=f.label :year, :class => 'control-label'
+		=f.select :year, Member::YEARS, {}, :style => 'width:101px;'
+	.input-group
+		=f.label :competitive, :class => 'control-label'
+		=f.check_box :competitive
+	.input-group
+		=f.label :officer, :class => 'control-label'
+		=f.check_box :officer, :id => 'officer_check_box'
+	.input-group#officer_position{ style: 'display:none;' }
+		=f.label :position, :class => 'control-label'
+		=f.select :position, Member::OFFICER_POSITIONS, {}, :style => 'width:101px;'
+	=f.hidden_field :password, :value => Member::random_password
 	.form-actions
-		=f.submit 'Add Member', class: 'btn btn-primary'
-		=link_to t('.cancel', default: t('helpers.links.cancel')), edit_members_path, class: 'btn btn-default'
+		=f.submit 'Add Member', :class => 'btn btn-primary'
+		=link_to t('.cancel', :default => t('helpers.links.cancel')), edit_members_path, :class => 'btn btn-default'
 :javascript
 	var checkbox = document.getElementById('officer_check_box');
 	var officer_section = document.getElementById('officer_position');
