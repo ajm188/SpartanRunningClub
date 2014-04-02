@@ -13,11 +13,19 @@
 		-else
 			.panel-group#accordion
 				.panel.panel-primary
-					-#%a{ :href => '#quick-links-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion'}
+					.panel-heading
+						%a{ :href => '#events-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion' }
+							.panel-title Upcoming Events
+					%ul.list-group.panel-collapse.collapse#events-collapse
+						-if @upcoming_events.any?
+							-@upcoming_events.each do |event|
+								%li.list-group-item=link_to event.name, event
+						-else
+							%li.list-group-item No upcoming events.
+				.panel.panel-primary
 					.panel-heading
 						%a{ :href => '#quick-links-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion'}
-							.panel-title
-								Quick Links
+							.panel-title Quick Links
 					%ul.list-group.panel-collapse.collapse.in#quick-links-collapse
 						%li.list-group-item=link_to 'View Profile', current_user
 						%li.list-group-item=link_to 'View the Routes', routes_path
