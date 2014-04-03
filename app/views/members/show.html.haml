@@ -1,13 +1,17 @@
 %h1=@member.full_name
 
 %ul
-  %li=@member.email
-  %li=@member.year
-  %li=@member.competitive ? 'Competitive' : 'Non Competitive'
-  -if @member.officer
-    %li=@member.position
+	%li=@member.email
+	%li=@member.year
+	%li=@member.competitive ? 'Competitive' : 'Non Competitive'
+	-if @member.officer
+		%li=@member.position
 
 .form-actions
-  -if current_user.id == @member.id or current_user.officer
-    =link_to 'Edit', edit_member_path(@member), class: 'btn btn-default'
-  =link_to 'All Members', members_path, class: 'btn btn-default'
+	-password_reset = current_user.id == @member.id
+	-show_edit = password_reset or current_user.officer?
+	-if show_edit
+		=link_to 'Edit', edit_member_path(@member), :class => 'btn btn-default'
+	-if password_reset
+		=link_to 'Change password', edit_user_password_path(@member), :class => 'btn btn-default'
+	=link_to 'All Members', members_path, :class => 'btn btn-default'
