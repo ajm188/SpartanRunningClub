@@ -12,6 +12,9 @@ SRC::Application.routes.draw do
     get '/log_a_run' => 'welcome#log_a_run', as: :log_a_run
     get '/practice_schedule' => 'welcome#practice_schedule', as: :practice_schedule
     get '/spartanlink' => 'welcome#spartan_link', as: :spartan_link
+    get '/members/:id/password' => 'passwords#change', :as => :member_password
+    put '/members/:id/password' => 'passwords#user_edit'
+    get '/members/:id/password/change' => 'passwords#change', :as => :change_user_password
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.officer } do

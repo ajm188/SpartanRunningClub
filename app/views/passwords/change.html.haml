@@ -1,0 +1,16 @@
+%h2.page-header Change your password
+
+=form_for @password, :url => member_password_path(@member), :html => { :class => 'form-horizontal', :role => 'form', :method => :put } do |f|
+	.input-group{ :style => 'width:290px;' }
+		=f.label :old_pass, 'Old Password', :class => 'control-label'
+		=f.password_field :old_pass, :class => 'form-control'
+	.input-group{ :style => 'width:290px;' }
+		=f.label :new_pass, 'New Password', :class => 'control-label'
+		=f.password_field :new_pass, :class => 'form-control'
+	.input-group{ :style => 'width:290px;' }
+		=f.label :confirm_pass, 'Confirm New Password', :class => 'control-label'
+		=f.password_field :confirm_pass, :class => 'form-control'
+	%br
+	.form-actions
+		=f.submit 'Change Password', :class => 'btn btn-primary'
+		=link_to 'Cancel', member_path(@member), :class => 'btn btn-default'
