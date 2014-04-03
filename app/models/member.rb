@@ -1,4 +1,5 @@
 require 'securerandom'
+require_relative 'time'
 
 class Member < ActiveRecord::Base
 	include Clearance::User
