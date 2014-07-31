@@ -5,12 +5,12 @@ gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do
-    gem 'sqlite3'
+  gem 'sqlite3'
 end
 
 #use mysql for production
 group :production do
-    gem 'mysql'
+  gem 'mysql'
 end
 
 # Use SCSS for stylesheets
@@ -40,19 +40,29 @@ group :doc do
 end
 
 gem 'clearance'
-gem 'therubyracer'
 gem 'paperclip', '~> 3.0'
 gem 'haml'
-gem 'haml-rails'
 gem 'maruku'
 gem 'momentjs-rails', '~> 2.5.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 
 group :development do
-    gem 'capistrano', '~> 3.0'
-    gem 'capistrano-rails', '~> 1.1', require: false
-    gem 'capistrano-bundler', '~> 1.1', require: false
-    gem 'capistrano-rvm', '~> 0.1', require: false
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-rails', '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+  gem 'capistrano-rvm', '~> 0.1', require: false
+  gem 'haml-rails'
+  gem 'spring'
+end
+
+group :test, :development do
+  gem 'debugger'
+  gem 'factory_girl_rails'
+  gem 'forgery'
+  gem 'guard-rspec'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
 end
 
 # Use ActiveModel has_secure_password

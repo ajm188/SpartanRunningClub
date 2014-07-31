@@ -25,3 +25,6 @@
 /config/deploy
 /config/deploy.rb
 Capfile
+
+# Ignore images uploaded in dev
+public/system/*
