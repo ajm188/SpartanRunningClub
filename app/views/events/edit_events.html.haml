@@ -12,7 +12,7 @@
 				%tr
 					%td=event.name
 					%td=event.time
-					%td=event.description_preview
+					%td=truncate(event.description)
 -else
 	%p You have no events!
 

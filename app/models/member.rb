@@ -4,18 +4,30 @@ require_relative 'time'
 class Member < ActiveRecord::Base
 	include Clearance::User
 
+	YEARS = %w(Freshman Sophomore Junior Senior)
+	OFFICER_POSITIONS = %w(President Vice\ President Treasurer Secretary)
+
 	scope :officers, -> { where(officer: true) }
 	scope :competitive, -> { where(competitive: true) }
 	scope :non_competitive, -> { where(competitive: false) }
 	scope :alphabetical, -> { order(:first_name) }
 
-	before_save :set_email
+	before_validation :set_email, if: -> { self.email.blank? }
 
-	validates :first_name, :last_name, :case_id, :email, :year, presence: true, allow_blank: false
-	validates :case_id, :email, uniqueness: true
-
-	YEARS = ['Freshman', 'Sophomore', 'Junior', 'Senior']
-	OFFICER_POSITIONS = ['President', 'Vice President', 'Treasurer', 'Secretary']
+	validates :first_name, :last_name, :case_id, :year, :competitive, :officer,
+		presence: true, allow_blank: false
+	validates :year,
+		inclusion: { in: YEARS }
+	validates :case_id,
+		length: { maximum: 6 },
+		format: { with: /[a-z]+\d+/, message: 'should be a valid case_id.' }
+	validates :case_id, :email,
+		uniqueness: true
+	# Validations for officers
+	validates :position,
+		presence: true, allow_blank: false, if: -> { self.officer }
+	validates :position,
+		inclusion: { in: OFFICER_POSITIONS }, if: -> { self.officer }
 
 	# generates a random string of length 8 containing numbers, letters and some symbols
 	def self.random_password
@@ -35,7 +47,9 @@ class Member < ActiveRecord::Base
 	end
 
 	private
-		def set_email
-			email = "#{case_id}@case.edu" unless email != ''
-		end
+
+	# Set the member's email using their case id if it's not already defined
+	def set_email
+		self.email = "#{case_id}@case.edu"
+	end
 end

@@ -1,7 +1,6 @@
 class Event < ActiveRecord::Base
   scope :upcoming, -> { where('time > ?', Time.now) }
 
-  def description_preview
-    description[0,50] + "..."
-  end
+  validates :name, :time, :description,
+    presence: true, allow_blank: false
 end
