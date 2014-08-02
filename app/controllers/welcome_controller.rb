@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
   def home
   	@active = CarouselItem.first_index
-  	@items = CarouselItem.rest.in_order
+  	@items = CarouselItem.rest
     @upcoming_events = Event.upcoming.limit(5)
   end
 

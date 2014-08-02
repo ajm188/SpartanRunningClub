@@ -1,0 +1,7 @@
+$('#error').html('<%=j flash[:error]%>');
+$('#notice').html('<%=j flash[:notice]%>');
+<%flash.discard%>
+<%(@updates || Hash.new).each do |div, hash|%>
+  $('#<%=div%>').html('<%=escape_javascript render(partial: hash[:partial], locals: hash[:locals])%>');
+<%end%>
+<%=raw @extra_js%>

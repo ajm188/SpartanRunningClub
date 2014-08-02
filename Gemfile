@@ -43,8 +43,7 @@ gem 'clearance'
 gem 'paperclip', '~> 3.0'
 gem 'haml'
 gem 'maruku'
-gem 'momentjs-rails', '~> 2.5.0'
-gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
+gem 'jquery-ui-rails'
 
 group :development do
   gem 'capistrano'

@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/sortable
 //= require turbolinks
-//= require moment
-//= require bootstrap-datetimepicker
 //= require_tree .
