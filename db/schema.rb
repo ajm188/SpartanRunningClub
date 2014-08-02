@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401013842) do
+ActiveRecord::Schema.define(version: 20140801230633) do
 
   create_table "carousel_items", force: true do |t|
     t.string   "primary_caption"
@@ -62,11 +62,9 @@ ActiveRecord::Schema.define(version: 20140401013842) do
 
   create_table "practices", force: true do |t|
     t.string   "day",        null: false
-    t.string   "hour"
-    t.string   "minute"
-    t.string   "am_pm",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "date"
   end
 
   create_table "routes", force: true do |t|

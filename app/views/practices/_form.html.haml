@@ -12,12 +12,9 @@
 		.controls
 			=f.select :day, Practice::DAYS, {}
 	.input-group
-		=f.label :time, 'Time', :class => 'control-label'
+		=f.label :date, 'Time', :class => 'control-label'
 		.controls
-			=f.select :hour, Practice::HOURS, {}, :class => 'col-md-1'
-			\:
-			=f.select :minute, Practice::MINUTES, {}, :class => 'col-md-1'
-			=f.select :am_pm, Practice::AMPM, {}, :class => 'col-md-1'
+			=f.time_field :date, value: @practice.time
 	.form-actions
 		=f.submit 'Save', :class => 'btn btn-primary'
 		=link_to t('.cancel', default: t('helpers.links.cancel')), practice_edit_path, :class => 'btn btn-default'

@@ -1,9 +1,6 @@
 class Practice < ActiveRecord::Base
 
   DAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
-  HOURS = %w(1 2 3 4 5 6 7 8 9 10 11 12)
-  MINUTES = %w(00 15 30 45)
-  AMPM = %w(AM PM)
 
   scope :sunday, -> { where(day: 'Sunday') }
   scope :monday, -> { where(day: 'Monday') }
@@ -12,23 +9,26 @@ class Practice < ActiveRecord::Base
   scope :thursday, -> { where(day: 'Thursday') }
   scope :friday, -> { where(day: 'Friday') }
   scope :saturday, -> { where(day: 'Saturday') }
-  scope :morning, -> { where(am_pm: 'AM') }
-  scope :afternoon, -> { where(am_pm: 'PM') }
-  scope :ordered, -> { order(:am_pm, :hour, :minute) }
+  scope :ordered, -> { order(:date) }
 
-  validates :day, :hour, :minute, :am_pm,
+  validates :day, :date,
     presence: true, allow_blanks: false
   validates :day,
     inclusion: { in: DAYS }
-  validates :hour,
-    inclusion: { in: HOURS }
-  validates :minute,
-    inclusion: { in: MINUTES }
-  validates :am_pm,
-    inclusion: { in: AMPM }
 
-  # Convert the practice hour, minute and meridian to a time string
+  before_save :set_date
+
+  # Convert the practice date to a time string
   def time
-    "#{hour}:#{minute} #{am_pm}"
+    self.date.present? ? self.date.strftime('%I:%M %p') : nil
+  end
+
+  private
+
+  # For all we care, the date part of the date field can be 2000-01-01
+  # This makes ordering queries better, since all we care about is the time
+  # anyway.
+  def set_date
+    self.date = DateTime.new(2000, 1, 1, self.date.hour, self.date.min)
   end
 end

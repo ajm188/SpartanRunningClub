@@ -14,4 +14,6 @@ Member.create!(
   :password    => 'password',
   :year        => 'Sophomore',
   :competitive => true,
-  :officer     => true)
+  :position    => Member::OFFICER_POSITIONS[0],
+  :officer     => true
+)

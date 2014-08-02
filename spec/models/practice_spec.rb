@@ -2,22 +2,40 @@ require 'rails_helper'
 
 RSpec.describe Practice, type: :model do
   it { should validate_presence_of(:day) }
-  it { should validate_presence_of(:hour) }
-  it { should validate_presence_of(:minute) }
-  it { should validate_presence_of(:am_pm) }
+  it { should validate_presence_of(:date) }
 
   it { should ensure_inclusion_of(:day).in_array(Practice::DAYS) }
-  it { should ensure_inclusion_of(:hour).in_array(Practice::HOURS) }
-  it { should ensure_inclusion_of(:minute).in_array(Practice::MINUTES) }
-  it { should ensure_inclusion_of(:am_pm).in_array(Practice::AMPM) }
+
+  describe 'callbacks' do
+    before(:each) do
+      @practice = FactoryGirl.build(:practice)
+    end
+
+    it 'should set the date to January 1st 2000' do
+      @practice.date = DateTime.new(2001, 4, 3, 3, 30)
+      @practice.save
+      expect(@practice.date).to eq Time.zone.local(2000, 1, 1, 3, 30)
+    end
+  end
 
   describe '#time' do
     before(:all) do
-      @practice = FactoryGirl.build(:practice, hour: 1, minute: 15, am_pm: 'PM')
+      time = DateTime.strptime('01:15 PM', '%I:%M %p')
+      @practice = FactoryGirl.build(:practice, date: time)
     end
 
-    it 'should return a string representing the hour, minute and meridian as a time' do
-      expect(@practice.time).to eq '1:15 PM'
+    it 'should return a string representing date as a time' do
+      expect(@practice.time).to eq '01:15 PM'
+    end
+
+    context 'when date is nil' do
+      before(:all) do
+        @practice.date = nil
+      end
+
+      it 'should return nil' do
+        expect(@practice.time).to be nil
+      end
     end
   end
 end
