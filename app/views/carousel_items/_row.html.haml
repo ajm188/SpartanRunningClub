@@ -1,4 +1,4 @@
-%tr
+%tr{ id: "carousel_item_#{item.id}" }
 	%td
 		-glyphicon_tag 'resize-vertical', class: 'handle btn btn-lg btn-default'
 	%td=image_tag item.image.url(:thumbnail)

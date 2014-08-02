@@ -1,0 +1,10 @@
+-table_tag do
+	%thead
+		%tr
+			%th
+			%th Image
+			%th Primary Caption
+			%th Secondary Caption
+			%th Actions
+	%tbody.sortable
+		=render partial: 'row', collection: @items, as: :item

@@ -6,21 +6,13 @@
 	%div{ style: 'display:inline-block;' }
 		=link_to new_carousel_item_path, class: 'btn btn-success', id: :new_carousel_link, remote: true, title: 'Add Image', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'plus'
-		=link_to reorder_carousel_items_path, class: 'btn btn-primary', method: :put, title: 'Save Changes', 'data-toggle' => 'tooltip' do
+		=link_to reorder_carousel_items_path, class: 'btn btn-primary', id: :reorder_carousel_link, method: :put, remote: true, title: 'Save Moves', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'floppy-saved'
-		=link_to edit_carousel_items_path, class: 'btn btn-warning', title: 'Undo All Changes', 'data-toggle' => 'tooltip' do
+		=link_to edit_carousel_items_path, class: 'btn btn-warning', remote: true, title: 'Undo All Moves', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'refresh'
 
--table_tag id: :carousel_items do
-	%thead
-		%tr
-			%th
-			%th Image
-			%th Primary Caption
-			%th Secondary Caption
-			%th Actions
-	%tbody.sortable
-		=render partial: 'row', collection: @items, as: :item
+#carousel_items
+	=render partial: 'edit'
 
 #new_carousel_form
 :javascript
@@ -30,6 +22,10 @@
 		handle: '.handle',
 		cursor: 'move',
 		axis: 'y'
+	});
+
+	$('#reorder_carousel_link').on('ajax:beforeSend', function(event, xhr, settings) {
+		settings.url += '?' + $('.sortable').sortable('serialize');
 	});
 
 	$(document).ready(function () {

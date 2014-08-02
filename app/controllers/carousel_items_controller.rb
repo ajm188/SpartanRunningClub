@@ -29,6 +29,14 @@ class CarouselItemsController < ApplicationController
   # The edit action is used to edit the entire carousel simultaneously.
   def edit
     @items = CarouselItem.all
+    respond_to do |format|
+      format.html
+      format.js do
+        @updates = {
+          'carousel_items' => 'carousel_items/edit'
+        }
+      end
+    end
   end
 
   def update
@@ -50,16 +58,27 @@ class CarouselItemsController < ApplicationController
     redirect_to edit_carousel_path
   end
 
+  # The jQuery sortable plugin will inject a serialized version of the
+  # CarouselItem ordering into the url, like this:
+  # => 'carousel_item' => ['1', '4', '3']
+  # The array contains the ids of the CarouselItems in their new order.
+  # Use this to bulk update the order
   def reorder
-    @items = CarouselItem.in_order
-  end
-
-  def submit_new_order
-    item1, item2 = CarouselItem.find(params[:item1_id]), CarouselItem.find(params[:item2_id])
-    swap_places item1, item2
-    item1.save
-    item2.save
-    redirect_to reorder_carousel_path
+    success = false
+    order = build_order_hash
+    begin
+      CarouselItem.connection.execute <<-SQL
+        UPDATE carousel_items
+        SET place = #{build_case_statement(order)}
+      SQL
+      flash[:notice] = 'Carousel was successfully reordered.'
+    rescue Exception => e
+      flash[:error] = 'An error occurred while reordering the carousel.'
+      flash[:error] << "\ne.to_s"
+    end
+    respond_to do |format|
+      format.js { render 'shared/update' }
+    end
   end
 
   private
@@ -73,9 +92,23 @@ class CarouselItemsController < ApplicationController
       :image, :place)
   end
 
-  def swap_places item1, item2
-    temp = item1.place
-    item1.place = item2.place
-    item2.place = temp
+  # Using the serialized ordering from the sortable plugin, build a hash of the
+  # form:
+  # => {id: new_place}
+  def build_order_hash
+    order = {}
+    params[:carousel_item].each_with_index do |id_string, index|
+      order[id_string.to_i] = index
+    end
+    return order
+  end
+
+  # Build a custom case statement based on the ordering
+  def build_case_statement order
+    sql = "CASE id\n"
+    order.each do |id, place|
+      sql << "WHEN #{id} THEN #{place}\n"
+    end
+    sql << "END"
   end
 end
