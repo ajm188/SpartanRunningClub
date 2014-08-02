@@ -1,0 +1,4 @@
+$('#error').html('<%=j flash[:error]%>');
+$('#notice').html('<%=j flash[:notice]%>');
+<%flash.discard%>
+$('#carousel_items > tbody:last').append('<%=escape_javascript(render partial: "carousel_items/row", locals: { item: @carousel_item }');

@@ -44,6 +44,7 @@ gem 'paperclip', '~> 3.0'
 gem 'haml'
 gem 'maruku'
 gem 'jquery-ui-rails'
+gem 'remotipart'
 
 group :development do
   gem 'capistrano'

@@ -11,7 +11,7 @@
 		=link_to edit_carousel_path, class: 'btn btn-warning', title: 'Undo All Changes', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'refresh'
 
--table_tag do
+-table_tag id: :carousel_items do
 	%thead
 		%tr
 			%th
@@ -20,18 +20,8 @@
 			%th Secondary Caption
 			%th Actions
 	%tbody.sortable
-		-@items.each do |item|
-			%tr
-				%td
-					-glyphicon_tag 'resize-vertical', class: 'handle btn btn-lg btn-default'
-				%td=image_tag item.image.url(:thumbnail)
-				%td=item.primary_caption
-				%td=item.secondary_caption
-				%td
-					=link_to edit_carousel_item_path(item), class: 'btn btn-default' do
-						-glyphicon_tag 'pencil'
-					=link_to item, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do
-						-glyphicon_tag 'remove'
+		=render partial: 'row', collection: @items, as: :item
+
 #new_carousel_form
 :javascript
 	show_hide_form('#new_carousel_link', '#new_carousel_form', '#cancel_new_carousel_form');

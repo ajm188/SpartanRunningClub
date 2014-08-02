@@ -1,4 +1,5 @@
 =form_for @carousel_item, html: { class: 'form-inline', multipart: true, role: :form }, remote: true do |f|
+	=f.hidden_field form_authenticity_token
 	-if @carousel_item.errors.any?
 		#error_explanation
 			%h2="#{pluralize(@carousel_item.errors.count, "error")} prohibited this Carousel Item from being saved:"
