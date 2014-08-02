@@ -1,5 +1,5 @@
 class CarouselItemsController < ApplicationController
-  before_action :set_carousel_item, only: [:edit, :update, :destroy]
+  before_action :set_carousel_item, only: [:update, :destroy]
 
   def new
     @carousel_item = CarouselItem.new
@@ -25,11 +25,10 @@ class CarouselItemsController < ApplicationController
     end
   end
 
-  def edit_carousel
-    @items = CarouselItem.all
-  end
-
+  # Going a bit against convention here.
+  # The edit action is used to edit the entire carousel simultaneously.
   def edit
+    @items = CarouselItem.all
   end
 
   def update

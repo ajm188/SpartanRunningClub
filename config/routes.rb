@@ -19,13 +19,19 @@ SRC::Application.routes.draw do
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.officer } do
     get '/admin' => 'admin#panel', as: :admin_panel
-    get '/carousel/edit' => 'carousel_items#edit_carousel', as: :edit_carousel
-    get '/carousel/reorder' => 'carousel_items#reorder', as: :reorder_carousel
     patch '/carousel/reorder/:item1_id&:item2_id' => 'carousel_items#submit_new_order', as: :submit_carousel_order
     get '/routes/edit' => 'routes#edit_routes', as: :edit_routes
     get '/members/edit' => 'members#edit_members', as: :edit_members
     get '/events/edit' => 'events#edit_events', as: :edit_events
-    resources :members, :routes, :carousel_items, :events
+    resources :members
+    resources :routes
+    resources :carousel_items do
+      collection do
+        get :edit
+        put :reorder
+      end
+    end
+    resources :events
     get '/practices/edit' => 'practices#admin_edit', as: :practice_edit
     resources :practices, only: [:index, :edit, :destroy, :new, :create]
   end
