@@ -42,7 +42,7 @@ class CarouselItemsController < ApplicationController
       format.html
       format.js do
         @updates = {
-          'carousel_items' => 'carousel_items/edit'
+          'carousel_items' => 'carousel_items/edit_all'
         }
       end
     end
