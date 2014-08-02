@@ -25,9 +25,9 @@ SRC::Application.routes.draw do
     get '/events/edit' => 'events#edit_events', as: :edit_events
     resources :members
     resources :routes
-    resources :carousel_items do
+    resources :carousel_items, except: [:show] do
       collection do
-        get :edit
+        get :edit, action: :edit_all
         put :reorder
       end
     end

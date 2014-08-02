@@ -1,7 +1,8 @@
 $('#error').html('<%=j flash[:error]%>');
 $('#notice').html('<%=j flash[:notice]%>');
 <%flash.discard%>
-$('#carousel_items > tbody:last').append('<%=escape_javascript(render partial: "carousel_items/row", locals: { item: @carousel_item })%>');
+$('#carousel_items tbody').append('<%=escape_javascript(render partial: "carousel_items/row", locals: { item: @carousel_item })%>');
+fix_cell_widths(); // have to restrict the cell widths for the new row
 // have to do this because remotipart messes with the show_hide_form function
 $("#new_carousel_link").show();
 $("#new_carousel_form").html("");

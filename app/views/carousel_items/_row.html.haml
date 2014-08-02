@@ -5,7 +5,7 @@
 	%td=item.primary_caption
 	%td=item.secondary_caption
 	%td
-		=link_to edit_carousel_item_path(item), class: 'btn btn-default' do
+		=link_to edit_carousel_item_path(item), class: 'btn btn-default', title: 'Edit this item', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'pencil'
-		=link_to item, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do
+		=link_to item, method: :delete, remote: true,  id: "delete_carousel_item_#{item.id}", class: 'btn btn-danger', title: 'Delete this item', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'remove'

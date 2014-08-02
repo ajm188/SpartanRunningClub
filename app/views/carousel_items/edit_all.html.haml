@@ -1,14 +1,14 @@
 #notice=flash[:notice]
-#error=flash[:notice]
+#error=flash[:error]
 
 -header_tag do
 	%h1 Edit the Carousel
 	%div{ style: 'display:inline-block;' }
 		=link_to new_carousel_item_path, class: 'btn btn-success', id: :new_carousel_link, remote: true, title: 'Add Image', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'plus'
-		=link_to reorder_carousel_items_path, class: 'btn btn-primary', id: :reorder_carousel_link, method: :put, remote: true, title: 'Save Moves', 'data-toggle' => 'tooltip' do
+		=link_to reorder_carousel_items_path, class: 'btn btn-primary', id: :reorder_carousel_link, method: :put, remote: true, title: 'Save All Changes', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'floppy-saved'
-		=link_to edit_carousel_items_path, class: 'btn btn-warning', remote: true, title: 'Undo All Moves', 'data-toggle' => 'tooltip' do
+		=link_to edit_carousel_items_path, class: 'btn btn-warning', title: 'Undo All Changes (Including Deletions)', 'data-toggle' => 'tooltip' do
 			-glyphicon_tag 'refresh'
 
 #carousel_items
@@ -29,7 +29,5 @@
 	});
 
 	$(document).ready(function () {
-		$('td').each(function () {
-			$(this).css('width', $(this).width() + 'px');
-		});
+		fix_cell_widths();
 	});
