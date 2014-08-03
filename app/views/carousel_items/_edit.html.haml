@@ -1,0 +1,4 @@
+=form_for @carousel_item do |f|
+	%td
+		-glyphicon_tag 'resize-vertical', class: 'handle btn btn-lg btn-default'
+	%td=image_tag @carousel_item.image.url(:thumbnail)

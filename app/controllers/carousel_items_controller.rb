@@ -31,6 +31,15 @@ class CarouselItemsController < ApplicationController
 
   # Show the edit form for a single carousel item row
   def edit
+    respond_to do |format|
+      format.js do
+        @updates = {
+          "carousel_item_#{@carousel_item.id}" =>
+            { partial: 'carousel_items/edit' }
+        }
+        render 'shared/update'
+      end
+    end
   end
 
   # Edit the carousel

@@ -1,0 +1,9 @@
+%td
+	-glyphicon_tag 'resize-vertical', class: 'handle btn btn-lg btn-default'
+%td=image_tag item.image.url(:thumbnail)
+%td=item.primary_caption
+%td=item.secondary_caption
+%td
+	=# TODO: link_to edit_carousel_item_path(item), remote: true, class: 'btn btn-default', title: 'Edit this item', 'data-toggle' => 'tooltip'
+	=link_to item, method: :delete, remote: true,  id: "delete_carousel_item_#{item.id}", class: 'btn btn-danger', title: 'Delete this item', 'data-toggle' => 'tooltip' do
+		-glyphicon_tag 'remove'
