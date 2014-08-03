@@ -12,6 +12,12 @@ class Member < ActiveRecord::Base
 	scope :non_competitive, -> { where(competitive: false) }
 	scope :alphabetical, -> { order(:first_name) }
 
+	has_many :followings
+	has_many :followables, through: :followings
+	# Members can follow Events
+	has_many :events, through: :followings,
+		source: :followable, source_type: Event.to_s
+
 	before_validation :set_email, if: -> { self.email.blank? }
 
 	validates :first_name, :last_name, :case_id, :year, :competitive, :officer,
