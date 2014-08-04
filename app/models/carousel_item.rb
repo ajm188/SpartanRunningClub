@@ -11,8 +11,4 @@ class CarouselItem < ActiveRecord::Base
   validates :place,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates_attachment_presence :image
-
-	def self.save_all
-		all.each { |item| item.save }
-	end
 end
