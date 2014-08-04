@@ -28,7 +28,7 @@ class PracticesController < ApplicationController
   def create
     @practice = Practice.new practice_params
     if @practice.save
-      redirect_to practice_edit_path
+      redirect_to edit_practices_path
     else
       render action: 'new'
     end
@@ -47,7 +47,7 @@ class PracticesController < ApplicationController
 
   def destroy
     @practice.destroy
-    redirect_to practice_edit_path
+    redirect_to edit_practices_path
   end
 
   private
