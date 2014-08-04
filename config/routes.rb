@@ -25,7 +25,7 @@ SRC::Application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.officer } do
-    get '/admin' => 'admin#panel', as: :admin_panel
+    get 'admin' => 'admin#panel', as: :admin_panel
     resources :members do
       collection do
         get :edit, action: :edit_members
