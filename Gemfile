@@ -45,6 +45,7 @@ gem 'haml'
 gem 'maruku'
 gem 'jquery-ui-rails'
 gem 'remotipart'
+gem 'whenever'
 
 group :development do
   gem 'capistrano'
