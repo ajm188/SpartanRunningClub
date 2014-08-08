@@ -1,39 +1,57 @@
 SRC::Application.routes.draw do
-  get "/contact" => 'welcome#contact', as: :contact
-  get "/about" => 'welcome#about', as: :about
-  resources :members, only: [:index]
-  get '/members/officers' => 'members#officers', as: :officers
+  get 'contact' => 'welcome#contact', as: :contact
+  get 'about' => 'welcome#about', as: :about
+
+  resources :members, only: [:index] do
+    collection do
+      get :officers
+    end
+  end
   root 'welcome#home'
 
   constraints Clearance::Constraints::SignedIn.new do
-    get '/members/competitive' => 'members#competitive', as: :competitive_members
-    get '/members/non_competitive' => 'members#non_competitive', as: :non_competitive_members
+    resources :members, only: [] do
+      collection do
+        get :non_competitive
+        get :competitive
+      end
+    end
     resources :practices, only: [:index]
-    get '/log_a_run' => 'welcome#log_a_run', as: :log_a_run
-    get '/practice_schedule' => 'welcome#practice_schedule', as: :practice_schedule
-    get '/spartanlink' => 'welcome#spartan_link', as: :spartan_link
-    get '/members/:id/password' => 'passwords#change', :as => :member_password
-    put '/members/:id/password' => 'passwords#user_edit'
-    get '/members/:id/password/change' => 'passwords#change', :as => :change_user_password
+    get 'log_a_run' => 'welcome#log_a_run', as: :log_a_run
+    get 'spartanlink' => 'welcome#spartan_link', as: :spartan_link
+    get 'members/:id/password' => 'passwords#change', :as => :member_password
+    put 'members/:id/password' => 'passwords#user_edit'
+    get 'members/:id/password/change' => 'passwords#change', :as => :change_user_password
   end
 
   constraints Clearance::Constraints::SignedIn.new { |user| user.officer } do
-    get '/admin' => 'admin#panel', as: :admin_panel
-    patch '/carousel/reorder/:item1_id&:item2_id' => 'carousel_items#submit_new_order', as: :submit_carousel_order
-    get '/routes/edit' => 'routes#edit_routes', as: :edit_routes
-    get '/members/edit' => 'members#edit_members', as: :edit_members
-    get '/events/edit' => 'events#edit_events', as: :edit_events
-    resources :members
-    resources :routes
+    get 'admin' => 'admin#panel', as: :admin_panel
+    resources :members do
+      collection do
+        get :edit, action: :edit_members
+      end
+    end
+    resources :routes do
+      collection do
+        get :edit, action: :edit_routes
+      end
+    end
     resources :carousel_items, except: [:show] do
       collection do
         get :edit, action: :edit_all
         put :reorder
       end
     end
-    resources :events
-    get '/practices/edit' => 'practices#admin_edit', as: :practice_edit
-    resources :practices, only: [:index, :edit, :destroy, :new, :create]
+    resources :events do
+      collection do
+        get :edit, action: :edit_events
+      end
+    end
+    resources :practices, except: [:update] do
+      collection do
+        get :edit, action: :admin_edit
+      end
+    end
   end
 
   constraints Clearance::Constraints::SignedIn.new do

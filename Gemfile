@@ -45,6 +45,7 @@ gem 'haml'
 gem 'maruku'
 gem 'jquery-ui-rails'
 gem 'remotipart'
+gem 'whenever'
 
 group :development do
   gem 'capistrano'
@@ -53,6 +54,7 @@ group :development do
   gem 'capistrano-rvm', '~> 0.1', require: false
   gem 'haml-rails'
   gem 'spring'
+  gem 'rubocop'
 end
 
 group :test, :development do
