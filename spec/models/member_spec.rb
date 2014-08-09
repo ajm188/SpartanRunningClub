@@ -5,11 +5,9 @@ RSpec.describe Member, type: :model do
   it { should validate_presence_of(:last_name) }
   it { should validate_presence_of(:case_id) }
   it { should validate_presence_of(:year) }
-  it { should validate_presence_of(:competitive) }
-  it { should validate_presence_of(:officer) }
   it { should validate_presence_of(:password) }
 
-  it { should allow_value('abc123', 'abc13').for(:case_id) }
+  it { should allow_value('def123', 'def13').for(:case_id) }
   it { should_not allow_value('123abc', 'abc', '123', '').for(:case_id) }
 
   it { should ensure_inclusion_of(:year).in_array(Member::YEARS) }
@@ -54,6 +52,16 @@ RSpec.describe Member, type: :model do
 
     it 'should concatenate first and last name' do
       expect(@member.full_name).to eq "hello world"
+    end
+  end
+
+  describe '#follows?' do
+    context 'when member follows' do
+      pending
+    end
+
+    context 'when member does not follow' do
+      pending
     end
   end
 end

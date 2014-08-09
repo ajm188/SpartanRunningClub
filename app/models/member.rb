@@ -20,7 +20,7 @@ class Member < ActiveRecord::Base
 
 	before_validation :set_email, if: -> { self.email.blank? }
 
-	validates :first_name, :last_name, :case_id, :year, :competitive, :officer,
+	validates :first_name, :last_name, :case_id, :year,
 		presence: true, allow_blank: false
 	validates :year,
 		inclusion: { in: YEARS }
@@ -50,6 +50,15 @@ class Member < ActiveRecord::Base
 
 	def officer_as_string
 		officer ? "Yes" : "No"
+	end
+
+	# Returns true if this member follows followable. False otherwise.
+	def follows? followable
+		Following.exists?(
+			followable_id: followable.id,
+			followable_type: followable.class.to_s,
+			member_id: self.id
+		)
 	end
 
 	private

@@ -22,14 +22,13 @@
 						%li=link_to 'Members', members_path
 						-# drop down later : all, competitive, non competitive, officers, (add member)
 						-if current_user
+							%li=link_to 'Events', events_path
 							%li=link_to 'Routes', routes_path
-							-# drop down later: all, (add route)
 							%li=link_to 'Practice Schedule', practices_path
 							%li=link_to 'Log A Run', log_a_run_path
 							%li=link_to 'Spartan Link', spartan_link_path
 						%li=link_to 'Contact Us', contact_path
 						%li=link_to 'About Us', about_path
-						-# also need to add news and events
 					%ul.nav.navbar-nav.pull-right
 						-if current_user
 							%li.dropdown

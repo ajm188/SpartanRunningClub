@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20140803192759) do
   create_table "followings", force: true do |t|
     t.integer  "member_id"
     t.integer  "followable_id"
-    t.integer  "followable_type"
+    t.string   "followable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

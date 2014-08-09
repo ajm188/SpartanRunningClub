@@ -3,7 +3,7 @@ class CreateFollowings < ActiveRecord::Migration
     create_table :followings do |t|
       t.integer :member_id
       t.integer :followable_id
-      t.integer :followable_type
+      t.string :followable_type
 
       t.timestamps
     end

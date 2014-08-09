@@ -10,6 +10,7 @@ SRC::Application.routes.draw do
   root 'welcome#home'
 
   constraints Clearance::Constraints::SignedIn.new do
+    resources :followings, only: [:create, :destroy]
     resources :members, only: [] do
       collection do
         get :non_competitive

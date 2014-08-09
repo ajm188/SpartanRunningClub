@@ -1,0 +1,5 @@
+-if current_user.follows?(followable)
+	-following = defined?(@following) ? @following : Following.lookup(current_user.id, followable.id, followable.class.to_s)
+	=link_to 'Unfollow', following_path(following.id), method: :delete, data: { confirm: "Are you sure you want to stop following this #{following.followable_type.downcase}?" }, remote: true, class: 'btn btn-warning'
+-else
+	=link_to 'Follow', url_for(controller: 'followings', action: 'create', params: {following: {member_id: current_user.id, followable_id: followable.id, followable_type: followable.class.to_s}}), method: :post, remote: true, class: 'btn btn-primary'
