@@ -81,7 +81,11 @@ class CarouselItemsController < ApplicationController
   # Additionally, this action handles any queued deletions stored in the 
   # session.
   def reorder
-    order = build_order_hash
+    actual_ids = CarouselItem.unscoped.map { |item| item.id.to_s }
+    concurrent_deletion =
+      params[:carousel_item].any? { |id| !actual_ids.include?(id) }
+    params[:carousel_item]
+      .reject { |id| !actual_ids.include?(id) } if concurrent_deletion
     begin
       CarouselItem.transaction do
         if session[:deleted_carousel_ids].present? &&
@@ -95,11 +99,18 @@ class CarouselItemsController < ApplicationController
         end
         CarouselItem.connection.execute <<-SQL
           UPDATE carousel_items
-          SET place = #{build_case_statement(order)}
+          SET place = #{build_case_statement(build_order_hash)}
         SQL
         # Clear out the deleted ids stored in the session
         session[:deleted_carousel_ids] = []
         flash[:notice] = 'Carousel was successfully updated.'
+        if concurrent_deletion
+          flash[:error] = CONCURRENT_DELETE_MESSAGE
+          @items = CarouselItem.all
+          @updates = {
+            'carousel_items' => { partial: 'carousel_items/edit_all' }
+          }
+        end
       end
     rescue Exception => e
       flash[:error] = 'An error occurred while updating the carousel.'
@@ -111,6 +122,10 @@ class CarouselItemsController < ApplicationController
   end
 
   private
+
+  CONCURRENT_DELETE_MESSAGE =
+    'Another user may have deleted some carousel items while you were workin' +
+      'g. Go yell at them if you really care.'
   
   def set_carousel_item
     @carousel_item = CarouselItem.find params[:id] if params[:id]
