@@ -24,7 +24,7 @@ SRC::Application.routes.draw do
 
   resources :events do
     collection do
-      get :edit, action: :edit_events
+      get :edit, action: :edit_all
     end
   end
 
@@ -35,21 +35,21 @@ SRC::Application.routes.draw do
   resources :members do
     collection do
       get :competitive
-      get :edit, action: :edit_members
+      get :edit, action: :edit_all
       get :non_competitive
       get :officers
     end
   end
 
-  resources :practices, except: [:update] do
+  resources :practices, except: [:show, :edit, :update] do
     collection do
-      get :edit, action: :admin_edit
+      get :edit, action: :edit_all
     end
   end
 
   resources :routes do
     collection do
-      get :edit, action: :edit_routes
+      get :edit, action: :edit_all
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

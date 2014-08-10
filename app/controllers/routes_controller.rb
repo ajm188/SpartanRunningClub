@@ -39,7 +39,7 @@ class RoutesController < ApplicationController
 		redirect_to edit_routes_path
 	end
 
-	def edit_routes
+	def edit_all
 		@routes = Route.all
 	end
 

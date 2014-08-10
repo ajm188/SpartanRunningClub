@@ -64,7 +64,7 @@ class MembersController < ApplicationController
     end
   end
 
-  def edit_members
+  def edit_all
     @members = Member.all
   end
 

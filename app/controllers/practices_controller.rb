@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
   before_filter :authorize_as_officer, except: [:index]
 
-  before_action :set_practice, only: [:edit, :update, :destroy]
+  before_action :set_practice, only: [:destroy]
 
   def index
     @sundays = Practice.sunday.ordered
@@ -13,7 +13,7 @@ class PracticesController < ApplicationController
     @saturdays = Practice.saturday.ordered
   end
 
-  def admin_edit
+  def edit_all
     @practices = Practice.sunday.ordered
     @practices = @practices.concat Practice.monday.ordered
     @practices = @practices.concat Practice.tuesday.ordered
@@ -33,17 +33,6 @@ class PracticesController < ApplicationController
       redirect_to edit_practices_path
     else
       render action: 'new'
-    end
-  end
-
-  def edit
-  end
-
-  def update
-    if @practice.update practice_params
-      redirect_to edit_practices_path, notice: 'Practice was successfully updated'
-    else
-      render action: 'edit'
     end
   end
 
