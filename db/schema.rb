@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803192759) do
+ActiveRecord::Schema.define(version: 20140810121131) do
 
   create_table "carousel_items", force: true do |t|
     t.string   "primary_caption"
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(version: 20140803192759) do
   end
 
   add_index "followings", ["followable_id", "followable_type"], name: "index_followings_on_followable_id_and_followable_type"
+
+  create_table "meetings", force: true do |t|
+    t.string   "title"
+    t.text     "minutes"
+    t.datetime "meeting_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "members", force: true do |t|
     t.string   "email",                          null: false

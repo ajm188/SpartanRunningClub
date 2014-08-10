@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   skip_before_filter :authorize, only: [:index, :officers]
-  before_filter :authorize_as_officer, only: [:create, :edit_members]
+  before_filter :authorize_as_officer, only: [:new, :create, :edit_members]
   before_filter :authorize_as_officer_or_self, only: [:edit, :update, :destroy]
 
 	before_action :set_member, only: [:show, :edit, :update, :destroy]

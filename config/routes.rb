@@ -30,6 +30,8 @@ SRC::Application.routes.draw do
 
   resources :followings, only: [:create, :destroy]
 
+  resources :meetings
+
   resources :members do
     collection do
       get :competitive
