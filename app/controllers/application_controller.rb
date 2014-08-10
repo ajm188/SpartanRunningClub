@@ -4,9 +4,13 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :page_not_found
+  before_filter :authorize
 
-  def page_not_found
-  	raise ActionController::RoutingError.new 'Not Found'
+  hide_action :authorize_as_officer
+
+  def authorize_as_officer
+    unless signed_in? && current_user.officer
+      deny_access 'You must have admin rights to view that resource.'
+    end
   end
 end

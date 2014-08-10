@@ -1,5 +1,10 @@
 class MembersController < ApplicationController
+  skip_before_filter :authorize, only: [:index, :officers]
+  before_filter :authorize_as_officer, only: [:create, :edit_members]
+  before_filter :authorize_as_officer_or_self, only: [:edit, :update, :destroy]
+
 	before_action :set_member, only: [:show, :edit, :update, :destroy]
+
 	def index
 		@members = Member.alphabetical
 	end
@@ -63,12 +68,20 @@ class MembersController < ApplicationController
     @members = Member.all
   end
 
-  	private
-  		def set_member
-  			@member = Member.find(params[:id]) if params[:id]
-  		end
+	private
 
-  		def member_params
-  			params.require(:member).permit(:first_name, :last_name, :case_id, :year, :competitive, :officer, :position, :email, :password)
-  		end
+	def set_member
+		@member = Member.find(params[:id]) if params[:id]
+	end
+
+	def member_params
+		params.require(:member).permit(:first_name, :last_name, :case_id, :year, :competitive, :officer, :position, :email, :password)
+	end
+
+  def authorize_as_officer_or_self
+    unless signed_in? &&
+      (current_user.officer || current_user.id == params[:id])
+      deny_access 'You do not have the appropriate permissions to do that.'
+    end
+  end
 end

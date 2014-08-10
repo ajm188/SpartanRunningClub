@@ -1,63 +1,54 @@
 SRC::Application.routes.draw do
-  get 'contact' => 'welcome#contact', as: :contact
+  # Welcome routes
+  root 'welcome#home'
   get 'about' => 'welcome#about', as: :about
+  get 'contact' => 'welcome#contact', as: :contact
+  get 'log_a_run' => 'welcome#log_a_run', as: :log_a_run
+  get 'spartanlink' => 'welcome#spartan_link', as: :spartan_link
 
-  resources :members, only: [:index] do
+  # Password resetting routes
+  get 'members/:id/password' => 'passwords#change', :as => :member_password
+  put 'members/:id/password' => 'passwords#user_edit'
+  get 'members/:id/password/change' => 'passwords#change', :as => :change_user_password
+
+  # Admin routes
+  get 'admin' => 'admin#panel', as: :admin_panel
+
+  # Regular resource routes
+  resources :carousel_items, except: [:show] do
     collection do
+      get :edit, action: :edit_all
+      put :reorder
+    end
+  end
+
+  resources :events do
+    collection do
+      get :edit, action: :edit_events
+    end
+  end
+
+  resources :followings, only: [:create, :destroy]
+
+  resources :members do
+    collection do
+      get :competitive
+      get :edit, action: :edit_members
+      get :non_competitive
       get :officers
     end
   end
-  root 'welcome#home'
 
-  constraints Clearance::Constraints::SignedIn.new do
-    resources :followings, only: [:create, :destroy]
-    resources :members, only: [] do
-      collection do
-        get :non_competitive
-        get :competitive
-      end
-    end
-    resources :practices, only: [:index]
-    get 'log_a_run' => 'welcome#log_a_run', as: :log_a_run
-    get 'spartanlink' => 'welcome#spartan_link', as: :spartan_link
-    get 'members/:id/password' => 'passwords#change', :as => :member_password
-    put 'members/:id/password' => 'passwords#user_edit'
-    get 'members/:id/password/change' => 'passwords#change', :as => :change_user_password
-  end
-
-  constraints Clearance::Constraints::SignedIn.new { |user| user.officer } do
-    get 'admin' => 'admin#panel', as: :admin_panel
-    resources :members do
-      collection do
-        get :edit, action: :edit_members
-      end
-    end
-    resources :routes do
-      collection do
-        get :edit, action: :edit_routes
-      end
-    end
-    resources :carousel_items, except: [:show] do
-      collection do
-        get :edit, action: :edit_all
-        put :reorder
-      end
-    end
-    resources :events do
-      collection do
-        get :edit, action: :edit_events
-      end
-    end
-    resources :practices, except: [:update] do
-      collection do
-        get :edit, action: :admin_edit
-      end
+  resources :practices, except: [:update] do
+    collection do
+      get :edit, action: :admin_edit
     end
   end
 
-  constraints Clearance::Constraints::SignedIn.new do
-    resources :members, only: [:index, :show, :edit]
-    resources :routes, :events, only: [:index, :show]
+  resources :routes do
+    collection do
+      get :edit, action: :edit_routes
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,4 +1,6 @@
 class PracticesController < ApplicationController
+  before_filter :authorize_as_officer, except: [:index]
+
   before_action :set_practice, only: [:edit, :update, :destroy]
 
   def index

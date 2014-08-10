@@ -1,4 +1,6 @@
 class CarouselItemsController < ApplicationController
+  before_filter :authorize_as_officer
+  
   before_action :set_carousel_item, only: [:edit, :update, :destroy]
 
   def new

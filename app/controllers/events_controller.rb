@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_filter :authorize_as_officer, except: [:index, :show]
+  
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def edit_events

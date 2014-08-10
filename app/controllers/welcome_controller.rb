@@ -1,4 +1,6 @@
 class WelcomeController < ApplicationController
+  skip_before_filter :authorize, only: [:home, :contact, :about]
+
   def home
   	@active = CarouselItem.first_index
   	@items = CarouselItem.rest
