@@ -32,7 +32,7 @@ RSpec.describe Member, type: :model do
         @member.email = nil
       end
 
-      it 'should set email based on case id', focus: true do
+      it 'should set email based on case id' do
         @member.valid?
         expect(@member.email).to eq "#{@member.case_id}@case.edu"
       end
@@ -57,11 +57,26 @@ RSpec.describe Member, type: :model do
 
   describe '#follows?' do
     context 'when member follows' do
-      pending
+      before(:all) do
+        @followable = FactoryGirl.create(:event)
+        @member = FactoryGirl.create(:member)
+        FactoryGirl.create(:following, member: @member, followable: @followable)
+      end
+
+      it 'should return an object' do
+        expect(@member.follows?(@followable)).to_not be nil
+      end
     end
 
     context 'when member does not follow' do
-      pending
+      before(:all) do
+        @followable = FactoryGirl.create(:event)
+        @member = FactoryGirl.create(:member)
+      end
+
+      it 'should return nil' do
+        expect(@member.follows?(@followable)).to be nil
+      end
     end
   end
 end
