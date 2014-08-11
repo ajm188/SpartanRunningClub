@@ -1,6 +1,7 @@
 class MeetingsController < ApplicationController
   before_filter :authorize_as_officer
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+  before_action :parse_date, only: [:create, :update]
 
   # GET /meetings
   def index
@@ -39,10 +40,11 @@ class MeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
+        flash[:notice] = 'Meeting was successfully updated.'
       else
-        format.html { render action: 'edit' }
+        flash[:error] = 'There were errors when updating this meeting.'
       end
+      format.html { redirect_to edit_meeting_path(@meeting) }
     end
   end
 
@@ -63,5 +65,11 @@ class MeetingsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def meeting_params
     params.require(:meeting).permit(:title, :date, :time, :minutes)
+  end
+
+  def parse_date
+    return unless params[:meeting][:date].present?
+    params[:meeting][:date] =
+      Date.strptime(params[:meeting][:date], '%m/%d/%Y')
   end
 end

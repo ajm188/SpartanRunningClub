@@ -10,7 +10,7 @@
 		=f.text_field :title, class: 'form-control'
 	.form-group
 		=f.label :date, 'Date', class: 'control-label'
-		=f.text_field :date, class: 'form-control'
+		=f.text_field :date, class: 'form-control', value: @meeting.date.present? ? @meeting.date.strftime('%m/%d/%Y') : nil
 	.form-group
 		=f.label :time, 'Time', class: 'control-label'
 		.input-group.bootstrap-timepicker.input-append
@@ -24,4 +24,4 @@
 		=f.submit 'Save', class: 'btn btn-primary'
 :javascript
 	$('#meeting_date').datepicker();
-	$('#meeting_time').timepicker();
+	$('#meeting_time').timepicker('setTime', '#{@meeting.time.present? ? @meeting.time.strftime('%l:%M %p').strip : nil }')
