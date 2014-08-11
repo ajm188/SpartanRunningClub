@@ -26,8 +26,10 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
+        flash[:notice] = 'Meeting was successfully created.'
+        format.html { redirect_to edit_meeting_path(@meeting) }
       else
+        flash[:error] = 'There were errors when creating this meeting.'
         format.html { render action: 'new' }
       end
     end
@@ -60,6 +62,6 @@ class MeetingsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def meeting_params
-    params[:meeting]
+    params.require(:meeting).permit(:title, :date, :time, :minutes)
   end
 end
