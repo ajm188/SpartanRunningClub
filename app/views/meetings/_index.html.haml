@@ -2,9 +2,15 @@
 	%tr
 		%th Title
 		%th Minutes
-		%th Meeting Date
+		%th Date
+		%th Time
+		%th Actions
 	-@meetings.each do |meeting|
 		%tr
-			%td=meeting.title
+			%td=link_to meeting.title, meeting_path(meeting)
 			%td=meeting.minutes
-			%td=meeting.meeting_date
+			%td=meeting.date_string
+			%td=meeting.time_string
+			%td
+				=link_to edit_meeting_path(meeting), class: 'btn btn-default' do
+					-glyphicon_tag 'pencil'
