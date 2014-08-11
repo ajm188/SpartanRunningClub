@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811141749) do
+ActiveRecord::Schema.define(version: 20140811145913) do
 
   create_table "carousel_items", force: true do |t|
     t.string   "primary_caption"
@@ -27,10 +27,11 @@ ActiveRecord::Schema.define(version: 20140811141749) do
 
   create_table "events", force: true do |t|
     t.string   "name"
-    t.datetime "time"
+    t.time     "time"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "date"
   end
 
   create_table "followings", force: true do |t|

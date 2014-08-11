@@ -5,13 +5,15 @@
 		%thead
 			%tr
 				%th Name
+				%th Date
 				%th Time
 				%th Description
 		%tbody
 			-@events.each do |event|
 				%tr
 					%td=event.name
-					%td=event.time
+					%td=event.date_string
+					%td=event.time_string
 					%td=truncate(event.description)
 -else
 	%p You have no events!
