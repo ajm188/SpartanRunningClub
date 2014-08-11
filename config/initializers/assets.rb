@@ -1,2 +1,2 @@
-Rails.application.config.assets.precompile += %w(bootstrap.min.css bootstrap-theme.min.css)
-Rails.application.config.assets.precompile += %w(bootstrap.min.js)
+Rails.application.config.assets.precompile += %w(bootstrap.min.css bootstrap-theme.min.css bootstrap-timepicker.min.css)
+Rails.application.config.assets.precompile += %w(bootstrap.min.js bootstrap-timepicker.js)

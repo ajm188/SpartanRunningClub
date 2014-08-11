@@ -1,10 +1,31 @@
-= form_for @meeting do |f|
-  - if @meeting.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@meeting.errors.count, "error")} prohibited this meeting from being saved:"
-      %ul
-        - @meeting.errors.full_messages.each do |msg|
-          %li= msg
-
-  .actions
-    = f.submit 'Save'
+=form_for @meeting, html: { class: 'form-horizontal' } do |f|
+	-if @meeting.errors.any?
+		#error_explanation
+			%h2="#{pluralize(@meeting.errors.count, "error")} prohibited this meeting from being saved:"
+			%ul
+				-@meeting.errors.full_messages.each do |msg|
+					%li=msg
+	.form-group
+		=f.label 'Title', class: 'control-label'
+		=f.text_field :title, class: 'form-control'
+	%br
+	.form-group
+		=f.label 'Date', class: 'control-label'
+		=f.text_field :date, class: 'form-control', id: :meeting_date_input
+	%br
+	.form-group
+		=f.label 'Time', class: 'control-label'
+		.input-group.bootstrap-timepicker.input-append
+			=f.text_field :time, class: 'form-control', id: :meeting_time_input
+			.input-group-addon
+				-glyphicon_tag 'time', class: 'add-on'
+	%br
+	.form-group
+		=f.label 'Minutes', class: 'control-label'
+		=f.text_area :minutes, class: 'form-control', cols: 70, rows: 10
+	%br
+	.actions
+		=f.submit 'Save', class: 'btn btn-primary'
+:javascript
+	$('#meeting_date_input').datepicker();
+	$('#meeting_time_input').timepicker();

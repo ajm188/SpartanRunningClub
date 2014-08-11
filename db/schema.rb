@@ -46,7 +46,8 @@ ActiveRecord::Schema.define(version: 20140810121131) do
   create_table "meetings", force: true do |t|
     t.string   "title"
     t.text     "minutes"
-    t.datetime "meeting_date"
+    t.date     "date"
+    t.time     "time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
