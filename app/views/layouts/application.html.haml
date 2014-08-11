@@ -13,6 +13,8 @@
 	%body{ class: controller.controller_name }
 		=render partial: 'navbar/navbar'
 		.container
+			%p#notice=flash[:notice]
+			%p#error=flash[:error]
 			=yield
 	=javascript_include_tag 'bootstrap.min.js', 'data-turbolinks-track' => true
 	:javascript
