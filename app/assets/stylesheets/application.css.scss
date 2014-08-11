@@ -22,13 +22,12 @@
  $warning-panel-title-color: #8a6d3b;
  $danger-panel-title-color:  #a94442;
 
-.form-group {
-    .form-control {
-        width: 50%;
-    }
-    .input-append {
-        width: 50%;
-    }
+.form-control {
+    width: 50%;
+}
+
+.input-append {
+    width: 50%;
 }
  
 .panel {
