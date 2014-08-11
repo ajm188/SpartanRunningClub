@@ -43,7 +43,7 @@ class PracticesController < ApplicationController
 
   private
   def practice_params
-    params.require(:practice).permit(:day, :date)
+    params.require(:practice).permit(:day, :time)
   end
 
   def set_practice

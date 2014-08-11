@@ -10,7 +10,7 @@
 			-@sundays.each do |practice|
 				%tr
 					%td=practice.day
-					%td=practice.time
+					%td=practice.time_string
 		-if @mondays.empty?
 			%tr
 				%td Monday
@@ -19,7 +19,7 @@
 			-@mondays.each do |practice|
 				%tr
 					%td=practice.day
-					%td=practice.time
+					%td=practice.time_string
 		-if @tuesdays.empty?
 			%tr
 				%td Tuesday
@@ -28,7 +28,7 @@
 			-@tuesdays.each do |practice|
 				%tr
 					%td=practice.day
-					%td=practice.time
+					%td=practice.time_string
 		-if @wednesdays.empty?
 			%tr
 				%td Wednesday
@@ -37,7 +37,7 @@
 			-@wednesdays.each do |practice|
 				%tr
 					%td=practice.day
-					%td=practice.time
+					%td=practice.time_string
 		-if @thursdays.empty?
 			%tr
 				%td Thursday
@@ -46,7 +46,7 @@
 			-@thursdays.each do |practice|
 				%tr
 					%td=practice.day
-					%td=practice.time
+					%td=practice.time_string
 		-if @fridays.empty?
 			%tr
 				%td Friday
@@ -55,7 +55,7 @@
 			-@fridays.each do |practice|
 				%tr
 					%td=practice.day
-					%td=practice.time
+					%td=practice.time_string
 		-if @saturdays.empty?
 			%tr
 				%td Saturday
@@ -64,4 +64,4 @@
 			-@saturdays.each do |practice|
 				%tr
 					%td=practice.day
-					%td=practice.time
+					%td=practice.time_string
