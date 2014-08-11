@@ -13,3 +13,5 @@
 		.container
 			=yield
 	=javascript_include_tag 'bootstrap.min.js', 'data-turbolinks-track' => true
+	:javascript
+		$("*[data-toggle='tooltip']").tooltip();

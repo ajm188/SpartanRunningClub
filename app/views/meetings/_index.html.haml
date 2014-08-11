@@ -1,0 +1,10 @@
+-table_tag do
+	%tr
+		%th Title
+		%th Minutes
+		%th Meeting Date
+	-@meetings.each do |meeting|
+		%tr
+			%td=meeting.title
+			%td=meeting.minutes
+			%td=meeting.meeting_date

@@ -1,17 +1,10 @@
-%h1 Listing meetings
+#notice=flash[:notice]
+#error=flash[:error]
 
-%table
-  %tr
-    %th
-    %th
-    %th
+-header_tag do
+	%h1 Meetings
+	%div{ style: 'display:inline-block;' }
+		=link_to new_meeting_path, class: 'btn btn-success', title: 'Create new meeting.', 'data-toggle' => 'tooltip', target: :_blank do
+			-glyphicon_tag 'plus'
 
-  - @meetings.each do |meeting|
-    %tr
-      %td= link_to 'Show', meeting
-      %td= link_to 'Edit', edit_meeting_path(meeting)
-      %td= link_to 'Destroy', meeting, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Meeting', new_meeting_path
+#meetings=render partial: 'index'
