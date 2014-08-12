@@ -18,3 +18,6 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+every :day, at: '2:00 am' do
+  runner 'Event.notify_followers'
+end
