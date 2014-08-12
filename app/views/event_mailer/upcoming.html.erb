@@ -1,0 +1,4 @@
+<p>An event that you are following, <%=@event.name%>, is taking place on <%=@event.date_string%> at <%=@event.time_string%>.</p>
+<p><strong>Description</strong></p>
+<p><%=@event.description%></p>
+<p>You can view this event at <%=url_for(controller: 'events', action: 'show', id: @event.id, only_path: false)%></p>
