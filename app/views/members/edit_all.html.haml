@@ -18,9 +18,9 @@
 				%td=member.case_id
 				%td=member.email
 				%td=member.year
-				%td=member.competitive_as_string
-				%td=member.officer_as_string
-				%td=member.officer ? member.position : ''
+				%td=member.competitive_string
+				%td=member.officer_string
+				%td=member.officer ? member.position : nil
 				%td
 					=link_to 'Edit', edit_member_path(member.id), class: 'btn btn-sm btn-default'
 					=link_to 'Delete', member_path(member.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'

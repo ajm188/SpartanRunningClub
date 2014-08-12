@@ -55,6 +55,78 @@ RSpec.describe Member, type: :model do
     end
   end
 
+  describe '#competitive_string' do
+    before(:all) do
+      @member = FactoryGirl.build(:member)
+    end
+
+    context 'when competitive is true' do
+      before(:all) do
+        @member.competitive = true
+      end
+
+      it 'should return "Yes"' do
+        expect(@member.competitive_string).to eq 'Yes'
+      end
+    end
+
+    context 'when competitive is false' do
+      before(:all) do
+        @member.competitive = false
+      end
+
+      it 'should return "No"' do
+        expect(@member.competitive_string).to eq 'No'
+      end
+    end
+
+    context 'when competitive is nil' do
+      before(:all) do
+        @member.competitive = nil
+      end
+
+      it 'should return "No"' do
+        expect(@member.competitive_string).to eq 'No'
+      end
+    end
+  end
+
+  describe '#officer_string' do
+    before(:all) do
+      @member = FactoryGirl.build(:member)
+    end
+
+    context 'when officer is true' do
+      before(:all) do
+        @member.officer = true
+      end
+
+      it 'should return "Yes"' do
+        expect(@member.officer_string).to eq 'Yes'
+      end
+    end
+
+    context 'when officer is false' do
+      before(:all) do
+        @member.officer = false
+      end
+
+      it 'should return "No"' do
+        expect(@member.officer_string).to eq 'No'
+      end
+    end
+
+    context 'when officer is nil' do
+      before(:all) do
+        @member.officer = nil
+      end
+
+      it 'should return "No"' do
+        expect(@member.officer_string).to eq 'No'
+      end
+    end
+  end
+
   describe '#follows?' do
     context 'when member follows' do
       before(:all) do

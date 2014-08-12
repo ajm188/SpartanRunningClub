@@ -1,5 +1,4 @@
 require 'securerandom'
-require_relative 'time'
 
 class Member < ActiveRecord::Base
 	include Clearance::User
@@ -44,11 +43,11 @@ class Member < ActiveRecord::Base
 		"#{first_name} #{last_name}"
 	end
 
-	def competitive_as_string
+	def competitive_string
 		competitive ? "Yes" : "No"
 	end
 
-	def officer_as_string
+	def officer_string
 		officer ? "Yes" : "No"
 	end
 
