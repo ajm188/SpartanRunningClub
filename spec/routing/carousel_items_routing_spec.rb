@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe CarouselItemsController, type: :routing do
   describe 'routing' do
-    it 'routes to #index' do
-      expect(get: '/carousel_items').to route_to 'carousel_items#index'
-    end
-
     it 'routes to #new' do
       expect(get: '/carousel_items/new').to route_to 'carousel_items#new'
     end

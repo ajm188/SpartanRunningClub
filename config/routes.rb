@@ -15,7 +15,7 @@ SRC::Application.routes.draw do
   get 'admin' => 'admin#panel', as: :admin_panel
 
   # Regular resource routes
-  resources :carousel_items, except: [:show] do
+  resources :carousel_items, except: [:index, :show] do
     collection do
       get :edit, action: :edit_all
       put :reorder
