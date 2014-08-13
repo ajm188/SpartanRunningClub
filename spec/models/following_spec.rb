@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Following, :type => :model do
+  it { should validate_presence_of :member_id }
+  it { should validate_presence_of :followable_id }
+  it { should validate_presence_of :followable_type }
+
   it { should belong_to :followable }
   it { should belong_to :member }
 
