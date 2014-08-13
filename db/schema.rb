@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811145913) do
+ActiveRecord::Schema.define(version: 20140813022858) do
 
   create_table "carousel_items", force: true do |t|
     t.string   "primary_caption"
@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(version: 20140811145913) do
 
   add_index "members", ["email"], name: "index_members_on_email"
   add_index "members", ["remember_token"], name: "index_members_on_remember_token"
+
+  create_table "members_meetings", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "meeting_id"
+    t.string   "relationship"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "members_meetings", ["member_id", "meeting_id", "relationship"], name: "members_meetings_index", unique: true
 
   create_table "news", force: true do |t|
     t.string   "title",      null: false
