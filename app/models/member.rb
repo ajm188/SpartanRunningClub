@@ -16,8 +16,13 @@ class Member < ActiveRecord::Base
 	# Members can follow Events
 	has_many :events, through: :followings,
 		source: :followable, source_type: Event.to_s
-
-	before_validation :set_email, if: -> { self.email.blank? }
+	has_many :member_meetings
+	has_many :invited_meetings, through: :member_meetings,
+		class_name: 'Meeting',
+		conditions: "relationship = '#{MemberMeeting::INVITEE}'"
+	has_many :attended_meetings, through: :member_meetings,
+		class_name: 'Meeting',
+		conditions: "relationship = '#{MemberMeeting::ATTENDEE}'"
 
 	validates :first_name, :last_name, :case_id, :year,
 		presence: true, allow_blank: false
@@ -33,6 +38,8 @@ class Member < ActiveRecord::Base
 		presence: true, allow_blank: false, if: -> { self.officer }
 	validates :position,
 		inclusion: { in: OFFICER_POSITIONS }, if: -> { self.officer }
+
+	before_validation :set_email, if: -> { self.email.blank? }
 
 	# generates a random string of length 8 containing numbers, letters and some symbols
 	def self.random_password

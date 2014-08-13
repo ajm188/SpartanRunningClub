@@ -43,6 +43,10 @@ RSpec.describe Member, type: :model do
   it { should have_many(:followables).through(:followings) }
   it { should have_many(:events).through(:followings) }
 
+  it { should have_many :member_meetings }
+  it { should have_many(:invited_meetings).through(:member_meetings) }
+  it { should have_many(:attended_meetings).through(:member_meetings) }
+
   describe '#full_name' do
     before(:all) do
       @member = FactoryGirl.build(:member)
