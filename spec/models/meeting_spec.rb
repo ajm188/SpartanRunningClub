@@ -5,6 +5,10 @@ RSpec.describe Meeting, :type => :model do
   it { should validate_presence_of(:date) }
   it { should validate_presence_of(:time) }
 
+  it { should have_many :member_meetings }
+  it { should have_many(:invitees).through(:member_meetings) }
+  it { should have_many(:attendees).through(:member_meetings) }
+
   describe '#date_string' do
     before(:all) do
       @meeting = FactoryGirl.build(:meeting)
