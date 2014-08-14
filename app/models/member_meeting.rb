@@ -5,6 +5,8 @@ class MemberMeeting < ActiveRecord::Base
   ATTENDEE = 'Attendee'
   RELATIONSHIPS = [INVITEE, ATTENDEE]
 
+  attr_accessor :invitor # who created the invitation?
+
   belongs_to :member
   belongs_to :meeting
 
@@ -12,4 +14,12 @@ class MemberMeeting < ActiveRecord::Base
     presence: true, allow_blank: false
   validates :relationship,
     inclusion: { in: RELATIONSHIPS }
+
+  after_create :notify_member
+
+  private
+
+  def notify_member
+    MeetingMailer.invite(self.member, self.meeting, self.invitor).deliver
+  end
 end
