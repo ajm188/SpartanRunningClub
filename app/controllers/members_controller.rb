@@ -44,9 +44,6 @@ class MembersController < ApplicationController
  	end
 
   def edit
-    unless current_user and (current_user.officer or @member.id == current_user.id)
-      page_not_found
-    end
   end
 
   def update
