@@ -17,11 +17,10 @@ class Member < ActiveRecord::Base
 	has_many :events, through: :followings,
 		source: :followable, source_type: Event.to_s
 	has_many :member_meetings
-	has_many :invited_meetings, ->{ where relationship: MemberMeeting::INVITEE },
-		through: :member_meetings, class_name: 'Meeting'
-	has_many :attended_meetings,
-		->{ where relationship: MemberMeeting::ATTENDEE },
-		through: :member_meetings, class_name: 'Meeting'
+	has_many :invited_meetings, ->{ where("relationship = ?",
+		MemberMeeting::INVITEE) }, through: :member_meetings, source: :meeting
+	has_many :attended_meetings, ->{ where("relationship = ?",
+		MemberMeeting::ATTENDEE) }, through: :member_meetings, source: :meeting
 
 	validates :first_name, :last_name, :case_id, :year,
 		presence: true, allow_blank: false
