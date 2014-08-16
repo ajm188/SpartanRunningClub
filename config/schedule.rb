@@ -20,4 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 every :day, at: '2:00 am' do
   runner 'Event.notify_followers'
+  runner 'Meeting.email_reminder'
 end
