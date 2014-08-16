@@ -74,11 +74,4 @@ class MembersController < ApplicationController
 	def member_params
 		params.require(:member).permit(:first_name, :last_name, :case_id, :year, :competitive, :officer, :position, :email, :password)
 	end
-
-  def authorize_as_officer_or_self
-    unless signed_in? &&
-      (current_user.officer || current_user.id == params[:id])
-      deny_access 'You do not have the appropriate permissions to do that.'
-    end
-  end
 end

@@ -1,6 +1,8 @@
 class PasswordsController < Clearance::PasswordsController
+  before_filter :authorize_as_officer_or_self, only: [:change, :user_edit]
+  before_action :set_member, only: [:change, :user_edit]
+
   def change
-    @member = Member.find(params[:id].to_i)
     if current_user.id == @member.id
       @password = Password.new
     else
@@ -9,7 +11,6 @@ class PasswordsController < Clearance::PasswordsController
   end
 
   def user_edit
-    @member = Member.find(params[:id].to_i)
     if current_user.id == @member.id
       old_pass = params[:password][:old_pass]
       new_pass = params[:password][:new_pass]
@@ -38,5 +39,11 @@ class PasswordsController < Clearance::PasswordsController
     else
       redirect_to root_path
     end
+  end
+
+  private
+
+  def set_member
+    @member = Member.find(params[:id]) if params[:id]
   end
 end
