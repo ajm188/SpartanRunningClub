@@ -9,4 +9,27 @@ RSpec.describe MemberMeeting, :type => :model do
 
   it { should belong_to :member }
   it { should belong_to :meeting }
+
+  describe 'custom validations' do
+    before(:each) do
+      @meeting = FactoryGirl.create(:meeting)
+      @member = FactoryGirl.create(:member)
+      @member_meeting = FactoryGirl.build(:member_meeting, member: @member, meeting: @meeting)
+    end
+
+    it "can't create an invitation after meeting date has passed" do
+      @meeting.date = Date.today - 1.day
+      @meeting.save
+      @member_meeting.relationship = MemberMeeting::INVITEE
+      expect(@member_meeting.save).to be false
+    end
+
+    it "can't destroy an invitation after a meeting date has passed" do
+      # @member_meeting.relationship = MemberMeeting::INVITEE
+      # @member_meeting.save
+      # @meeting.date = Date.today - 1.day
+      # @meeting.save
+      # expect(@member_meeting.destroy).to be false
+    end
+  end
 end

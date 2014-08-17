@@ -15,9 +15,16 @@ class MemberMeeting < ActiveRecord::Base
   validates :relationship,
     inclusion: { in: RELATIONSHIPS }
 
+  before_create :check_meeting_date, if: -> { self.relationship == INVITEE }
   after_create :notify_member
+  before_destroy :check_meeting_date, if: -> { self.relationship == INVITEE }
 
   private
+
+  # Cannot create an invitation for a meeting that has already happened
+  def check_meeting_date
+    return false if self.meeting.date < Date.today
+  end
 
   def notify_member
     MeetingMailer.invite(self.member, self.meeting, self.invitor).deliver
