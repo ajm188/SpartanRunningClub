@@ -13,5 +13,5 @@
 	-if show_edit
 		=link_to 'Edit', edit_member_path(@member), :class => 'btn btn-default'
 	-if password_reset
-		=link_to 'Change password', change_user_password_path(@member.id), :class => 'btn btn-default'
+		=link_to 'Change password', member_password_path(@member.id), :class => 'btn btn-default'
 	=link_to 'All Members', members_path, :class => 'btn btn-default'

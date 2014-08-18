@@ -1,6 +1,6 @@
 %h2.page-header Change your password
 
-=form_for @password, :url => member_password_path(@member), :html => { :class => 'form-horizontal', :role => 'form', :method => :put } do |f|
+=form_for :password_reset, :url => member_password_path(@member), :html => { :class => 'form-horizontal', :role => 'form', :method => :put } do |f|
 	.input-group{ :style => 'width:290px;' }
 		=f.label :old_pass, 'Old Password', :class => 'control-label'
 		=f.password_field :old_pass, :class => 'form-control'

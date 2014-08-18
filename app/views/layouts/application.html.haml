@@ -15,6 +15,7 @@
 		.container
 			%p#notice=flash[:notice]
 			%p#error=flash[:error]
+			-flash.discard
 			=yield
 	=javascript_include_tag 'bootstrap.min.js', 'data-turbolinks-track' => true
 	:javascript

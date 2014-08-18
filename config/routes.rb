@@ -9,7 +9,6 @@ SRC::Application.routes.draw do
   # Password resetting routes
   get 'members/:id/password' => 'passwords#change', :as => :member_password
   put 'members/:id/password' => 'passwords#user_edit'
-  get 'members/:id/password/change' => 'passwords#change', :as => :change_user_password
 
   # Admin routes
   get 'admin' => 'admin#panel', as: :admin_panel

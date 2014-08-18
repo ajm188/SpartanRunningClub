@@ -3,41 +3,30 @@ class PasswordsController < Clearance::PasswordsController
   before_action :set_member, only: [:change, :user_edit]
 
   def change
-    if current_user.id == @member.id
-      @password = Password.new
-    else
-      redirect_to root_path
-    end
   end
 
   def user_edit
-    if current_user.id == @member.id
-      old_pass = params[:password][:old_pass]
-      new_pass = params[:password][:new_pass]
-      confirm_pass = params[:password][:confirm_pass]
-      errors = []
+    old_pass = params[:password_reset][:old_pass]
+    new_pass = params[:password_reset][:new_pass]
+    confirm_pass = params[:password_reset][:confirm_pass]
 
-      unless BCrypt::Password.new(@member.encrypted_password) == old_pass
-        errors << "Old password does not match your password"
-      end
+    unless BCrypt::Password.new(@member.encrypted_password) == old_pass
+      flash[:error] = 'Old password does not match your old password.'
+      render action: 'change' and return
+    end
 
-      unless new_pass == confirm_pass
-        errors << "New passwords do not match"
-      end
+    unless new_pass == confirm_pass
+      flash[:error] = 'New passwords do not match.'
+      render action: 'change' and return
+    end
 
-      if errors.empty?
-        @member.password = new_pass
-        unless @member.save
-          render :action => 'change'
-        else
-          MemberMailer.change_password_email(@member).deliver
-          redirect_to root_path
-        end
-      else
-        render action: 'change', locals: { errors: errors }
-      end
-    else
+    @member.password = new_pass
+    if @member.save
+      flash[:notice] = 'Password successfully changed.'
       redirect_to root_path
+    else
+      flash[:error] = 'An error occurred while changing your password.'
+      render action: 'change'
     end
   end
 
