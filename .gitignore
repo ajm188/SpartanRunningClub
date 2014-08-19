@@ -28,3 +28,6 @@ Capfile
 
 # Ignore images uploaded in dev
 public/system/*
+
+# Ignore coverage
+/coverage
