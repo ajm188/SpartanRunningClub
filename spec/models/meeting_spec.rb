@@ -16,7 +16,7 @@ RSpec.describe Meeting, :type => :model do
 
     context 'with no upcoming meetings' do
       it 'should not call the mailer' do
-        expect(MeetingMailer).to_not receive(:remind_invites)
+        expect(MeetingMailer).to_not receive(:remind_invitees)
         Meeting.email_reminder
       end
     end
@@ -27,7 +27,7 @@ RSpec.describe Meeting, :type => :model do
       end
 
       it 'should not call the mailer' do
-        expect(MeetingMailer).to_not receive(:remind_invites)
+        expect(MeetingMailer).to_not receive(:remind_invitees)
         Meeting.email_reminder
       end
     end
