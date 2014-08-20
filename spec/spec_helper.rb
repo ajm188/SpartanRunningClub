@@ -1,6 +1,9 @@
 require 'simplecov'
 SimpleCov.start do
-  add_filter '/config'
+  add_filter do |src|
+    src.filename.start_with? "#{SimpleCov.root}/config" unless
+      src.filename.end_with? 'routes.rb'
+  end
   add_filter '/spec'
 end
 require 'paperclip/matchers'
