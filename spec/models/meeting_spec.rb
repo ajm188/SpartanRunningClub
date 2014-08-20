@@ -9,6 +9,43 @@ RSpec.describe Meeting, :type => :model do
   it { should have_many(:invitees).through(:member_meetings) }
   it { should have_many(:attendees).through(:member_meetings) }
 
+  describe '::email_reminder' do
+    before(:all) do
+      @invitor = FactoryGirl.create(:member)
+    end
+
+    context 'with no upcoming meetings' do
+      it 'should not call the mailer' do
+        expect(MeetingMailer).to_not receive(:remind_invites)
+        Meeting.email_reminder
+      end
+    end
+
+    context 'with a meeting with no invitees' do
+      before(:each) do
+        FactoryGirl.create(:meeting, date: Date.today + 1.day)
+      end
+
+      it 'should not call the mailer' do
+        expect(MeetingMailer).to_not receive(:remind_invites)
+        Meeting.email_reminder
+      end
+    end
+
+    context 'with an upcoming meeting with invitees' do
+      before(:each) do
+        meeting = FactoryGirl.create(:meeting, date: Date.today + 1.day)
+        member = FactoryGirl.create(:member)
+        create_invite(member, meeting, @invitor)
+      end
+
+      it 'should call the mailer' do
+        expect(MeetingMailer).to receive(:remind_invitees).and_return(double("Mailer", deliver: true))
+        Meeting.email_reminder
+      end
+    end
+  end
+
   describe '#date_string' do
     before(:all) do
       @meeting = FactoryGirl.build(:meeting)
@@ -16,11 +53,11 @@ RSpec.describe Meeting, :type => :model do
 
     context 'when date is set' do
       before(:all) do
-        @meeting.date = Date.strptime('12/25/2014', '%m/%d/%Y')
+        @meeting.date = Date.strptime('12/25/2013', '%m/%d/%Y')
       end
 
       it 'should return string representing the date' do
-        expect(@meeting.date_string).to eq '12/25/2014'
+        expect(@meeting.date_string).to eq '12/25/2013'
       end
     end
 
