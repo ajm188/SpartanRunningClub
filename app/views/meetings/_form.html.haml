@@ -1,27 +1,64 @@
 =form_for @meeting do |f|
-	-if @meeting.errors.any?
-		#error_explanation
-			%h2="#{pluralize(@meeting.errors.count, "error")} prohibited this meeting from being saved:"
-			%ul
-				-@meeting.errors.full_messages.each do |msg|
-					%li=msg
-	.form-group
-		=f.label :title, 'Title', class: 'control-label'
-		=f.text_field :title, class: 'form-control'
-	.form-group
-		=f.label :date, 'Date', class: 'control-label'
-		=f.text_field :date, class: 'form-control', value: @meeting.date_string
-	.form-group
-		=f.label :time, 'Time', class: 'control-label'
-		.input-group.bootstrap-timepicker.input-append
-			=f.text_field :time, class: 'form-control'
-			.input-group-addon
-				-glyphicon_tag 'time', class: 'add-on'
-	.form-group
-		=f.label :minutes, 'Minutes', class: 'control-label'
-		=f.text_area :minutes, class: 'form-control', cols: 70, rows: 10
-	.actions
-		=f.submit 'Save', class: 'btn btn-primary'
+	.col-md-6
+		-if @meeting.errors.any?
+			#error_explanation
+				%h2="#{pluralize(@meeting.errors.count, "error")} prohibited this meeting from being saved:"
+				%ul
+					-@meeting.errors.full_messages.each do |msg|
+						%li=msg
+		.form-group
+			=f.label :title, 'Title', class: 'control-label'
+			=f.text_field :title, class: 'form-control'
+		.form-group
+			=f.label :date, 'Date', class: 'control-label'
+			=f.text_field :date, class: 'form-control', value: @meeting.date_string
+		.form-group
+			=f.label :time, 'Time', class: 'control-label'
+			.input-group.bootstrap-timepicker.input-append
+				=f.text_field :time, class: 'form-control'
+				.input-group-addon
+					-glyphicon_tag 'time', class: 'add-on'
+		.form-group
+			=f.label :minutes, 'Minutes', class: 'control-label'
+			=f.text_area :minutes, class: 'form-control', cols: 70, rows: 10
+		.actions
+			=f.submit 'Save', class: 'btn btn-primary'
+	.col-md-6	
+		-table_tag id: 'invitees' do
+			%thead
+				%tr
+					%th
+						Invitees
+						=link_to new_member_meeting_path(relationship: MemberMeeting::INVITEE), id: :new_invitee_link, remote: true, class: 'btn btn-xs btn-success' do
+							-glyphicon_tag 'plus'
+			-@meeting.invitees.each do |invitee|
+				%tr{ id: "invitee_#{invitee.id}", member_id: invitee.id }
+					%td=invitee.full_name
+					%td
+						=link_to member_meeting_path(member_id: invitee.id, relationship: MemberMeeting::INVITEE), method: :delete, remote: true, class: 'btn btn-xs btn-danger' do
+							-glyphicon_tag 'remove'
+		#invitee_form
+		-table_tag id: 'attendees' do
+			%thead
+				%tr
+					%th
+						Attendees
+						=link_to new_member_meeting_path(relationship: MemberMeeting::ATTENDEE), id: :new_attendee_link, remote: true, class: 'btn btn-xs btn-success' do
+							-glyphicon_tag 'plus'
+			-@meeting.attendees.each do |attendee|
+				%tr{ id: "attendee_#{attendee.id}", member_id: attendee.id }
+					%td=attendee.full_name
+					%td
+						=link_to member_meeting_path(member_id: attendee.id, relationship: MemberMeeting::ATTENDEE), method: :delete, remote: true, class: 'btn btn-xs btn-danger' do
+							-glyphicon_tag 'remove'
+		#attendee_form
 :javascript
 	$('#meeting_date').datepicker();
-	$('#meeting_time').timepicker('setTime', '#{@meeting.time_string}')
+	$('#meeting_time').timepicker('setTime', '#{@meeting.time_string}');
+
+	// Can't use the generalized form method for this page
+	show_form_on_click('#new_invitee_link', '#invitee_form');
+	cancel_form('#cancel_invitee', '#new_invitee_link', '#invitee_form');
+
+	show_form_on_click('#new_attendee_link', '#attendee_form');
+	cancel_form('#cancel_attendee', '#new_attendee_link', '#attendee_form');

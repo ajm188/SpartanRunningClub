@@ -1,0 +1,10 @@
+.form-group.form-inline
+	=text_field_tag :name, nil, placeholder: 'Name', class: 'form-control'
+	=link_to 'Add', member_meetings_path, method: :post, remote: true, id: "submit_#{@relationship.downcase}", class: 'btn btn-primary'
+	=link_to 'Cancel', '#', remote: true, id: "cancel_#{@relationship.downcase}", class: 'btn btn-default'
+:javascript
+	$('#submit_#{@relationship.downcase}').on('ajax:beforeSend', function(event, xhr, settings) {
+		settings.url += '?member_meeting[relationship]=#{@relationship}'
+		$('#new_#{@relationship.downcase}_link').toggle();
+		$('##{@relationship.downcase}_form').html('');
+	});

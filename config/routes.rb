@@ -41,7 +41,7 @@ SRC::Application.routes.draw do
     end
   end
 
-  resources :member_meetings, only: [:new]
+  resources :member_meetings, only: [:new, :create, :destroy]
 
   resources :practices, except: [:show, :edit, :update] do
     collection do
