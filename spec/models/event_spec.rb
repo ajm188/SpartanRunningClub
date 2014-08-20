@@ -11,6 +11,26 @@ RSpec.describe Event, type: :model do
     it { should have_many(:members) }
   end
 
+  describe '::notify_followers' do
+    context 'with no upcoming events' do
+      it 'should not call the mailer' do
+        expect(EventMailer).to_not receive(:upcoming)
+        Event.notify_followers
+      end
+    end
+
+    context 'with upcoming events' do
+      before(:all) do
+        FactoryGirl.create(:event, date: Date.today + 2.days)
+      end
+
+      it 'should call the mailer' do
+        expect(EventMailer).to receive(:upcoming).and_return(double("Mailer", deliver: true))
+        Event.notify_followers
+      end
+    end
+  end
+
   describe '#date_string' do
     before(:all) do
       @event = FactoryGirl.build(:event)
@@ -18,11 +38,11 @@ RSpec.describe Event, type: :model do
 
     context 'when date is set' do
       before(:all) do
-        @event.date = Date.strptime('12/25/2014', '%m/%d/%Y')
+        @event.date = Date.strptime('12/25/2013', '%m/%d/%Y')
       end
 
       it 'should return string representing the date' do
-        expect(@event.date_string).to eq '12/25/2014'
+        expect(@event.date_string).to eq '12/25/2013'
       end
     end
 
