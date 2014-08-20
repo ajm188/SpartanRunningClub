@@ -10,7 +10,7 @@ RSpec.describe MemberMeeting, :type => :model do
   it { should belong_to :member }
   it { should belong_to :meeting }
 
-  describe 'custom validations' do
+  describe 'callbacks' do
     before(:each) do
       @meeting = FactoryGirl.create(:meeting)
       @member = FactoryGirl.create(:member)
@@ -25,11 +25,19 @@ RSpec.describe MemberMeeting, :type => :model do
     end
 
     it "can't destroy an invitation after a meeting date has passed" do
-      # @member_meeting.relationship = MemberMeeting::INVITEE
-      # @member_meeting.save
-      # @meeting.date = Date.today - 1.day
-      # @meeting.save
-      # expect(@member_meeting.destroy).to be false
+      @member_meeting.relationship = MemberMeeting::INVITEE
+      @member_meeting.invitor = FactoryGirl.create(:member)
+      @member_meeting.save
+      @meeting.date = Date.today - 1.day
+      @meeting.save
+      expect(@member_meeting.destroy).to be false
+    end
+
+    it 'should notify the invitee when an invite is created' do
+      @member_meeting.relationship = MemberMeeting::INVITEE
+      @member_meeting.invitor = @member
+      expect(MeetingMailer).to receive(:invite).and_return(double("Mailer", deliver: true))
+      @member_meeting.save
     end
   end
 end
