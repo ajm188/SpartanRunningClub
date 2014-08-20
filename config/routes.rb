@@ -41,6 +41,8 @@ SRC::Application.routes.draw do
     end
   end
 
+  resources :member_meetings, only: [:new]
+
   resources :practices, except: [:show, :edit, :update] do
     collection do
       get :edit, action: :edit_all
