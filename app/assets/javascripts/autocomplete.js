@@ -1,4 +1,4 @@
-function autocomplete_with_hidden_id (autocomplete_id, hidden_id, source) {
+function autocomplete_with_hidden_id(autocomplete_id, hidden_id, source) {
     $(autocomplete_id).autocomplete({
         source: source,
         select: function (event, ui) {
@@ -9,13 +9,13 @@ function autocomplete_with_hidden_id (autocomplete_id, hidden_id, source) {
     });
 }
 
-function autocomplete_keydown (autocomplete_id, multiples) {
+function autocomplete_keydown(autocomplete_id, multiples) {
     $(autocomplete_id).bind('keydown.autocomplete', function(event) {
         var keyCode = $.ui.keyCode;
         switch (event.keyCode) {
             case keyCode.PAGE_DOWN:
             case keyCode.DOWN:
-                set_value($(this));
+                set_value($(this), keyCode);
                 break;
             case keyCode.PAGE_UP:
             case keyCode.UP:
@@ -29,14 +29,15 @@ function autocomplete_keydown (autocomplete_id, multiples) {
                     menu_visible = menu.first().css('display') != 'none';
                 }
                 if (menu_visible) {
-                    set_value($(this));
+                    set_value($(this), keyCode);
                 }
                 break;
         }
     });
 }
 
-function set_value (input) {
-    var value = $('.ui-state-focus').first().text();
-    input.val(value);
+function set_value (input, keyCode) {
+    var keyEvent = $.Event('keydown');
+    keyEvent.keyCode = keyCode.ENTER;
+    input.trigger(keyEvent);
 }

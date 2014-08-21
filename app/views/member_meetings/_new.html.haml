@@ -6,8 +6,10 @@
 :javascript
 	autocomplete_with_hidden_id('##{@relationship}_name', '##{@relationship}_id', '#{autocomplete_members_path}');
 	autocomplete_keydown('##{@relationship}_name', true);
-	/*$('#submit_#{@relationship.downcase}').on('ajax:beforeSend', function(event, xhr, settings) {
-		settings.url += '?member_meeting[relationship]=#{@relationship}'
+	$('#submit_#{@relationship.downcase}').on('ajax:beforeSend', function(event, xhr, settings) {
+		var member_id = $('##{@relationship}_id').val();
+		settings.url += '?relationship=#{@relationship}'
+		settings.url += '&member_id=' + member_id;
 		$('#new_#{@relationship.downcase}_link').toggle();
 		$('##{@relationship.downcase}_form').html('');
-	});*/
+	});

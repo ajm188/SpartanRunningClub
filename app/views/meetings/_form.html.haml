@@ -31,12 +31,9 @@
 						Invitees
 						=link_to new_member_meeting_path(relationship: MemberMeeting::INVITEE), id: :new_invitee_link, remote: true, class: 'btn btn-xs btn-success' do
 							-glyphicon_tag 'plus'
-			-@meeting.invitees.each do |invitee|
-				%tr{ id: "invitee_#{invitee.id}", member_id: invitee.id }
-					%td=invitee.full_name
-					%td
-						=link_to member_meeting_path(member_id: invitee.id, relationship: MemberMeeting::INVITEE), method: :delete, remote: true, class: 'btn btn-xs btn-danger' do
-							-glyphicon_tag 'remove'
+			%tbody
+				-@meeting.invitees.each do |invitee|
+					=render partial: 'meetings/member', locals: {member: invitee, relationship: MemberMeeting::INVITEE}
 		#invitee_form
 		-table_tag id: 'attendees' do
 			%thead
@@ -45,12 +42,9 @@
 						Attendees
 						=link_to new_member_meeting_path(relationship: MemberMeeting::ATTENDEE), id: :new_attendee_link, remote: true, class: 'btn btn-xs btn-success' do
 							-glyphicon_tag 'plus'
-			-@meeting.attendees.each do |attendee|
-				%tr{ id: "attendee_#{attendee.id}", member_id: attendee.id }
-					%td=attendee.full_name
-					%td
-						=link_to member_meeting_path(member_id: attendee.id, relationship: MemberMeeting::ATTENDEE), method: :delete, remote: true, class: 'btn btn-xs btn-danger' do
-							-glyphicon_tag 'remove'
+			%tbody
+				-@meeting.attendees.each do |attendee|
+					=render partial: 'meetings/member', locals: {member: attendee, relationship: MemberMeeting::ATTENDEE}
 		#attendee_form
 :javascript
 	$('#meeting_date').datepicker();

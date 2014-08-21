@@ -11,6 +11,7 @@ class MemberMeetingsController < ApplicationController
   end
 
   def create
-    # TODO
+    @member = Member.find(params[:member_id])
+    @relationship = params[:relationship]
   end
 end
