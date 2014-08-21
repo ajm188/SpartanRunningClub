@@ -1,4 +1,4 @@
-=form_for @meeting do |f|
+=form_for @meeting, id: :meeting_form, remote: true do |f|
 	.col-md-6
 		-if @meeting.errors.any?
 			#error_explanation
@@ -56,3 +56,18 @@
 
 	show_form_on_click('#new_attendee_link', '#attendee_form');
 	cancel_form('#cancel_attendee', '#new_attendee_link', '#attendee_form');
+
+	$('#meeting_form').on('ajax:beforeSend', function(event, xhr, settings) {
+		var invitees = [];
+		$('#invitees tr[member_id]').each(function() {
+			invitees.push($(this).attr('member_id'));
+		});
+
+		var attendees = [];
+		$('#attendees tr[member_id]').each(function() {
+			attendees.push($(this).attr('member_id'));
+		});
+
+		settings.url += '?invitees=' + invitees;
+		settings.url += '&attendees=' + attendees;
+	});
