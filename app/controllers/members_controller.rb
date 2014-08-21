@@ -5,6 +5,22 @@ class MembersController < ApplicationController
 
 	before_action :set_member, only: [:show, :edit, :update, :destroy]
 
+  def autocomplete
+    name_search = "concat(first_name, ' ', last_name) LIKE"
+    name_search << " '%#{params[:term].gsub(/ /, '%')}%'"
+    case_id_search = "case_id LIKE '%#{params[:term]}%'"
+    # members = Member.where(name_search << ' OR ' << case_id_search)
+    #                 .limit(5)
+    #                 .pluck(:id, :first_name, :last_name)
+    # render json: members.map do |m|
+    #   {label: m[1], value: m[0]}
+    # end
+    render json: Member.where(name_search + ' OR ' + case_id_search)
+                        .limit(5)
+                        .pluck(:id, :first_name, :last_name, :case_id)
+                        .map { |m| {label: "#{m[1]} #{m[2]} (#{m[3]})", value: m[0]} }
+  end
+
 	def index
 		@members = Member.alphabetical
 	end

@@ -29,6 +29,7 @@ SRC::Application.routes.draw do
 
   resources :members do
     collection do
+      get :autocomplete
       get :competitive
       get :edit, action: :edit_all
       get :non_competitive

@@ -18,6 +18,10 @@ RSpec.describe MembersController, type: :routing do
       expect(get: '/members/1/edit').to route_to('members#edit', id: '1')
     end
 
+    it 'routes to #autocomplete' do
+      expect(get: '/members/autocomplete?term=qwerty').to route_to('members#autocomplete', term: 'qwerty')
+    end
+
     it 'routes to #competitive' do
       expect(get: '/members/competitive').to route_to 'members#competitive'
     end
