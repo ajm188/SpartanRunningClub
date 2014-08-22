@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813022858) do
+ActiveRecord::Schema.define(version: 20140822214315) do
+
+  create_table "articles", force: true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "author_id"
+    t.integer  "editor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "carousel_items", force: true do |t|
     t.string   "primary_caption"
@@ -42,7 +51,7 @@ ActiveRecord::Schema.define(version: 20140813022858) do
     t.datetime "updated_at"
   end
 
-  add_index "followings", ["followable_id", "followable_type"], name: "index_followings_on_followable_id_and_followable_type"
+  add_index "followings", ["followable_id", "followable_type"], name: "index_followings_on_followable_id_and_followable_type", using: :btree
 
   create_table "meetings", force: true do |t|
     t.string   "title"
@@ -69,8 +78,8 @@ ActiveRecord::Schema.define(version: 20140813022858) do
     t.string   "position"
   end
 
-  add_index "members", ["email"], name: "index_members_on_email"
-  add_index "members", ["remember_token"], name: "index_members_on_remember_token"
+  add_index "members", ["email"], name: "index_members_on_email", using: :btree
+  add_index "members", ["remember_token"], name: "index_members_on_remember_token", using: :btree
 
   create_table "members_meetings", force: true do |t|
     t.integer  "member_id"
@@ -80,7 +89,7 @@ ActiveRecord::Schema.define(version: 20140813022858) do
     t.datetime "updated_at"
   end
 
-  add_index "members_meetings", ["member_id", "meeting_id", "relationship"], name: "members_meetings_index", unique: true
+  add_index "members_meetings", ["member_id", "meeting_id", "relationship"], name: "members_meetings_index", unique: true, using: :btree
 
   create_table "news", force: true do |t|
     t.string   "title",      null: false
@@ -99,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140813022858) do
 
   create_table "routes", force: true do |t|
     t.string   "title"
-    t.decimal  "distance"
+    t.decimal  "distance",               precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "map_image_file_name"
