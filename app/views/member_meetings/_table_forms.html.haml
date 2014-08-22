@@ -1,0 +1,30 @@
+.col-md-6	
+	-table_tag id: 'invitees' do
+		%thead
+			%tr
+				%th
+					Invitees
+					=link_to new_member_meeting_path(relationship: MemberMeeting::INVITEE, meeting_id: @meeting.id), id: :new_invitee_link, remote: true, class: 'btn btn-xs btn-success' do
+						-glyphicon_tag 'plus'
+		%tbody
+			-@meeting.invitees.each do |invitee|
+				=render partial: 'meetings/member', locals: {meeting: @meeting, member: invitee, relationship: MemberMeeting::INVITEE}
+	#invitee_form
+	-table_tag id: 'attendees' do
+		%thead
+			%tr
+				%th
+					Attendees
+					=link_to new_member_meeting_path(relationship: MemberMeeting::ATTENDEE, meeting_id: @meeting.id), id: :new_attendee_link, remote: true, class: 'btn btn-xs btn-success' do
+						-glyphicon_tag 'plus'
+		%tbody
+			-@meeting.attendees.each do |attendee|
+				=render partial: 'meetings/member', locals: {meeting: @meeting, member: attendee, relationship: MemberMeeting::ATTENDEE}
+	#attendee_form
+:javascript
+	// Can't use the generalized form method for this page
+	show_form_on_click('#new_invitee_link', '#invitee_form');
+	cancel_form('#cancel_invitee', '#new_invitee_link', '#invitee_form');
+
+	show_form_on_click('#new_attendee_link', '#attendee_form');
+	cancel_form('#cancel_attendee', '#new_attendee_link', '#attendee_form');

@@ -16,7 +16,7 @@ class MemberMeeting < ActiveRecord::Base
     inclusion: { in: RELATIONSHIPS }
 
   before_create :check_meeting_date, if: -> { self.relationship == INVITEE }
-  after_create :notify_member
+  after_create :notify_member, if: -> { self.relationship == INVITEE }
   before_destroy :check_meeting_date, if: -> { self.relationship == INVITEE }
 
   private

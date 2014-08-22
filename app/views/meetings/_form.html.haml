@@ -1,4 +1,4 @@
-=form_for @meeting, id: :meeting_form, remote: true do |f|
+=form_for @meeting do |f|
 	.col-md-6
 		-if @meeting.errors.any?
 			#error_explanation
@@ -23,51 +23,8 @@
 			=f.text_area :minutes, class: 'form-control', cols: 70, rows: 10
 		.actions
 			=f.submit 'Save', class: 'btn btn-primary'
-	.col-md-6	
-		-table_tag id: 'invitees' do
-			%thead
-				%tr
-					%th
-						Invitees
-						=link_to new_member_meeting_path(relationship: MemberMeeting::INVITEE, meeting_id: @meeting.id), id: :new_invitee_link, remote: true, class: 'btn btn-xs btn-success' do
-							-glyphicon_tag 'plus'
-			%tbody
-				-@meeting.invitees.each do |invitee|
-					=render partial: 'meetings/member', locals: {meeting: @meeting, member: invitee, relationship: MemberMeeting::INVITEE}
-		#invitee_form
-		-table_tag id: 'attendees' do
-			%thead
-				%tr
-					%th
-						Attendees
-						=link_to new_member_meeting_path(relationship: MemberMeeting::ATTENDEE, meeting_id: @meeting.id), id: :new_attendee_link, remote: true, class: 'btn btn-xs btn-success' do
-							-glyphicon_tag 'plus'
-			%tbody
-				-@meeting.attendees.each do |attendee|
-					=render partial: 'meetings/member', locals: {meeting: @meeting, member: attendee, relationship: MemberMeeting::ATTENDEE}
-		#attendee_form
+	-if params[:action] == 'edit'
+		=render partial: 'member_meetings/table_forms'
 :javascript
 	$('#meeting_date').datepicker();
 	$('#meeting_time').timepicker('setTime', '#{@meeting.time_string}');
-
-	// Can't use the generalized form method for this page
-	show_form_on_click('#new_invitee_link', '#invitee_form');
-	cancel_form('#cancel_invitee', '#new_invitee_link', '#invitee_form');
-
-	show_form_on_click('#new_attendee_link', '#attendee_form');
-	cancel_form('#cancel_attendee', '#new_attendee_link', '#attendee_form');
-
-	$('#meeting_form').on('ajax:beforeSend', function(event, xhr, settings) {
-		var invitees = [];
-		$('#invitees tr[member_id]').each(function() {
-			invitees.push($(this).attr('member_id'));
-		});
-
-		var attendees = [];
-		$('#attendees tr[member_id]').each(function() {
-			attendees.push($(this).attr('member_id'));
-		});
-
-		settings.url += '?invitees=' + invitees;
-		settings.url += '&attendees=' + attendees;
-	});
