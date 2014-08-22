@@ -8,8 +8,9 @@
 	autocomplete_keydown('##{@relationship}_name', true);
 	$('#submit_#{@relationship.downcase}').on('ajax:beforeSend', function(event, xhr, settings) {
 		var member_id = $('##{@relationship}_id').val();
-		settings.url += '?relationship=#{@relationship}'
-		settings.url += '&member_id=' + member_id;
+		settings.url += '?member_meeting[relationship]=#{@relationship}'
+		settings.url += '&member_meeting[member_id]=' + member_id;
+		settings.url += '&member_meeting[meeting_id]=' + #{@meeting_id};
 		$('#new_#{@relationship.downcase}_link').toggle();
 		$('##{@relationship.downcase}_form').html('');
 	});

@@ -1,3 +1,3 @@
-var partial = '<%=j(render partial: "meetings/member", locals: {relationship: @relationship, member: @member})%>'
-var table_id = '#<%=@relationship.downcase.pluralize%>'
+var partial = '<%=j(render partial: "meetings/member", locals: {relationship: @member_meeting.relationship, member: @member_meeting.member, meeting: @member_meeting.meeting})%>'
+var table_id = '#<%=@member_meeting.relationship.downcase.pluralize%>'
 $(table_id + ' tr:last').after(partial);

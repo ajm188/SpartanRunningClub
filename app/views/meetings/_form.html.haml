@@ -29,22 +29,22 @@
 				%tr
 					%th
 						Invitees
-						=link_to new_member_meeting_path(relationship: MemberMeeting::INVITEE), id: :new_invitee_link, remote: true, class: 'btn btn-xs btn-success' do
+						=link_to new_member_meeting_path(relationship: MemberMeeting::INVITEE, meeting_id: @meeting.id), id: :new_invitee_link, remote: true, class: 'btn btn-xs btn-success' do
 							-glyphicon_tag 'plus'
 			%tbody
 				-@meeting.invitees.each do |invitee|
-					=render partial: 'meetings/member', locals: {member: invitee, relationship: MemberMeeting::INVITEE}
+					=render partial: 'meetings/member', locals: {meeting: @meeting, member: invitee, relationship: MemberMeeting::INVITEE}
 		#invitee_form
 		-table_tag id: 'attendees' do
 			%thead
 				%tr
 					%th
 						Attendees
-						=link_to new_member_meeting_path(relationship: MemberMeeting::ATTENDEE), id: :new_attendee_link, remote: true, class: 'btn btn-xs btn-success' do
+						=link_to new_member_meeting_path(relationship: MemberMeeting::ATTENDEE, meeting_id: @meeting.id), id: :new_attendee_link, remote: true, class: 'btn btn-xs btn-success' do
 							-glyphicon_tag 'plus'
 			%tbody
 				-@meeting.attendees.each do |attendee|
-					=render partial: 'meetings/member', locals: {member: attendee, relationship: MemberMeeting::ATTENDEE}
+					=render partial: 'meetings/member', locals: {meeting: @meeting, member: attendee, relationship: MemberMeeting::ATTENDEE}
 		#attendee_form
 :javascript
 	$('#meeting_date').datepicker();
