@@ -1,0 +1,17 @@
+-table_tag do
+	%thead
+		%tr
+			%th Invitees
+	%tbody
+		-@meeting.invitees.each do |invitee|
+			%tr
+				%td=invitee.full_name
+
+-table_tag do
+	%thead
+		%tr
+			%th Attendees
+	%tbody
+		-@meeting.attendees.each do |attendee|
+			%tr
+				%td=attendee.full_name
