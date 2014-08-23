@@ -10,7 +10,7 @@ class FollowingsController < ApplicationController
       else
         flash[:error] = 
           "An error occurred while trying to create a following for this "
-        flash[:error] << "#{@following.follwable_type}"
+        flash[:error] << "#{@following.followable_type}"
       end
       format.js do
         @updates = {
@@ -27,9 +27,6 @@ class FollowingsController < ApplicationController
     if @following.destroy
       flash[:notice] =
         "You are no longer following this #{@following.followable_type}"
-    else
-      flash[:error] =
-        "An error occurred. Please refresh this page and try again"
     end
     respond_to do |format|
       format.js do
