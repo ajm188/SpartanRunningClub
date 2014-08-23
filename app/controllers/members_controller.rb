@@ -3,7 +3,7 @@ class MembersController < ApplicationController
   before_filter :authorize_as_officer, only: [:new, :create, :edit_members]
   before_filter :authorize_as_officer_or_self, only: [:edit, :update, :destroy]
 
-	before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   def autocomplete
     name_search = "concat(first_name, ' ', last_name) LIKE"
@@ -16,9 +16,9 @@ class MembersController < ApplicationController
                         .map { |m| {label: "#{m[1]} #{m[2]} (#{m[3]})", value: m[0]} }
   end
 
-	def index
-		@members = Member.alphabetical
-	end
+  def index
+    @members = Member.alphabetical
+  end
 
   def competitive
     @competitive_members = Member.competitive.alphabetical
@@ -32,27 +32,25 @@ class MembersController < ApplicationController
     @officers = Member.officers.alphabetical
   end
 
-	def show
-	end
+  def show
+  end
 
-	def new
+  def new
     @member = Member.new
- 	end
+  end
 
- 	def create
- 		@member = Member.new member_params
+  def create
+    @member = Member.new member_params
 
- 		respond_to do |format|
- 			if @member.save
- 				MemberMailer.welcome_email(@member).deliver
- 				format.html { redirect_to @member }
- 				format.json { render action: 'show', status: :created, location: @member }
- 			else
- 				format.html { render action: 'new' }
- 				format.json { render json: @member.errors, status: :unprocessable_entity }
- 			end
- 		end
- 	end
+    respond_to do |format|
+      if @member.save
+        MemberMailer.welcome_email(@member).deliver
+        format.html { redirect_to @member }
+      else
+        format.html { render action: 'new' }
+      end
+    end
+  end
 
   def edit
   end
@@ -76,13 +74,15 @@ class MembersController < ApplicationController
     @members = Member.all
   end
 
-	private
+  private
 
-	def set_member
-		@member = Member.find(params[:id]) if params[:id]
-	end
+  def set_member
+    @member = Member.find(params[:id]) if params[:id]
+  end
 
-	def member_params
-		params.require(:member).permit(:first_name, :last_name, :case_id, :year, :competitive, :officer, :position, :email, :password)
-	end
+  def member_params
+    params.require(:member)
+      .permit(:first_name, :last_name, :case_id, :year, :competitive, :officer,
+              :position, :email, :password)
+  end
 end

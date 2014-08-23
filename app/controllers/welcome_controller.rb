@@ -14,7 +14,7 @@ class WelcomeController < ApplicationController
   def about
   end
 
-  def logarun
+  def log_a_run
   end
 
   def spartan_link
