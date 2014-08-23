@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_author_id, only: [:create]
+  before_action :set_editor_id, only: [:create, :update]
 
   # GET /articles
   def index
@@ -46,13 +48,22 @@ class ArticlesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_article
+    @article = Article.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def article_params
-      params[:article]
-    end
+  def set_author_id
+    params[:article][:author_id] = current_user.id if params[:article]
+  end
+
+  def set_editor_id
+    params[:article][:editor_id] = current_user.id if params[:article]
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def article_params
+    params.require(:article).permit(:title, :body, :author_id, :editor_id)
+  end
 end
