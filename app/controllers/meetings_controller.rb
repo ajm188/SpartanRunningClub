@@ -38,12 +38,12 @@ class MeetingsController < ApplicationController
 
   # PATCH/PUT /meetings/1
   def update
+    if @meeting.update(meeting_params)
+      flash[:notice] = 'Meeting was successfully updated.'
+    else
+      flash[:error] = 'There were errors when updating this meeting.'
+    end
     respond_to do |format|
-      if @meeting.update(meeting_params)
-        flash[:notice] = 'Meeting was successfully updated.'
-      else
-        flash[:error] = 'There were errors when updating this meeting.'
-      end
       format.html { redirect_to edit_meeting_path(@meeting) }
     end
   end
