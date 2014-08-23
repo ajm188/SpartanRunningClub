@@ -22,7 +22,7 @@ class Member < ActiveRecord::Base
 	has_many :attended_meetings, ->{ where("relationship = ?",
 		MemberMeeting::ATTENDEE) }, through: :member_meetings, source: :meeting
 
-	validates :first_name, :last_name, :case_id, :year,
+	validates :first_name, :last_name, :case_id, :year, :password,
 		presence: true, allow_blank: false
 	validates :year,
 		inclusion: { in: YEARS }
