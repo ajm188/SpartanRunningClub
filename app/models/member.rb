@@ -22,7 +22,7 @@ class Member < ActiveRecord::Base
 	has_many :attended_meetings, ->{ where("relationship = ?",
 		MemberMeeting::ATTENDEE) }, through: :member_meetings, source: :meeting
 
-	validates :first_name, :last_name, :case_id, :year, :password,
+	validates :first_name, :last_name, :case_id, :year,
 		presence: true, allow_blank: false
 	validates :year,
 		inclusion: { in: YEARS }
@@ -36,6 +36,9 @@ class Member < ActiveRecord::Base
 		presence: true, allow_blank: false, if: -> { self.officer }
 	validates :position,
 		inclusion: { in: OFFICER_POSITIONS }, if: -> { self.officer }
+	# Password validation
+	validates :password,
+		presence: true, allow_blank: false, on: :create
 
 	before_validation :set_email, if: -> { self.email.blank? }
 

@@ -15,19 +15,20 @@ class PasswordsController < Clearance::PasswordsController
       render action: 'change' and return
     end
 
+    if new_pass.blank?
+      flash[:error] = 'New password cannot be blank.'
+      render action: 'change' and return
+    end
+
     unless new_pass == confirm_pass
       flash[:error] = 'New passwords do not match.'
       render action: 'change' and return
     end
 
     @member.password = new_pass
-    if @member.save
-      flash[:notice] = 'Password successfully changed.'
-      redirect_to root_path
-    else
-      flash[:error] = 'An error occurred while changing your password.'
-      render action: 'change'
-    end
+    @member.save
+    flash[:notice] = 'Password successfully changed.'
+    redirect_to root_path
   end
 
   private

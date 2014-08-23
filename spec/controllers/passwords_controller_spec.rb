@@ -53,22 +53,6 @@ RSpec.describe PasswordsController, type: :controller do
       end
     end
 
-    context 'with bad params' do
-      before(:each) do
-        sign_in_as officer
-        password_reset = {old_pass: 'password', new_pass: nil, confirm_pass: nil}
-        put :user_edit, id: member.id, password_reset: password_reset
-      end
-
-      it 'should render change template' do
-        expect(response).to render_template :change
-      end
-
-      it 'should flash an error' do
-        expect(flash[:error]).to eq 'An error occurred while changing your password.'
-      end
-    end
-
     context 'with incorrect old password' do
       before(:each) do
         sign_in_as officer
@@ -82,6 +66,22 @@ RSpec.describe PasswordsController, type: :controller do
 
       it 'should flash an error' do
         expect(flash[:error]).to eq 'Old password does not match your old password.'
+      end
+    end
+
+    context 'when new password is blank' do
+      before(:each) do
+        sign_in_as officer
+        password_reset = {old_pass: 'password', new_pass: nil, confirm_pass: nil}
+        put :user_edit, id: member.id, password_reset: password_reset
+      end
+
+      it 'should render change template' do
+        expect(response).to render_template :change
+      end
+
+      it 'should flash an error' do
+        expect(flash[:error]).to eq 'New password cannot be blank.'
       end
     end
 
