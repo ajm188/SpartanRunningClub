@@ -54,6 +54,22 @@ RSpec.describe Member, type: :model do
     end
   end
 
+  describe '::update_year' do
+    before(:all) do
+      @member = FactoryGirl.create(:member, year: Member::FRESHMAN)
+      @senior = FactoryGirl.create(:member, year: Member::SENIOR)
+      Member.update_year
+    end
+
+    it "should update the member's year" do
+      expect(@member.reload.year).to eq Member::SOPHOMORE
+    end
+
+    it 'should not update the senior' do
+      expect(@senior.reload.year).to eq Member::SENIOR
+    end
+  end
+
   describe '#full_name' do
     before(:all) do
       @member = FactoryGirl.build(:member)

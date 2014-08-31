@@ -22,3 +22,7 @@ every :day, at: '2:00 am' do
   runner 'Event.notify_followers'
   runner 'Meeting.email_reminder'
 end
+
+every :year, at: 'August 25th 2:30 am' do
+  runner 'Member.update_year'
+end

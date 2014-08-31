@@ -3,8 +3,17 @@ require 'securerandom'
 class Member < ActiveRecord::Base
 	include Clearance::User
 
-	YEARS = %w(Freshman Sophomore Junior Senior)
-	OFFICER_POSITIONS = %w(President Vice\ President Treasurer Secretary)
+	FRESHMAN = "Freshman"
+	SOPHOMORE = "Sophomore"
+	JUNIOR = "Junior"
+	SENIOR = "Senior"
+	YEARS = [FRESHMAN, SOPHOMORE, JUNIOR, SENIOR]
+
+	PRESIDENT = "President"
+	VICE_PRESIDENT = "Vice President"
+	TREASURER = "Treasurer"
+	SECRETARY = "Secretary"
+	OFFICER_POSITIONS = [PRESIDENT, VICE_PRESIDENT, TREASURER, SECRETARY]
 
 	scope :officers, -> { where(officer: true) }
 	scope :competitive, -> { where(competitive: true) }
@@ -42,7 +51,15 @@ class Member < ActiveRecord::Base
 
 	before_validation :set_email, if: -> { self.email.blank? }
 
-	# generates a random string of length 8 containing numbers, letters and some symbols
+	def self.update_year
+		Member.where('year != ?', SENIOR).each do |member|
+			member.update_attributes({
+				year: YEARS[YEARS.index(member.year) + 1]
+			})
+		end
+	end
+
+	# generates a random string of length 8
 	def self.random_password
 		SecureRandom::base64 6
 	end
