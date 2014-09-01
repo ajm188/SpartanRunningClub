@@ -170,8 +170,13 @@ RSpec.describe MembersController, type: :controller do
           get :edit, id: member.id
         end
 
-        it 'should render edit template'
-        it 'should set the member'
+        it 'should render edit template' do
+          expect(response).to render_template :edit
+        end
+
+        it 'should set the member' do
+          expect(assigns(:member)).to eq member
+        end
       end
     end
 
@@ -327,7 +332,9 @@ RSpec.describe MembersController, type: :controller do
           delete :destroy, id: @member.id
         end
 
-        it 'should destroy the member'
+        it 'should destroy the member' do
+          expect(Member.exists?(@member.id)).to be nil
+        end
       end
     end
 
