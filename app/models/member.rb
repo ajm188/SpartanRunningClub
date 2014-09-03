@@ -34,6 +34,8 @@ class Member < ActiveRecord::Base
 	has_attached_file :avatar,
 		styles: { thumb: '20x20#', reg: '120x120#' },
 		default_url: '/images/members/missing_:style.jpg'
+	validates_attachment_content_type :avatar,
+		content_type: /\Aimage/
 
 	validates :first_name, :last_name, :case_id, :year,
 		presence: true, allow_blank: false
