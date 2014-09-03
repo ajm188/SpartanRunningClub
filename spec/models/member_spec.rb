@@ -22,6 +22,10 @@ RSpec.describe Member, type: :model do
     it { should ensure_inclusion_of(:position).in_array(Member::OFFICER_POSITIONS)}
   end
 
+  describe 'paperclip validations' do
+    it { should have_attached_file :avatar }
+  end
+
   describe 'custom validations' do
     before(:each) do
       @member = FactoryGirl.build(:member)

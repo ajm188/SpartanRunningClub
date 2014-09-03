@@ -17,6 +17,7 @@
 				-if current_user
 					%li.dropdown
 						%a.dropdown-toggle{ href: '/', 'data-toggle' => 'dropdown' }
+							=image_tag current_user.avatar.url(:thumb)
 							=current_user.full_name
 							%b.caret
 						%ul.dropdown-menu{ role: 'menu' }

@@ -3,6 +3,7 @@
 %table.table.table-striped
 	%thead
 		%tr
+			%th
 			%th Name
 			-if current_user
 				%th Case ID
@@ -15,6 +16,7 @@
 	%tbody
 		-members.each do |member|
 			%tr
+				%td=image_tag member.avatar.url(:thumb)
 				-if current_user
 					%td=link_to member.full_name, member
 					%td=member.case_id
