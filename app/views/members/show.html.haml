@@ -1,13 +1,11 @@
--password_reset = current_user.id == @member.id
+-password_reset = 
 -show_edit = password_reset || current_user.officer?
 -header_tag do
 	%h1=@member.full_name
-	-if show_edit
-		=link_to edit_member_path(@member), class: 'btn btn-default' do
-			-glyphicon_tag 'pencil'
-	-if password_reset
-		=link_to password_member_path(@member), class: 'btn btn-default' do
-			-glyphicon_tag 'lock'
+	-if current_user.id == @member.id
+		%div{ style: 'display: inline-block' }
+			=link_to password_member_path(@member), class: 'btn btn-default', title: 'Change your password', 'data-toggle' => 'tooltip' do
+				-glyphicon_tag 'lock'
 
 .col-md-2
 	=image_tag @member.avatar.url(:reg)
