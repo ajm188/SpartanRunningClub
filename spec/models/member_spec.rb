@@ -24,6 +24,7 @@ RSpec.describe Member, type: :model do
 
   describe 'paperclip validations' do
     it { should have_attached_file :avatar }
+    it { should validate_attachment_content_type(:avatar).allowing('image/png', 'image/jpg') }
   end
 
   describe 'custom validations' do
