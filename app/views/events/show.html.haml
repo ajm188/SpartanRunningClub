@@ -4,8 +4,3 @@
 	#follow_unfollow=render partial: 'followings/follow_unfollow_button', locals: { followable: @event }
 
 %p=@event.description
-
-
-= link_to 'Edit', edit_event_path(@event)
-\|
-= link_to 'Back', events_path
