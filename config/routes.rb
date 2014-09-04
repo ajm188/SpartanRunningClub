@@ -5,6 +5,10 @@ SRC::Application.routes.draw do
   get 'contact' => 'welcome#contact', as: :contact
   get 'spartanlink' => 'welcome#spartan_link', as: :spartan_link
 
+  # Feedback
+  get 'feedback' => 'welcome#feedback', as: :feedback
+  post 'feedback' => 'welcome#submit_feedback', as: :submit_feedback
+
   # Admin routes
   get 'admin' => 'admin#panel', as: :admin_panel
 
