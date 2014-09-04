@@ -5,6 +5,7 @@
 	-table_tag do
 		%thead
 			%tr
+				%th
 				%th Name
 				%th Date
 				%th Time
@@ -13,6 +14,7 @@
 		%tbody
 			-@events.each do |event|
 				%tr{ id: "event_#{event.id}" }
+					%td=image_tag event.photo.url(:thumb)
 					%td=event.name
 					%td=event.date_string
 					%td=event.time_string

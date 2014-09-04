@@ -1,6 +1,9 @@
 .page-header
 	%h1=@event.name
-	='(' << @event.time.strftime('%m/%d/%y %I:%M %p') << ')'
+	="(#{@event.date_string} #{@event.time_string})"
 	#follow_unfollow=render partial: 'followings/follow_unfollow_button', locals: { followable: @event }
 
-%p=@event.description
+.col-md-6
+	=image_tag @event.photo.url(:full)
+.col-md-6
+	%p=@event.description.html_safe

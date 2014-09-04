@@ -20,7 +20,12 @@
 					-glyphicon_tag 'time', class: 'add-on'
 		.form-group
 			=f.label :description, 'Description', class: 'control-label'
+			%br
+			Note: You can (and should) use HTML tags to mark up the description. Newlines (hitting the enter key) will not be properly rendered. Use paragraphs (&ltp>Your text here&lt/p>) instead. For a quick reference of HTML markup, see <a href="http://www.w3schools.com/html/html_formatting.asp" target="_blank">http://www.w3schools.com/html/html_formatting.asp</a>
 			=f.text_area :description, class: 'form-control', size: "60x10"
+		.form-group
+			=f.label :photo, 'Upload a photo', class: 'control-label'
+			=f.file_field :photo, class: 'form-control'
 		.form-actions
 			=f.submit 'Save', class: 'btn btn-primary'
 			=link_to 'Back', admin_panel_path, class: 'btn btn-default'

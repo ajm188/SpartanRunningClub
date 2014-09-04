@@ -3,6 +3,7 @@
 
 -table_tag do
 	%tr
+		%th
 		%th Name
 		%th Description
 		%th Date
@@ -10,6 +11,7 @@
 
 	-@events.each do |event|
 		%tr
+			%td=image_tag event.photo.url(:thumb)
 			%td=link_to event.name, event_path(event.id)
 			%td=truncate(event.description)
 			%td=event.date_string
