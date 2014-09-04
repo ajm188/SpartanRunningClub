@@ -49,29 +49,6 @@ RSpec.describe WelcomeController, type: :controller do
     end
   end
 
-  describe 'GET #log_a_run' do
-    context 'with no user signed in' do
-      before(:each) do
-        get :log_a_run
-      end
-
-      it 'should redirect to sign in' do
-        expect(response).to redirect_to sign_in_path
-      end
-    end
-
-    context 'with a user' do
-      before(:each) do
-        sign_in_as member
-        get :log_a_run
-      end
-
-      it 'should render log_a_run template' do
-        expect(response).to render_template :log_a_run
-      end
-    end
-  end
-
   describe 'GET #spartan_link' do
     context 'with no user signed in' do
       before(:each) do
