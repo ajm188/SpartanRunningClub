@@ -20,12 +20,12 @@ class Member < ActiveRecord::Base
 	scope :non_competitive, -> { where(competitive: false) }
 	scope :alphabetical, -> { order(:first_name) }
 
-	has_many :followings
+	has_many :followings, dependent: :destroy
 	has_many :followables, through: :followings
 	# Members can follow Events
 	has_many :events, through: :followings,
 		source: :followable, source_type: Event.to_s
-	has_many :member_meetings
+	has_many :member_meetings, dependent: :destroy
 	has_many :invited_meetings, ->{ where("relationship = ?",
 		MemberMeeting::INVITEE) }, through: :member_meetings, source: :meeting
 	has_many :attended_meetings, ->{ where("relationship = ?",
