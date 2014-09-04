@@ -53,8 +53,9 @@ class EventsController < ApplicationController
   # DELETE /events/1
   def destroy
     @event.destroy
+    flash[:notice] = 'Event was successfully destroyed.'
     respond_to do |format|
-      format.html { redirect_to events_url }
+      format.js
     end
   end
 
