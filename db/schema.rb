@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904135844) do
+ActiveRecord::Schema.define(version: 20140906160539) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20140904135844) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "request"
   end
 
   add_index "members", ["email"], name: "index_members_on_email", using: :btree

@@ -31,3 +31,6 @@ public/system/*
 
 # Ignore coverage
 /coverage
+
+# Ignore secrets
+/config/secrets.yml
