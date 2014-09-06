@@ -20,28 +20,20 @@
 		=f.label :email, :class => 'control-label'
 		=f.email_field :email, :placeholder => 'abc123@case.edu', :class => 'form-control'
 	.input-group
+		=f.label :password, class: 'control-label'
+		=f.password_field :password, class: 'form-control'
+	.input-group
+		=label_tag :confirm, 'Confirm Password', class: 'control-label'
+		=password_field_tag :confirm, nil, class: 'form-control'
+	.input-group
 		=f.label :year, :class => 'control-label'
 		=f.select :year, Member::YEARS, {}, :style => 'width:101px;'
 	.input-group
 		=f.label :competitive, :class => 'control-label'
 		=f.check_box :competitive
-	.input-group
-		=f.label :officer, :class => 'control-label'
-		=f.check_box :officer, :id => 'officer_check_box'
-	.input-group#officer_position{ style: 'display:none;' }
-		=f.label :position, :class => 'control-label'
-		=f.select :position, Member::OFFICER_POSITIONS, {}, :style => 'width:101px;'
-	=f.hidden_field :password, :value => Member::random_password
+	
+	
 	.form-actions
-		=f.submit 'Add Member', :class => 'btn btn-primary'
+		=f.submit 'Sign Up', :class => 'btn btn-primary'
 		=link_to t('.cancel', :default => t('helpers.links.cancel')), edit_members_path, :class => 'btn btn-default'
-:javascript
-	var checkbox = document.getElementById('officer_check_box');
-	var officer_section = document.getElementById('officer_position');
-	checkbox.onchange = function() {
-		if (this.checked) {
-			officer_section.style['display'] = 'block';
-		} else {
-			officer_section.style['display'] = 'none';
-		}
-	};
+

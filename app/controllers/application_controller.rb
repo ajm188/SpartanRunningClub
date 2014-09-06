@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
 
   hide_action :authorize_as_officer, :authorize_as_officer_or_self
 
+  def authorize
+    unless signed_in? and !current_user.request
+        deny_access
+    end
+  end
   def authorize_as_officer
     unless signed_in? && current_user.officer
       deny_access 'You must have admin rights to view that resource.'
