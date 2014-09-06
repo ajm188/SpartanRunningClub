@@ -1,0 +1,15 @@
+-header_tag do
+	%h1 Feedback
+=form_tag do
+	.form-group
+		=text_area_tag :feedback, params[:feedback] || nil, placeholder: 'Enter your feedback here...', class: 'form-control', size: '150x15'
+	%div{ style: 'display:inline-block' }
+		=link_to '#', class: 'btn btn-primary', id: 'submit_link', title: 'Send Feedback', 'data-toggle' => 'tooltip' do
+			-glyphicon_tag 'send'
+		=link_to root_path, class: 'btn btn-default', title: 'Cancel', 'data-toggle' => 'tooltip' do
+			-glyphicon_tag 'remove'
+
+:javascript
+	$('#submit_link').on('click', function() {
+		$('form').submit();
+	});

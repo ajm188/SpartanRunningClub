@@ -49,10 +49,10 @@ RSpec.describe WelcomeController, type: :controller do
     end
   end
 
-  describe 'GET #log_a_run' do
-    context 'with no user signed in' do
+  describe 'GET #feedback' do
+    context 'as guest' do
       before(:each) do
-        get :log_a_run
+        get :feedback
       end
 
       it 'should redirect to sign in' do
@@ -60,22 +60,79 @@ RSpec.describe WelcomeController, type: :controller do
       end
     end
 
-    context 'with a user' do
+    context 'as member' do
       before(:each) do
         sign_in_as member
-        get :log_a_run
+        get :feedback
       end
 
-      it 'should render log_a_run template' do
-        expect(response).to render_template :log_a_run
+      it 'should render the feedback template' do
+        expect(response).to render_template :feedback
       end
     end
   end
 
-  describe 'GET #spartan_link' do
+  describe 'POST #submit_feedback' do
+    context 'as guest' do
+      before(:each) do
+        post :submit_feedback
+      end
+
+      it 'should redirect to sign in' do
+        expect(response).to redirect_to sign_in_path
+      end
+    end
+
+    context 'as member' do
+      before(:each) do
+        sign_in_as member
+      end
+
+      context 'with empty feedback' do
+        before(:each) do
+          post :submit_feedback, feedback: ''
+        end
+
+        it 'should render the feedback template' do
+          expect(response).to render_template :feedback
+        end
+
+        it 'should flash an error' do
+          expect(flash[:error]).to_not be nil
+        end
+
+        it 'should not deliver the feedback' do
+          expect(Mailer).to_not receive :feedback
+        end
+      end
+
+      context 'with actual feedback' do
+        before(:all) do
+          # Ensure there is an officer to email
+          FactoryGirl.create(:member, :officer)
+        end
+
+        before(:each) do
+          post :submit_feedback, feedback: 'lorem ipsum'
+        end
+
+        it 'should redirect to the home page' do
+          expect(response).to redirect_to root_path
+        end
+
+        it 'should flash success' do
+          expect(flash[:notice]).to_not be nil
+        end
+
+        it 'should deliver the feedback'
+      end
+    end
+  end
+
+  describe 'GET #orgsync' do
     context 'with no user signed in' do
       before(:each) do
-        get :spartan_link
+        get :orgsync
       end
 
       it 'should redirect to sign in' do
@@ -86,11 +143,11 @@ RSpec.describe WelcomeController, type: :controller do
     context 'with a user' do
       before(:each) do
         sign_in_as member
-        get :spartan_link
+        get :orgsync
       end
 
-      it 'should render spartan_link template' do
-        expect(response).to render_template :spartan_link
+      it 'should render orgsync template' do
+        expect(response).to render_template :orgsync
       end
     end
   end

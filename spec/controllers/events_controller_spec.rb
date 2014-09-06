@@ -188,15 +188,15 @@ RSpec.describe EventsController, type: :controller do
       sign_in_as officer
       @event = FactoryGirl.create(:event)
       @count = Event.count
-      delete :destroy, id: @event.id
+      xhr :delete, :destroy, id: @event.id
     end
 
     it 'should destroy the event' do
       expect(Event.count).to eq (@count - 1)
     end
 
-    it 'should redirect to events' do
-      expect(response).to redirect_to :events
+    it 'should render the destroy template' do
+      expect(response).to render_template :destroy
     end
   end
 end

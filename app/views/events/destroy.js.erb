@@ -1,0 +1,5 @@
+$('#error').html('<%=j flash[:error]%>');
+$('#notice').html('<%=j flash[:notice]%>');
+<%flash.discard%>
+
+$('#event_<%=@event.id%>').remove();

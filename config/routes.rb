@@ -3,8 +3,11 @@ SRC::Application.routes.draw do
   root 'welcome#home'
   get 'about' => 'welcome#about', as: :about
   get 'contact' => 'welcome#contact', as: :contact
-  get 'log_a_run' => 'welcome#log_a_run', as: :log_a_run
-  get 'spartanlink' => 'welcome#spartan_link', as: :spartan_link
+  get 'orgsync' => 'welcome#orgsync', as: :orgsync
+
+  # Feedback
+  get 'feedback' => 'welcome#feedback', as: :feedback
+  post 'feedback' => 'welcome#submit_feedback', as: :submit_feedback
 
   # Admin routes
   get 'admin' => 'admin#panel', as: :admin_panel

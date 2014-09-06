@@ -6,6 +6,11 @@ RSpec.describe Event, type: :model do
   it { should validate_presence_of(:date) }
   it { should validate_presence_of(:description) }
 
+  describe 'paperclip validations' do
+    it { should have_attached_file :photo }
+    it { should validate_attachment_content_type(:photo).allowing('image/png', 'image/jpg') }
+  end
+
   describe '::Followable' do
     it { should have_many(:followings) }
     it { should have_many(:members) }

@@ -1,17 +1,18 @@
-%h1 Listing events
+-header_tag do
+	%h1 Events
 
-%table
-  %tr
-    %th
-    %th
-    %th
+-table_tag do
+	%tr
+		%th
+		%th Name
+		%th Description
+		%th Date
+		%th Time
 
-  - @events.each do |event|
-    %tr
-      %td= link_to 'Show', event
-      %td= link_to 'Edit', edit_event_path(event)
-      %td= link_to 'Destroy', event, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Event', new_event_path
+	-@events.each do |event|
+		%tr
+			%td=image_tag event.photo.url(:thumb)
+			%td=link_to event.name, event_path(event.id)
+			%td=truncate(event.description)
+			%td=event.date_string
+			%td=event.time_string

@@ -5,6 +5,12 @@ class Event < ActiveRecord::Base
   
   scope :upcoming, -> { where('time >= ?', DateTime.now.beginning_of_day) }
 
+  has_attached_file :photo,
+    styles: { thumb: '20x20#', full: '300x200#' },
+    default_url: '/images/events/missing_:style.jpg'
+  validates_attachment_content_type :photo,
+    content_type: /\Aimage/
+
   validates :name, :time, :date, :description,
     presence: true, allow_blank: false
 

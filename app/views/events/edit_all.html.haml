@@ -1,20 +1,29 @@
-%h1.page-header Edit Events
+-header_tag do
+	%h1 Edit Events
 
 -if @events.any?
-	%table.table.table-striped
+	-table_tag do
 		%thead
 			%tr
+				%th
 				%th Name
 				%th Date
 				%th Time
 				%th Description
+				%th Actions
 		%tbody
 			-@events.each do |event|
-				%tr
+				%tr{ id: "event_#{event.id}" }
+					%td=image_tag event.photo.url(:thumb)
 					%td=event.name
 					%td=event.date_string
 					%td=event.time_string
 					%td=truncate(event.description)
+					%td
+						=link_to edit_event_path(event.id), class: 'btn btn-default', target: :_blank, title: 'Edit', 'data-toggle' => 'tooltip' do
+							-glyphicon_tag 'pencil'
+						=link_to event_path(event.id), class: 'btn btn-danger', remote: true, method: :delete, data: { confirm: 'Are you sure you want to delete this event?' }, title: 'Delete', 'data-toggle' => 'tooltip' do
+							-glyphicon_tag 'remove'
 -else
 	%p You have no events!
 
