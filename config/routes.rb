@@ -3,7 +3,7 @@ SRC::Application.routes.draw do
   root 'welcome#home'
   get 'about' => 'welcome#about', as: :about
   get 'contact' => 'welcome#contact', as: :contact
-  get 'spartanlink' => 'welcome#spartan_link', as: :spartan_link
+  get 'orgsync' => 'welcome#orgsync', as: :orgsync
 
   # Feedback
   get 'feedback' => 'welcome#feedback', as: :feedback

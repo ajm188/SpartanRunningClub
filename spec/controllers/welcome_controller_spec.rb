@@ -129,10 +129,10 @@ RSpec.describe WelcomeController, type: :controller do
     end
   end
 
-  describe 'GET #spartan_link' do
+  describe 'GET #orgsync' do
     context 'with no user signed in' do
       before(:each) do
-        get :spartan_link
+        get :orgsync
       end
 
       it 'should redirect to sign in' do
@@ -143,11 +143,11 @@ RSpec.describe WelcomeController, type: :controller do
     context 'with a user' do
       before(:each) do
         sign_in_as member
-        get :spartan_link
+        get :orgsync
       end
 
-      it 'should render spartan_link template' do
-        expect(response).to render_template :spartan_link
+      it 'should render orgsync template' do
+        expect(response).to render_template :orgsync
       end
     end
   end

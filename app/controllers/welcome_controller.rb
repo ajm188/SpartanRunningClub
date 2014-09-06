@@ -28,6 +28,6 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def spartan_link
+  def orgsync
   end
 end

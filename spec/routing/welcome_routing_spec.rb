@@ -22,8 +22,8 @@ RSpec.describe WelcomeController, type: :routing do
       expect(post: '/feedback').to route_to 'welcome#submit_feedback'
     end
 
-    it 'routes to #spartan_link' do
-      expect(get: '/spartanlink').to route_to 'welcome#spartan_link'
+    it 'routes to #orgsync' do
+      expect(get: '/orgsync').to route_to 'welcome#orgsync'
     end
   end
 end
