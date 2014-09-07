@@ -1,6 +1,7 @@
 class MembersController < ApplicationController
-  skip_before_filter :authorize, only: [:autocomplete, :index, :officers, :new]
-  before_filter :authorize_as_officer, only: [:new, :create, :edit_all]
+  skip_before_filter :authorize, only: [:autocomplete, :index, :officers, :new,
+    :create]
+  before_filter :authorize_as_officer, only: [:edit_all]
   before_filter :authorize_as_officer_or_self, only: [:edit, :update, :destroy]
 
   before_action :set_member, only: [:show, :edit, :update, :destroy]
@@ -40,14 +41,21 @@ class MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new member_params
+    @member = Member.new member_params.merge({request: true})
+
+    unless confirm_password
+      flash[:error] = 'Passwords did not match.'
+      render action: 'new' and return
+    end
 
     respond_to do |format|
-      if @member.save and (params[:member][:password] == params[:confirm])
-        MemberMailer.welcome_email(@member).deliver
-        format.html { redirect_to @member }
+      if @member.save
+        format.html do
+          flash[:notice] = "You have successfully registered! You will get an "
+          flash[:notice] += "email when an officer has approved your request."
+          redirect_to root_path
+        end
       else
-        flash[:error] = "Your passwords didn't match up"
         format.html { render action: 'new' }
       end
     end
@@ -85,5 +93,10 @@ class MembersController < ApplicationController
     params.require(:member)
       .permit(:first_name, :last_name, :case_id, :year, :competitive, :officer,
               :position, :email, :password, :avatar)
+  end
+
+  def confirm_password
+    params[:member][:password].present? && params[:confirm] ==
+      params[:member][:password]
   end
 end

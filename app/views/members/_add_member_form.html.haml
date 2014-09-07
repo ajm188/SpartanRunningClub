@@ -7,33 +7,33 @@
 			%ul
 				-@member.errors.full_messages.each do |msg|
 					%li=msg
-	.input-group
-		=f.label :first_name, 'First Name', :class => 'control-label'
-		=f.text_field :first_name, :placeholder => 'John', :class => 'form-control'
-	.input-group
-		=f.label :last_name, 'Last Name', :class => 'control-label'
-		=f.text_field :last_name, :placeholder => 'Smith', :class => 'form-control'
-	.input-group
-		=f.label :case_id, 'Case ID', :class => 'control-label'
-		=f.text_field :case_id, :placeholder => 'abc123', :class => 'form-control'
-	.input-group
-		=f.label :email, :class => 'control-label'
-		=f.email_field :email, :placeholder => 'abc123@case.edu', :class => 'form-control'
-	.input-group
-		=f.label :password, class: 'control-label'
-		=f.password_field :password, class: 'form-control'
-	.input-group
-		=label_tag :confirm, 'Confirm Password', class: 'control-label'
-		=password_field_tag :confirm, nil, class: 'form-control'
-	.input-group
-		=f.label :year, :class => 'control-label'
-		=f.select :year, Member::YEARS, {}, :style => 'width:101px;'
-	.input-group
-		=f.label :competitive, :class => 'control-label'
-		=f.check_box :competitive
+	.col-md-4
+		.form-group
+			=f.label :first_name, 'First Name', :class => 'control-label'
+			=f.text_field :first_name, :placeholder => 'John', :class => 'form-control'
+		.form-group
+			=f.label :last_name, 'Last Name', :class => 'control-label'
+			=f.text_field :last_name, :placeholder => 'Smith', :class => 'form-control'
+		.form-group
+			=f.label :case_id, 'Case ID', :class => 'control-label'
+			=f.text_field :case_id, :placeholder => 'abc123', :class => 'form-control'
+		.form-group
+			=f.label :email, :class => 'control-label'
+			=f.email_field :email, :placeholder => 'abc123@case.edu', :class => 'form-control'
+		.form-group
+			=f.label :password, class: 'control-label'
+			=f.password_field :password, class: 'form-control'
+		.form-group
+			=label_tag :confirm, 'Confirm Password', class: 'control-label'
+			=password_field_tag :confirm, nil, class: 'form-control'
+		.form-group
+			=f.label :year, :class => 'control-label'
+			=f.select :year, Member::YEARS, {}, class: 'form-control'
+		.form-group
+			=f.label :competitive, :class => 'control-label'
+			=f.check_box :competitive
 	
 	
-	.form-actions
-		=f.submit 'Sign Up', :class => 'btn btn-primary'
-		=link_to t('.cancel', :default => t('helpers.links.cancel')), edit_members_path, :class => 'btn btn-default'
-
+		.form-actions
+			=f.submit 'Sign Up', :class => 'btn btn-primary'
+			=link_to t('.cancel', :default => t('helpers.links.cancel')), edit_members_path, :class => 'btn btn-default'
