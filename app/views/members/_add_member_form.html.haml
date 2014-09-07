@@ -32,8 +32,11 @@
 		.form-group
 			=f.label :competitive, :class => 'control-label'
 			=f.check_box :competitive
-	
+			%a{id: :competitive_popover, title: '', 'data-original-title' => 'What is this?', 'data-content' => 'Check this if you are interested in running races.', 'data-placement' => :right, 'data-trigger' => :hover}
+				-glyphicon_tag 'question-sign'
 	
 		.form-actions
 			=f.submit 'Sign Up', :class => 'btn btn-primary'
 			=link_to t('.cancel', :default => t('helpers.links.cancel')), edit_members_path, :class => 'btn btn-default'
+:javascript
+	$('#competitive_popover').popover();
