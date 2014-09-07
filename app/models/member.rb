@@ -15,6 +15,8 @@ class Member < ActiveRecord::Base
 	SECRETARY = "Secretary"
 	OFFICER_POSITIONS = [PRESIDENT, VICE_PRESIDENT, TREASURER, SECRETARY]
 
+	default_scope -> { where(request: false) }
+
 	scope :officers, -> { where(officer: true) }
 	scope :competitive, -> { where(competitive: true) }
 	scope :non_competitive, -> { where(competitive: false) }
@@ -68,6 +70,11 @@ class Member < ActiveRecord::Base
 	# generates a random string of length 8
 	def self.random_password
 		SecureRandom::base64 6
+	end
+
+	# can't define this as a scope because it won't override the default scope
+	def self.requests
+		unscoped { where(request: true) }
 	end
 
 	def full_name

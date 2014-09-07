@@ -1,0 +1,24 @@
+-header_tag do
+	%h1 Member Requests
+
+-table_tag do
+	%thead
+		%th Name
+		%th Case ID
+		%th Email
+		%th Year
+		%th Competitive
+		%th Actions
+	%tbody
+		-@requests.each do |request|
+			%tr{ id: "request_#{request.id}" }
+				%td=request.full_name
+				%td=request.case_id
+				%td=request.email
+				%td=request.year
+				%td=request.competitive_string
+				%td
+					=link_to approve_member_path(request), method: :put, remote: true, class: 'btn btn-primary', title: 'Approve', 'data-toggle' => :tooltip do
+						-glyphicon_tag 'ok'
+					=link_to deny_member_path(request), method: :delete, remote: true, data: {confirm: 'Are you sure you want to deny this request?'}, class: 'btn btn-danger', title: 'Deny (and delete)', 'data-toggle' => :tooltip do
+						-glyphicon_tag 'remove'

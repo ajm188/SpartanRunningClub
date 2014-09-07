@@ -1,10 +1,11 @@
 class MembersController < ApplicationController
   skip_before_filter :authorize, only: [:autocomplete, :index, :officers, :new,
     :create]
-  before_filter :authorize_as_officer, only: [:edit_all]
+  before_filter :authorize_as_officer, only: [:edit_all, :requests]
   before_filter :authorize_as_officer_or_self, only: [:edit, :update, :destroy]
 
   before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_request, only: [:approve, :deny]
 
   def autocomplete
     name_search = "concat(first_name, ' ', last_name) LIKE"
@@ -33,6 +34,10 @@ class MembersController < ApplicationController
     @officers = Member.officers.alphabetical
   end
 
+  def requests
+    @requests = Member.requests
+  end
+
   def show
   end
 
@@ -51,6 +56,7 @@ class MembersController < ApplicationController
     respond_to do |format|
       if @member.save
         format.html do
+          MemberMailer.request_to_officers.deliver
           flash[:notice] = "You have successfully registered! You will get an "
           flash[:notice] += "email when an officer has approved your request."
           redirect_to root_path
@@ -72,6 +78,30 @@ class MembersController < ApplicationController
     end
   end
 
+  def approve
+    @request.update_attributes({
+      request: false
+    })
+
+    flash[:notice] = 'Request approved.'
+    MemberMailer.welcome_email(@member).deliver
+
+    respond_to do |format|
+      format.js { render 'requests' }
+    end
+  end
+
+  def deny
+    @request.destroy
+
+    flash[:notice] = 'Request denied.'
+    MemberMailer.deny_request(@request.email).deliver
+
+    respond_to do |format|
+      format.js { render 'requests' }
+    end
+  end
+
   def destroy
     @member.destroy
     respond_to do |format|
@@ -87,6 +117,10 @@ class MembersController < ApplicationController
 
   def set_member
     @member = Member.find(params[:id]) if params[:id]
+  end
+
+  def set_request
+    @request = Member.where(id: params[:id], request: true).first
   end
 
   def member_params

@@ -39,11 +39,14 @@ SRC::Application.routes.draw do
       get :edit, action: :edit_all
       get :non_competitive
       get :officers
+      get :requests
     end
 
     member do
       get :password, controller: 'passwords', action: :change
       put :password, controller: 'passwords', action: :user_edit
+      put :approve
+      delete :deny
     end
   end
 

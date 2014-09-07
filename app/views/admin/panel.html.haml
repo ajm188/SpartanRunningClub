@@ -1,7 +1,19 @@
 %h1.page-header Administrative Tasks
 
+-request_count = Member.requests.count
+-if request_count > 0
+	-alert_tag 'warning' do
+		-if request_count == 1
+			1 request needs
+		-else
+			=request_count
+			requests need
+		your attention!
+
 .panel.panel-primary
 	.list-group
+		-if request_count > 0
+			.list-group-item=link_to 'Approve Requests', requests_members_path
 		.list-group-item=link_to 'Modify Practice Schedule', edit_practices_path
 		.list-group-item=link_to 'Modify Routes', edit_routes_path
 		.list-group-item=link_to 'Modify Members', edit_members_path

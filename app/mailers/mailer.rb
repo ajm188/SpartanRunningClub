@@ -1,4 +1,5 @@
 class Mailer < ActionMailer::Base
+  URL = 'running.case.edu'
   FROM = 'spartan.running.club@gmail.com'
   default from: FROM
 
