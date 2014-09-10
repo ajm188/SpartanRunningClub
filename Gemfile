@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'ckeditor'
 gem 'clearance'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'paperclip', '~> 3.0'
