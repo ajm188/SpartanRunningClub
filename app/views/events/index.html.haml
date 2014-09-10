@@ -13,6 +13,6 @@
 		%tr
 			%td=image_tag event.photo.url(:thumb)
 			%td=link_to event.name, event_path(event.id)
-			%td=truncate(event.description)
+			%td=truncate(strip_tags(event.description))
 			%td=event.date_string
 			%td=event.time_string
