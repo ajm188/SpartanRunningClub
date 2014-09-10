@@ -13,6 +13,8 @@
 		%meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
 	%body{ class: controller.controller_name }
 		=render partial: 'navbar/navbar'
+		-4.times do
+			%br
 		.container
 			%p#notice=flash[:notice]
 			%p#error=flash[:error]
