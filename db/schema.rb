@@ -100,14 +100,6 @@ ActiveRecord::Schema.define(version: 20140906160539) do
 
   add_index "members_meetings", ["member_id", "meeting_id", "relationship"], name: "members_meetings_index", unique: true, using: :btree
 
-  create_table "news", force: true do |t|
-    t.string   "title",      null: false
-    t.integer  "author_id",  null: false
-    t.string   "body",       null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "practices", force: true do |t|
     t.string   "day",        null: false
     t.datetime "created_at"
