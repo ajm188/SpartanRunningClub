@@ -8,6 +8,7 @@ RSpec.describe Route, type: :model do
 
   describe 'paperclip validations' do
     it { should have_attached_file :map_image }
+    it { should validate_attachment_presence :map_image }
     it { should validate_attachment_content_type(:map_image).allowing('image/png', 'image/jpg') }
   end
 end
