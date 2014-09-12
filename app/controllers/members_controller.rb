@@ -84,7 +84,7 @@ class MembersController < ApplicationController
     })
 
     flash[:notice] = 'Request approved.'
-    MemberMailer.welcome_email(@member).deliver
+    MemberMailer.welcome_email(@request).deliver
 
     respond_to do |format|
       format.js { render 'requests' }
