@@ -116,7 +116,7 @@ class MembersController < ApplicationController
   private
 
   def set_member
-    @member = Member.find(params[:id]) if params[:id]
+    @member = Member.friendly.find(params[:id]) if params[:id]
   end
 
   def set_request

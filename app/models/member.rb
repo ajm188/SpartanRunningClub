@@ -2,6 +2,9 @@ require 'securerandom'
 
 class Member < ActiveRecord::Base
 	include Clearance::User
+	extend FriendlyId
+
+	friendly_id :case_id, use: :slugged
 
 	FRESHMAN = "Freshman"
 	SOPHOMORE = "Sophomore"

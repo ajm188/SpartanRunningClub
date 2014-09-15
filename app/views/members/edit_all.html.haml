@@ -22,5 +22,7 @@
 				%td=member.officer_string
 				%td=member.officer ? member.position : nil
 				%td
-					=link_to 'Edit', edit_member_path(member.id), class: 'btn btn-sm btn-default'
-					=link_to 'Delete', member_path(member.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+					=link_to edit_member_path(member), class: 'btn btn-default', title: 'Edit this member', 'data-toggle' => :tooltip, target: :_blank do
+						-glyphicon_tag 'pencil'
+					=link_to member_path(member), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete this member', 'data-toggle' => :tooltip do
+						-glyphicon_tag 'remove'
