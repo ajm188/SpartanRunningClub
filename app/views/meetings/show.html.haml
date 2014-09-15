@@ -1,8 +1,10 @@
 -header_tag do
-	%h1=@meeting.title
-	=@meeting.date_string
-	\|
-	=@meeting.time_string
+	%h1
+		=@meeting.title
+		%small
+			=@meeting.date_string
+			\|
+			=@meeting.time_string
 .col-md-6
 	%p=@meeting.minutes
 .col-md-6
