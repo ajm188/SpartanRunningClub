@@ -120,7 +120,7 @@ class MembersController < ApplicationController
   end
 
   def set_request
-    @request = Member.where(id: params[:id], request: true).first
+    @request = Member.unscoped.friendly.find(params[:id]) if params[:id]
   end
 
   def member_params
