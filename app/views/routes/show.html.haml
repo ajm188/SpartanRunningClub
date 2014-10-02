@@ -4,4 +4,4 @@
 		%small
 			=@route.distance
 			mi
-=image_tag @route.map_image.url(:show)
+%iframe{ src: @route.embedded_map_url, height: '600px', width: '100%', frameborder: 0, overflow: :visible }

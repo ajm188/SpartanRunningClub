@@ -10,14 +10,12 @@
 	-table_tag do
 		%thead
 			%tr
-				%th Map
 				%th Title
 				%th Distance
 				%th Actions
 		%tbody
 			-@routes.each do |route|
 				%tr
-					%td=image_tag route.map_image.url :thumbnail
 					%td=route.title
 					%td=route.distance
 					%td
