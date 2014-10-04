@@ -20,7 +20,7 @@ class Member < ActiveRecord::Base
 
 	default_scope -> { where(request: false) }
 
-	scope :officers, -> { where(officer: true) }
+	scope :officers, -> { where(officer: true).order(officer_order) }
 	scope :competitive, -> { where(competitive: true) }
 	scope :non_competitive, -> { where(competitive: false) }
 	scope :alphabetical, -> { order(:first_name) }
@@ -78,6 +78,15 @@ class Member < ActiveRecord::Base
 	# can't define this as a scope because it won't override the default scope
 	def self.requests
 		unscoped { where(request: true) }
+	end
+
+	def self.officer_order
+		sql = "CASE\n"
+		OFFICER_POSITIONS.each_with_index do |position, index|
+			sql << "WHEN members.position = '#{position}' THEN #{index}\n"
+		end
+		sql << "ELSE #{OFFICER_POSITIONS.size} END"
+		sql
 	end
 
 	def full_name
