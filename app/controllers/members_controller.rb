@@ -31,7 +31,7 @@ class MembersController < ApplicationController
   end
 
   def officers
-    @officers = Member.officers.alphabetical
+    @officers = Member.officers
   end
 
   def requests
