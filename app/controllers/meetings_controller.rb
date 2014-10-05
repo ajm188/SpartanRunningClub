@@ -1,5 +1,5 @@
 class MeetingsController < ApplicationController
-  before_filter :authorize_as_officer
+  before_filter :authorize_as_officer, except: [:show, :index]
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
   before_action :parse_date, only: [:create, :update]
 
