@@ -7,12 +7,12 @@
 -table_tag do
 	%thead
 		%tr
-			%th
-			%th
-			%th
+			%th Title
+			%th Author
+			%th Last Edited
 
 	-@articles.each do |article|
 		%tr
-			%td= link_to 'Show', article
-			%td= link_to 'Edit', edit_article_path(article)
-			%td= link_to 'Destroy', article, :method => :delete, :data => { :confirm => 'Are you sure?' }
+			%td=link_to article.title, article
+			%td=article.author.full_name
+			%td=article.last_edited_string
