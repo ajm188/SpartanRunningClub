@@ -1,7 +1,9 @@
 -header_tag do
-	%h1 Articles
-	=link_to new_article_path, class: 'btn btn-success' do
-		-glyphicon_tag 'plus'
+	%h1 
+		Articles
+		%small
+			=link_to new_article_path, class: 'btn btn-sm btn-success' do
+				-glyphicon_tag 'plus'
 -table_tag do
 	%thead
 		%tr
