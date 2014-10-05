@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822214315) do
+ActiveRecord::Schema.define(version: 20141002151339) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -41,6 +41,10 @@ ActiveRecord::Schema.define(version: 20140822214315) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "date"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "followings", force: true do |t|
@@ -53,6 +57,19 @@ ActiveRecord::Schema.define(version: 20140822214315) do
 
   add_index "followings", ["followable_id", "followable_type"], name: "index_followings_on_followable_id_and_followable_type", using: :btree
 
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
   create_table "meetings", force: true do |t|
     t.string   "title"
     t.text     "minutes"
@@ -63,19 +80,25 @@ ActiveRecord::Schema.define(version: 20140822214315) do
   end
 
   create_table "members", force: true do |t|
-    t.string   "email",                          null: false
-    t.string   "encrypted_password", limit: 128, null: false
-    t.string   "confirmation_token", limit: 128
-    t.string   "remember_token",     limit: 128, null: false
+    t.string   "email",                           null: false
+    t.string   "encrypted_password",  limit: 128, null: false
+    t.string   "confirmation_token",  limit: 128
+    t.string   "remember_token",      limit: 128, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "case_id",            limit: 6
+    t.string   "case_id",             limit: 6
     t.string   "year"
     t.boolean  "competitive"
     t.boolean  "officer"
     t.string   "position"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.boolean  "request"
+    t.string   "slug"
   end
 
   add_index "members", ["email"], name: "index_members_on_email", using: :btree
@@ -108,13 +131,10 @@ ActiveRecord::Schema.define(version: 20140822214315) do
 
   create_table "routes", force: true do |t|
     t.string   "title"
-    t.decimal  "distance",               precision: 10, scale: 0
+    t.decimal  "distance",      precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "map_image_file_name"
-    t.string   "map_image_content_type"
-    t.integer  "map_image_file_size"
-    t.datetime "map_image_updated_at"
+    t.string   "map_my_run_id"
   end
 
 end

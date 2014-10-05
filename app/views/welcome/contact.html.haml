@@ -1,15 +1,23 @@
-.page-header
+-header_tag do
 	%h1 Contact Us
+.col-md-6
+	%table
+		-@officers.each_slice(2) do |officers|
+			%tr
+				-officers.each do |officer|
+					%td{ style: 'padding-bottom: 5px;' }
+						%table
+							%tr
+								%td=image_tag officer.avatar.url(:reg)
+								%td{ style: 'padding-left: 5px;' }
+									=officer.full_name
+									=mail_to officer.email
+.col-md-6.pull-right
+	.panel.panel-primary
+		.panel-heading
+			External
+		%ul.list-group
+			%li.list-group-item=link_to 'Facebook', 'https://facebook.com/groups/spartanrunningclub'
+			%li.list-group-item=link_to '@spartan_running', 'https://twitter.com/spartan_running'
+			%li.list-group-item=mail_to 'spartan.running.club@gmail.com'
 
-%ul
-	%li
-		Contact this site:
-		%ul
-			%li
-				Facebook:
-				=link_to 'SRC Facebook Group', 'https://facebook.com/groups/spartanrunningclub'
-	-@officers.each do |officer|
-		%li
-			="Contact #{officer.full_name}"
-			%ul
-				%li="Email: #{officer.email}"

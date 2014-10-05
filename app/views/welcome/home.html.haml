@@ -7,29 +7,32 @@
 		-else
 			=render partial: 'carousel', locals: { active: @active, items: @items }
 	.col-md-4.pull-right
-		-unless current_user
-			.please-sign-in
-				%p You are not signed in. Please click the sign in button above to be able to access the full site.
+		-unless signed_in?
+			.panel.panel-warning
+				.panel-heading You are not signed in
+				%ul.list-group
+					%li.list-group-item=link_to 'Sign Up', new_member_path	
 		-else
 			.panel-group#accordion
+				-events = @upcoming_events.any?
 				.panel.panel-primary
 					.panel-heading
 						%a{ :href => '#events-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion' }
 							.panel-title Upcoming Events
-					%ul.list-group.panel-collapse.collapse#events-collapse
-						-if @upcoming_events.any?
-							-@upcoming_events.each do |event|
-								%li.list-group-item=link_to event.name, event
-						-else
+					-klass = events ? 'in' : ''
+					%ul.list-group.panel-collapse.collapse#events-collapse{ class: klass }
+						-@upcoming_events.each do |event|
+							%li.list-group-item=link_to event.name, event
+						-unless events
 							%li.list-group-item No upcoming events.
 				.panel.panel-primary
 					.panel-heading
 						%a{ :href => '#quick-links-collapse', 'data-toggle' => 'collapse', 'data-parent' => '#accordion'}
 							.panel-title Quick Links
-					%ul.list-group.panel-collapse.collapse.in#quick-links-collapse
+					-klass = klass.blank? ? 'in' : ''
+					%ul.list-group.panel-collapse.collapse#quick-links-collapse{ class: klass }
 						%li.list-group-item=link_to 'View Profile', current_user
-						%li.list-group-item=link_to 'Get set up on LogARun', log_a_run_path
-						%li.list-group-item=link_to 'Sign up on Spartan Link', spartan_link_path
+						%li.list-group-item=link_to 'Sign up on OrgSync', orgsync_path			
 
 :javascript
 	$('.carousel').carousel();

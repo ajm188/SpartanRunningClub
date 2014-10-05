@@ -1,15 +1,14 @@
-%h1.page-header SRC Routes
+-header_tag do
+	%h1 Routes
 
 -if @routes.any?
-	%table.table.table-striped.display.thumbnail
+	-table_tag do
 		%thead
 			%tr
-				%th Map
 				%th Title
 				%th Distance
 		%tbody
 			-@routes.each do |route|
 				%tr
-					%td=image_tag route.map_image.url :thumbnail
 					%td=link_to route.title, route
 					%td=route.distance

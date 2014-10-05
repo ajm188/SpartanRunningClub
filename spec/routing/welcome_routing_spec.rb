@@ -14,12 +14,16 @@ RSpec.describe WelcomeController, type: :routing do
       expect(get: '/contact').to route_to 'welcome#contact'
     end
 
-    it 'routes to #log_a_run' do
-      expect(get: '/log_a_run').to route_to 'welcome#log_a_run'
+    it 'routes to #feedback' do
+      expect(get: '/feedback').to route_to 'welcome#feedback'
     end
 
-    it 'routes to #spartan_link' do
-      expect(get: '/spartanlink').to route_to 'welcome#spartan_link'
+    it 'routes to #submit_feedback' do
+      expect(post: '/feedback').to route_to 'welcome#submit_feedback'
+    end
+
+    it 'routes to #orgsync' do
+      expect(get: '/orgsync').to route_to 'welcome#orgsync'
     end
   end
 end

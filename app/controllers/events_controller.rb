@@ -53,8 +53,9 @@ class EventsController < ApplicationController
   # DELETE /events/1
   def destroy
     @event.destroy
+    flash[:notice] = 'Event was successfully destroyed.'
     respond_to do |format|
-      format.html { redirect_to events_url }
+      format.js
     end
   end
 
@@ -66,7 +67,7 @@ class EventsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
-    params.require(:event).permit(:name, :date, :time, :description)
+    params.require(:event).permit(:name, :date, :time, :description, :photo)
   end
 
   def parse_date

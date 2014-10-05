@@ -17,10 +17,15 @@
 //@import 'bootstrap';
 
  $primary-panel-title-color: #fff;
+ $primary-color: #2d6ca2;
  $success-panel-title-color: #3c763d;
+ $success-color: #3e8f3e;
  $info-panel-title-color:    #31708f;
+ $info-color: #28a4c9;
  $warning-panel-title-color: #8a6d3b;
+ $warning-color: #e38d13;
  $danger-panel-title-color:  #a94442;
+ $danger-color: #b92c28;
  
 .panel {
     .panel-heading {
@@ -73,4 +78,32 @@
             color: $danger-panel-title-color;
         }
     }
+}
+
+.badge-primary {
+    background-color: $primary-color;
+}
+
+.badge-success {
+    background-color: $success-color;
+}
+
+.badge-info {
+    background-color: $info-color;
+}
+
+.badge-warning {
+    background-color: $warning-color;
+}
+
+.badge-danger {
+    background-color: $danger-color;
+}
+
+.container {
+    margin-bottom: 10px;
+}
+
+.header-buttons {
+    display: inline-block;
 }

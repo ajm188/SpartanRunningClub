@@ -2,7 +2,7 @@ class Meeting < ActiveRecord::Base
   include Timed
   include Dated
 
-  has_many :member_meetings
+  has_many :member_meetings, dependent: :destroy
   has_many :invitees, ->{ where("relationship = ?", MemberMeeting::INVITEE) },
     through: :member_meetings, source: :member
   has_many :attendees, ->{ where("relationship = ?",

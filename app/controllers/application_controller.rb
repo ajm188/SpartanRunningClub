@@ -8,6 +8,16 @@ class ApplicationController < ActionController::Base
 
   hide_action :authorize_as_officer, :authorize_as_officer_or_self
 
+  def authorize
+    if signed_in?
+      if current_user.request
+        deny_access "Your request has not yet been approved."
+      end
+    else
+      deny_access "You must be signed in to view that resource."
+    end
+  end
+
   def authorize_as_officer
     unless signed_in? && current_user.officer
       deny_access 'You must have admin rights to view that resource.'
@@ -16,7 +26,7 @@ class ApplicationController < ActionController::Base
 
   def authorize_as_officer_or_self
     unless signed_in? &&
-      (current_user.officer || current_user.id == params[:id])
+      (current_user.officer || current_user.id == params[:id].to_i)
       deny_access 'You do not have the appropriate permissions to do that.'
     end
   end

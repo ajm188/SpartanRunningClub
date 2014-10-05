@@ -1,4 +1,14 @@
-%h1=@member.full_name
+-password_reset = 
+-show_edit = password_reset || current_user.officer?
+-header_tag do
+	%h1=@member.full_name
+	-if current_user.id == @member.id
+		%div{ style: 'display: inline-block' }
+			=link_to password_member_path(@member), class: 'btn btn-default', title: 'Change your password', 'data-toggle' => 'tooltip' do
+				-glyphicon_tag 'lock'
+
+.col-md-2
+	=image_tag @member.avatar.url(:reg)
 
 %ul
 	%li=@member.email
@@ -6,12 +16,3 @@
 	%li=@member.competitive ? 'Competitive' : 'Non Competitive'
 	-if @member.officer
 		%li=@member.position
-
-.form-actions
-	-password_reset = current_user.id == @member.id
-	-show_edit = password_reset or current_user.officer?
-	-if show_edit
-		=link_to 'Edit', edit_member_path(@member), :class => 'btn btn-default'
-	-if password_reset
-		=link_to 'Change password', password_member_path(@member.id), :class => 'btn btn-default'
-	=link_to 'All Members', members_path, :class => 'btn btn-default'

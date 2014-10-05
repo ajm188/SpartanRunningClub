@@ -1,9 +1,7 @@
-%h1.page-header SRC Routes
-
-.col-md-8
-	=image_tag @route.map_image.url
-.col-md-3.pull-right
-	.panel.panel-primary
-		.panel-heading=@route.title
-		.panel-body
-			="#{@route.distance} mi"
+-header_tag do
+	%h1
+		=@route.title
+		%small
+			=@route.distance
+			mi
+%iframe{ src: @route.embedded_map_url, height: '600px', width: '100%', frameborder: 0, overflow: :visible }

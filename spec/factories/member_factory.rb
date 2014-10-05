@@ -7,14 +7,14 @@ FactoryGirl.define do
       # as long as our tests don't create more the 999 members, we'll be fine
       "abc#{n}"
     end
-    year 'Freshman'
+    year Member::FRESHMAN
     competitive false
     password 'Password'
     officer false
 
     trait :officer do
       officer true
-      position 'President'
+      position Member::PRESIDENT
     end
   end
 end

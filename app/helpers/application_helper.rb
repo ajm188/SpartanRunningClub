@@ -1,6 +1,25 @@
 module ApplicationHelper
+  def alert_tag alert_level, options = {}, &block
+    options[:class] = append_string options, :class,
+      "alert alert-#{alert_level}"
+
+    haml_tag :div, options do
+      yield block if block_given?
+    end
+  end
+
+  def badge_tag type = nil, options = {}, &block
+    badge_class = type.nil? ? '' : "badge-#{type}"
+    options[:class] = append_string options, :class, "badge #{badge_class}"
+
+    haml_tag :span, options do
+      yield block if block_given?
+    end
+  end
+
   def table_tag options = {}, &block
-    options[:class] = append_string options, :class, 'table table-striped table-hover'
+    options[:class] = append_string options, :class,
+      'table table-striped table-hover'
 
     haml_tag :table, options do
       yield block if block_given?

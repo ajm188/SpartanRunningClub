@@ -2,9 +2,12 @@
 #error=flash[:error]
 
 -header_tag do
-	%h1 Meetings
-	%div{ style: 'display:inline-block;' }
-		=link_to new_meeting_path, class: 'btn btn-success', title: 'Create new meeting.', 'data-toggle' => 'tooltip', target: :_blank do
-			-glyphicon_tag 'plus'
+	%h1
+		Meetings
+		-if current_user.officer
+			%small
+				%div{ style: 'display:inline-block;' }
+					=link_to new_meeting_path, class: 'btn btn-success', title: 'Create a new meeting.', 'data-toggle' => 'tooltip', target: :_blank do
+						-glyphicon_tag 'plus'
 
 #meetings=render partial: 'index'

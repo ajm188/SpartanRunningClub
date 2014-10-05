@@ -2,25 +2,45 @@ require 'securerandom'
 
 class Member < ActiveRecord::Base
 	include Clearance::User
+	extend FriendlyId
 
-	YEARS = %w(Freshman Sophomore Junior Senior)
-	OFFICER_POSITIONS = %w(President Vice\ President Treasurer Secretary)
+	friendly_id :case_id, use: :slugged
 
-	scope :officers, -> { where(officer: true) }
+	FRESHMAN = "Freshman"
+	SOPHOMORE = "Sophomore"
+	JUNIOR = "Junior"
+	SENIOR = "Senior"
+	YEARS = [FRESHMAN, SOPHOMORE, JUNIOR, SENIOR]
+
+	PRESIDENT = "President"
+	VICE_PRESIDENT = "Vice President"
+	TREASURER = "Treasurer"
+	SECRETARY = "Secretary"
+	OFFICER_POSITIONS = [PRESIDENT, VICE_PRESIDENT, TREASURER, SECRETARY]
+
+	default_scope -> { where(request: false) }
+
+	scope :officers, -> { where(officer: true).order(officer_order) }
 	scope :competitive, -> { where(competitive: true) }
 	scope :non_competitive, -> { where(competitive: false) }
 	scope :alphabetical, -> { order(:first_name) }
 
-	has_many :followings
+	has_many :followings, dependent: :destroy
 	has_many :followables, through: :followings
 	# Members can follow Events
 	has_many :events, through: :followings,
 		source: :followable, source_type: Event.to_s
-	has_many :member_meetings
+	has_many :member_meetings, dependent: :destroy
 	has_many :invited_meetings, ->{ where("relationship = ?",
 		MemberMeeting::INVITEE) }, through: :member_meetings, source: :meeting
 	has_many :attended_meetings, ->{ where("relationship = ?",
 		MemberMeeting::ATTENDEE) }, through: :member_meetings, source: :meeting
+
+	has_attached_file :avatar,
+		styles: { thumb: '20x20#', reg: '120x120#' },
+		default_url: '/images/members/missing_:style.jpg'
+	validates_attachment_content_type :avatar,
+		content_type: /\Aimage/
 
 	validates :first_name, :last_name, :case_id, :year,
 		presence: true, allow_blank: false
@@ -36,12 +56,37 @@ class Member < ActiveRecord::Base
 		presence: true, allow_blank: false, if: -> { self.officer }
 	validates :position,
 		inclusion: { in: OFFICER_POSITIONS }, if: -> { self.officer }
+	# Password validation
+	validates :password,
+		presence: true, allow_blank: false, on: :create
 
 	before_validation :set_email, if: -> { self.email.blank? }
 
-	# generates a random string of length 8 containing numbers, letters and some symbols
+	def self.update_year
+		Member.where('year != ?', SENIOR).each do |member|
+			member.update_attributes({
+				year: YEARS[YEARS.index(member.year) + 1]
+			})
+		end
+	end
+
+	# generates a random string of length 8
 	def self.random_password
 		SecureRandom::base64 6
+	end
+
+	# can't define this as a scope because it won't override the default scope
+	def self.requests
+		unscoped { where(request: true) }
+	end
+
+	def self.officer_order
+		sql = "CASE\n"
+		OFFICER_POSITIONS.each_with_index do |position, index|
+			sql << "WHEN members.position = '#{position}' THEN #{index}\n"
+		end
+		sql << "ELSE #{OFFICER_POSITIONS.size} END"
+		sql
 	end
 
 	def full_name

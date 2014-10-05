@@ -1,9 +1,11 @@
 class MembersController < ApplicationController
-  skip_before_filter :authorize, only: [:index, :officers]
-  before_filter :authorize_as_officer, only: [:new, :create, :edit_members]
+  skip_before_filter :authorize, only: [:autocomplete, :index, :officers, :new,
+    :create]
+  before_filter :authorize_as_officer, only: [:edit_all, :requests]
   before_filter :authorize_as_officer_or_self, only: [:edit, :update, :destroy]
 
-	before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_request, only: [:approve, :deny]
 
   def autocomplete
     name_search = "concat(first_name, ' ', last_name) LIKE"
@@ -16,9 +18,9 @@ class MembersController < ApplicationController
                         .map { |m| {label: "#{m[1]} #{m[2]} (#{m[3]})", value: m[0]} }
   end
 
-	def index
-		@members = Member.alphabetical
-	end
+  def index
+    @members = Member.alphabetical
+  end
 
   def competitive
     @competitive_members = Member.competitive.alphabetical
@@ -29,30 +31,41 @@ class MembersController < ApplicationController
   end
 
   def officers
-    @officers = Member.officers.alphabetical
+    @officers = Member.officers
   end
 
-	def show
-	end
+  def requests
+    @requests = Member.requests
+  end
 
-	def new
+  def show
+  end
+
+  def new
     @member = Member.new
- 	end
+  end
 
- 	def create
- 		@member = Member.new member_params
+  def create
+    @member = Member.new member_params.merge({request: true})
 
- 		respond_to do |format|
- 			if @member.save
- 				MemberMailer.welcome_email(@member).deliver
- 				format.html { redirect_to @member }
- 				format.json { render action: 'show', status: :created, location: @member }
- 			else
- 				format.html { render action: 'new' }
- 				format.json { render json: @member.errors, status: :unprocessable_entity }
- 			end
- 		end
- 	end
+    unless confirm_password
+      flash[:error] = 'Passwords did not match.'
+      render action: 'new' and return
+    end
+
+    respond_to do |format|
+      if @member.save
+        format.html do
+          MemberMailer.request_to_officers.deliver
+          flash[:notice] = "You have successfully registered! You will get an "
+          flash[:notice] += "email when an officer has approved your request."
+          redirect_to root_path
+        end
+      else
+        format.html { render action: 'new' }
+      end
+    end
+  end
 
   def edit
   end
@@ -62,6 +75,30 @@ class MembersController < ApplicationController
       redirect_to @member, notice: 'Member was successfully updated'
     else
       render action: 'edit'
+    end
+  end
+
+  def approve
+    @request.update_attributes({
+      request: false
+    })
+
+    flash[:notice] = 'Request approved.'
+    MemberMailer.welcome_email(@request).deliver
+
+    respond_to do |format|
+      format.js { render 'requests' }
+    end
+  end
+
+  def deny
+    @request.destroy
+
+    flash[:notice] = 'Request denied.'
+    MemberMailer.deny_request(@request.email).deliver
+
+    respond_to do |format|
+      format.js { render 'requests' }
     end
   end
 
@@ -76,13 +113,24 @@ class MembersController < ApplicationController
     @members = Member.all
   end
 
-	private
+  private
 
-	def set_member
-		@member = Member.find(params[:id]) if params[:id]
-	end
+  def set_member
+    @member = Member.friendly.find(params[:id]) if params[:id]
+  end
 
-	def member_params
-		params.require(:member).permit(:first_name, :last_name, :case_id, :year, :competitive, :officer, :position, :email, :password)
-	end
+  def set_request
+    @request = Member.unscoped.friendly.find(params[:id]) if params[:id]
+  end
+
+  def member_params
+    params.require(:member)
+      .permit(:first_name, :last_name, :case_id, :year, :competitive, :officer,
+              :position, :email, :password, :avatar)
+  end
+
+  def confirm_password
+    params[:member][:password].present? && params[:confirm] ==
+      params[:member][:password]
+  end
 end

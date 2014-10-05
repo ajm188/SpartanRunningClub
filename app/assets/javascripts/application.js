@@ -16,5 +16,6 @@
 //= require jquery-ui/autocomplete
 //= require jquery-ui/datepicker
 //= require jquery-ui/sortable
+//= require ckeditor/init
 //= require turbolinks
 //= require_tree .

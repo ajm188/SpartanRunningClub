@@ -22,6 +22,11 @@ RSpec.describe Member, type: :model do
     it { should ensure_inclusion_of(:position).in_array(Member::OFFICER_POSITIONS)}
   end
 
+  describe 'paperclip validations' do
+    it { should have_attached_file :avatar }
+    it { should validate_attachment_content_type(:avatar).allowing('image/png', 'image/jpg') }
+  end
+
   describe 'custom validations' do
     before(:each) do
       @member = FactoryGirl.build(:member)
@@ -51,6 +56,22 @@ RSpec.describe Member, type: :model do
     it 'should randomly generate passwords' do
       passwords = (1..10).map { Member.random_password }
       expect(passwords.uniq!).to be nil # returns nil if nothing removed
+    end
+  end
+
+  describe '::update_year' do
+    before(:all) do
+      @member = FactoryGirl.create(:member, year: Member::FRESHMAN)
+      @senior = FactoryGirl.create(:member, year: Member::SENIOR)
+      Member.update_year
+    end
+
+    it "should update the member's year" do
+      expect(@member.reload.year).to eq Member::SOPHOMORE
+    end
+
+    it 'should not update the senior' do
+      expect(@senior.reload.year).to eq Member::SENIOR
     end
   end
 

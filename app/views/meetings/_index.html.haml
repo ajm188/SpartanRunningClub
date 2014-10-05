@@ -12,5 +12,5 @@
 			%td=meeting.date_string
 			%td=meeting.time_string
 			%td
-				=link_to edit_meeting_path(meeting), class: 'btn btn-default' do
+				=link_to edit_meeting_path(meeting), class: 'btn btn-default', title: 'Edit this meeting', 'data-toggle' => :tooltip do
 					-glyphicon_tag 'pencil'

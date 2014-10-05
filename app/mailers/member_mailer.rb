@@ -19,4 +19,20 @@ class MemberMailer < Mailer
       subject: 'Your password has been changed'
     )
   end
+
+  def request_to_officers
+    @url = URL
+    mail(
+      to: Member.officers.map { |o| o.email },
+      subject: 'SRC: A member has requested to join.'
+    )
+  end
+
+  def deny_request email
+    @url = URL
+    mail(
+      to: email,
+      subject: 'Your request to join Spartan Running Club was denied.'
+    )
+  end
 end

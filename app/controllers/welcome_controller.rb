@@ -14,9 +14,20 @@ class WelcomeController < ApplicationController
   def about
   end
 
-  def logarun
+  def feedback
   end
 
-  def spartan_link
+  def submit_feedback
+    if params[:feedback].blank?
+      flash[:error] = 'Please enter some feedback.'
+      render action: :feedback
+    else
+      flash[:notice] = "Thanks for your feedback! We'll look into it."
+      Mailer.feedback(params[:feedback], current_user).deliver
+      redirect_to root_path
+    end
+  end
+
+  def orgsync
   end
 end
