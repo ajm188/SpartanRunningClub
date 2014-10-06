@@ -52,6 +52,8 @@ RSpec.describe Member, type: :model do
   it { should have_many(:invited_meetings).through(:member_meetings) }
   it { should have_many(:attended_meetings).through(:member_meetings) }
 
+  it { should have_many :comments }
+
   describe '::random_password' do
     it 'should randomly generate passwords' do
       passwords = (1..10).map { Member.random_password }
