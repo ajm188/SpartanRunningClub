@@ -1,6 +1,9 @@
 class Article < ActiveRecord::Base
   include Followable
   include Timed
+
+  FOLLOWABLE_TOOLTIP =
+    "Follow this article to get email notifications when it is updated."
   
   belongs_to :author, class_name: 'Member'
   belongs_to :editor, class_name: 'Member'
