@@ -1,5 +1,6 @@
 %tr{id: "comment_#{comment.id}"}
-	%td=image_tag comment.commenter.avatar(:thumb)
 	%td
-		=link_to comment.commenter.full_name, comment.commenter
-		=comment.comment
+		=link_to comment.commenter, title: comment.commenter.full_name, 'data-toggle' => :tooltip do
+			=image_tag comment.commenter.avatar(:thumb)
+	%td=comment.comment
+	%td=comment.date_string
