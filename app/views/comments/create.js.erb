@@ -1,2 +1,4 @@
 $('#comments #comment_form').before("<%=escape_javascript(render partial: 'comments/comment', locals: {comment: @comment})%>");
-$('#comments #comment_form').html("<%=escape_javascript(render partial: 'comments/form', locals: {commentable: @comment.commentable, comment: Comment.new})%>");
+<%commentable = @comment.commentable%>
+<%@comment = Comment.new%>
+$('#comments #comment_form').html("<%=escape_javascript(render partial: 'comments/form', locals: {commentable: commentable})%>");
