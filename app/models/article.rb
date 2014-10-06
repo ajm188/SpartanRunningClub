@@ -13,10 +13,17 @@ class Article < ActiveRecord::Base
 
   alias_attribute :time, :updated_at
 
+  after_update :notify_followers
 
   def last_edited_string
     self.time_string +
       (self.author_id != self.editor_id ?
         " (by #{self.editor.full_name})" : "")
+  end
+
+  private
+
+  def notify_followers
+    ArticleMailer.notify_update(self).deliver
   end
 end
