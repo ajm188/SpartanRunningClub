@@ -3,4 +3,6 @@
 		=link_to comment.commenter, title: comment.commenter.full_name, 'data-toggle' => :tooltip do
 			=image_tag comment.commenter.avatar(:thumb)
 	%td=comment.comment
-	%td=comment.date_string
+	%td
+		%p{title: comment.time_string, 'data-toggle' => :tooltip}
+			=comment.date_string
