@@ -10,4 +10,4 @@
 			-if current_user.officer || current_user.id == @article.author_id
 				=link_to edit_article_path(@article), class: 'btn btn-default', title: 'Edit this article.', 'data-toggle' => :tooltip do
 					-glyphicon_tag 'pencil'
-=@article.body.html_safe
+.col-md-8=@article.body.html_safe
