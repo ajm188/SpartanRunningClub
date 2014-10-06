@@ -13,4 +13,8 @@ RSpec.describe Article, :type => :model do
     it { should have_many(:followings) }
     it { should have_many(:members) }
   end
+
+  describe '::Commentable' do
+    it { should have_many :comments }
+  end
 end

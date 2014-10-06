@@ -1,4 +1,5 @@
 class Article < ActiveRecord::Base
+  include Commentable
   include Followable
   include Timed
 
