@@ -1,14 +1,19 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
+  before_action :set_commenter_id, only: [:create]
 
   # POST /comments
   def create
     @comment = Comment.new(comment_params)
-
-    if @comment.save
-      redirect_to @comment, notice: 'Comment was successfully created.'
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @comment.save
+        format.js
+      else
+        format.js do
+          flash[:error] = "Could not post comment."
+          render 'shared/update'
+        end
+      end
     end
   end
 
@@ -25,8 +30,13 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
   end
 
+  def set_commenter_id
+    params[:comment][:commenter_id] = current_user.id if params[:comment]
+  end
+
   # Only allow a trusted parameter "white list" through.
   def comment_params
-    params[:comment]
+    params.require(:comment).permit(:comment, :commentable_id,
+      :commentable_type, :commenter_id)
   end
 end
