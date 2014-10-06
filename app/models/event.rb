@@ -2,6 +2,9 @@ class Event < ActiveRecord::Base
   include Dated
   include Followable
   include Timed
+
+  FOLLOWABLE_TOOLTIP =
+    "Follow this event to get an email reminder 48 hours before the event."
   
   scope :upcoming, -> { where('time >= ?', DateTime.now.beginning_of_day) }
 
