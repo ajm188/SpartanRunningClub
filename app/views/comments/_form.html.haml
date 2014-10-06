@@ -1,5 +1,5 @@
 -@comment ||= comment
-=form_for @comment do |f|
+=form_for @comment, remote: true do |f|
 	=f.hidden_field :commentable_type, value: commentable.class.to_s
 	=f.hidden_field :commentable_id, value: commentable.id
 	%td=image_tag current_user.avatar(:thumb)
