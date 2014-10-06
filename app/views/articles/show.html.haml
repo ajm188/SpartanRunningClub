@@ -1,3 +1,9 @@
 -header_tag do
-	%h1=@article.title
+	%h1
+		=@article.title
+		%small
+			by
+			=@article.author.full_name
+			\. Last edited
+			=@article.last_edited_string
 =@article.body.html_safe
