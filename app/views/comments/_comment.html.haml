@@ -1,5 +1,5 @@
 %tr{id: "comment_#{comment.id}"}
-	%td=comment.commenter.avatar(:thumb)
+	%td=image_tag comment.commenter.avatar(:thumb)
 	%td
 		=link_to comment.commenter.full_name, comment.commenter
 		=comment.comment
