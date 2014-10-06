@@ -6,4 +6,5 @@
 			=@article.author.full_name
 			\. Last edited
 			=@article.last_edited_string
+			%span#follow_unfollow=render partial: 'followings/follow_unfollow_button', locals: { followable: @article }
 =@article.body.html_safe
