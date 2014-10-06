@@ -1,10 +1,7 @@
-= form_for @comment do |f|
-  - if @comment.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@comment.errors.count, "error")} prohibited this comment from being saved:"
-      %ul
-        - @comment.errors.full_messages.each do |msg|
-          %li= msg
-
-  .actions
-    = f.submit 'Save'
+-@comment ||= comment
+=form_for @comment do |f|
+	=f.hidden_field :commentable_type, value: commentable.class.to_s
+	=f.hidden_field :commentable_id, value: commentable.id
+	%td=image_tag current_user.avatar(:thumb)
+	%td=f.text_field :comment, class: 'form-control', placeholder: 'Write a comment.'
+	%td=f.submit 'Post', class: 'btn btn-primary btn-sm'

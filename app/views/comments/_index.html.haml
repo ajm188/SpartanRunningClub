@@ -1,3 +1,4 @@
 -table_tag do
 	-commentable.comments.includes(:commenter).each do |comment|
 		=render partial: 'comments/comment', locals: {comment: comment}
+	%tr#comment_form=render partial: 'comments/form', locals: {commentable: commentable, comment: Comment.new}
