@@ -22,6 +22,8 @@ SRC::Application.routes.draw do
     end
   end
 
+  resources :comments, only: [:new, :create, :destroy]
+
   resources :events do
     collection do
       get :edit, action: :edit_all
