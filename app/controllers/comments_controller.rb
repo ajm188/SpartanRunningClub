@@ -19,9 +19,14 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy
     respond_to do |format|
-      format.js
+      if @comment.commenter != current_user
+        flash[:error] = 'That is not your comment.'
+        format.js { render 'shared/update' }
+      else
+        @comment.destroy
+        format.js
+      end
     end
   end
 
