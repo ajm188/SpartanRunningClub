@@ -28,11 +28,6 @@ class Member < ActiveRecord::Base
 	# Members can follow Events
 	has_many :events, through: :followings,
 		source: :followable, source_type: Event.to_s
-	has_many :member_meetings, dependent: :destroy
-	has_many :invited_meetings, ->{ where("relationship = ?",
-		MemberMeeting::INVITEE) }, through: :member_meetings, source: :meeting
-	has_many :attended_meetings, ->{ where("relationship = ?",
-		MemberMeeting::ATTENDEE) }, through: :member_meetings, source: :meeting
 
 	has_many :comments, as: :commenter, dependent: :destroy
 

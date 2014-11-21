@@ -1,5 +1,0 @@
-%tr{ id: "#{relationship.downcase}_#{member.id}", member_id: member.id }
-	%td=member.full_name
-	%td
-		=link_to member_meeting_path(id: 1, meeting_id: meeting.id, member_id: member.id, relationship: relationship), method: :delete, remote: true, class: 'btn btn-xs btn-danger' do
-			-glyphicon_tag 'remove'

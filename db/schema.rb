@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006032236) do
+ActiveRecord::Schema.define(version: 20141121185040) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -79,15 +79,6 @@ ActiveRecord::Schema.define(version: 20141006032236) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "meetings", force: true do |t|
-    t.string   "title"
-    t.text     "minutes"
-    t.date     "date"
-    t.time     "time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "members", force: true do |t|
     t.string   "email",                           null: false
     t.string   "encrypted_password",  limit: 128, null: false
@@ -112,16 +103,6 @@ ActiveRecord::Schema.define(version: 20141006032236) do
 
   add_index "members", ["email"], name: "index_members_on_email", using: :btree
   add_index "members", ["remember_token"], name: "index_members_on_remember_token", using: :btree
-
-  create_table "members_meetings", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "meeting_id"
-    t.string   "relationship"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "members_meetings", ["member_id", "meeting_id", "relationship"], name: "members_meetings_index", unique: true, using: :btree
 
   create_table "news", force: true do |t|
     t.string   "title",      null: false

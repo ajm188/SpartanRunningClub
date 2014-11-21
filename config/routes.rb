@@ -31,8 +31,6 @@ SRC::Application.routes.draw do
 
   resources :followings, only: [:create, :destroy]
 
-  resources :meetings
-
   resources :members do
     collection do
       get :autocomplete
@@ -50,8 +48,6 @@ SRC::Application.routes.draw do
       delete :deny
     end
   end
-
-  resources :member_meetings, only: [:new, :create, :destroy]
 
   resources :practices, except: [:show, :edit, :update] do
     collection do
