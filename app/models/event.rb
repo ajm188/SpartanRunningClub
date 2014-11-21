@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   FOLLOWABLE_TOOLTIP =
     "Follow this event to get an email reminder 48 hours before the event."
   
-  scope :upcoming, -> { where('time >= ?', DateTime.now.beginning_of_day) }
+  scope :upcoming, -> { where('date >= ?', DateTime.now.beginning_of_day) }
 
   has_attached_file :photo,
     styles: { thumb: '20x20#', full: '300x200#' },
