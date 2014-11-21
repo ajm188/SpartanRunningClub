@@ -27,7 +27,4 @@ class WelcomeController < ApplicationController
       redirect_to root_path
     end
   end
-
-  def orgsync
-  end
 end

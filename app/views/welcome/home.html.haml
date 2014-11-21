@@ -32,7 +32,8 @@
 					-klass = klass.blank? ? 'in' : ''
 					%ul.list-group.panel-collapse.collapse#quick-links-collapse{ class: klass }
 						%li.list-group-item=link_to 'View Profile', current_user
-						%li.list-group-item=link_to 'Sign up on OrgSync', orgsync_path			
+						%li.list-group-item
+							%a{ href: "https://orgsync.com/90333/chapter", target: :_blank } Sign up on OrgSync
 
 :javascript
 	$('.carousel').carousel();

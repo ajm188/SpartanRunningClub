@@ -128,27 +128,4 @@ RSpec.describe WelcomeController, type: :controller do
       end
     end
   end
-
-  describe 'GET #orgsync' do
-    context 'with no user signed in' do
-      before(:each) do
-        get :orgsync
-      end
-
-      it 'should redirect to sign in' do
-        expect(response).to redirect_to sign_in_path
-      end
-    end
-
-    context 'with a user' do
-      before(:each) do
-        sign_in_as member
-        get :orgsync
-      end
-
-      it 'should render orgsync template' do
-        expect(response).to render_template :orgsync
-      end
-    end
-  end
 end
