@@ -1,5 +1,3 @@
-require 'securerandom'
-
 class Member < ActiveRecord::Base
 	include Clearance::User
 	extend FriendlyId
@@ -70,11 +68,6 @@ class Member < ActiveRecord::Base
 				year: YEARS[YEARS.index(member.year) + 1]
 			})
 		end
-	end
-
-	# generates a random string of length 8
-	def self.random_password
-		SecureRandom::base64 6
 	end
 
 	# can't define this as a scope because it won't override the default scope

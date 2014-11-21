@@ -54,13 +54,6 @@ RSpec.describe Member, type: :model do
 
   it { should have_many :comments }
 
-  describe '::random_password' do
-    it 'should randomly generate passwords' do
-      passwords = (1..10).map { Member.random_password }
-      expect(passwords.uniq!).to be nil # returns nil if nothing removed
-    end
-  end
-
   describe '::update_year' do
     before(:all) do
       @member = FactoryGirl.create(:member, year: Member::FRESHMAN)
