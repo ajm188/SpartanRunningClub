@@ -290,7 +290,7 @@ RSpec.describe MembersController, type: :controller do
       end
 
       it 'should redirect to show' do
-        expect(response).to redirect_to member_path(officer.id)
+        expect(response).to redirect_to member_path(officer.case_id)
       end
     end
 
