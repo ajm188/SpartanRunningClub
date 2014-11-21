@@ -28,10 +28,12 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner', require: false
   gem 'simplecov', require: false
 end
 
 group :test, :development do
+  gem 'cucumber-rails', require: false
   gem 'debugger'
   gem 'factory_girl_rails'
   gem 'forgery'
