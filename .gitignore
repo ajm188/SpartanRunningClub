@@ -34,3 +34,6 @@ public/system/*
 
 # Ignore secrets
 /config/secrets.yml
+
+# Ignore .DS_Store
+.DS_Store
