@@ -1,3 +1,11 @@
+Given(/^I have no carousel items$/) do
+  CarouselItem.delete_all
+end
+
+Given(/^I create a new carousel item with the caption "(.*?)"$/) do |caption|
+  FactoryGirl.create(:carousel_item, primary_caption: caption)
+end
+
 When(/^I go to the home page$/) do
   visit root_path
 end

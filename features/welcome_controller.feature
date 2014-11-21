@@ -17,3 +17,9 @@ Feature: The Home Page
         And I go to the home page
         Then I should see "Upcoming Events"
         And I should see "Quick Links"
+
+    Scenario: Viewing the carousel
+        Given I have no carousel items
+        And I create a new carousel item with the caption "Hello!"
+        When I go to the home page
+        Then I should see "Hello!"
