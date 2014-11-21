@@ -22,6 +22,10 @@ When(/^I am signed in as "(.*?)"$/) do |email|
   click_button('Sign In')
 end
 
+When(/^I click the "(.*?)" link$/) do |locator|
+  click_link locator
+end
+
 Then(/^I should see "(.*?)"$/) do |content|
   expect(page).to have_content(content)
 end

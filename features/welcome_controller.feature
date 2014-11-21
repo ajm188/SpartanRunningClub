@@ -23,3 +23,11 @@ Feature: The Home Page
         And I create a new carousel item with the caption "Hello!"
         When I go to the home page
         Then I should see "Hello!"
+
+    Scenario: Turning the carousel
+        Given I have no carousel items
+        And I create a new carousel item with the caption "Hello!"
+        And I create a new carousel item with the caption "Goodbye!"
+        When I go to the home page
+        And I click the "›" link
+        Then I should see "Goodbye!"
