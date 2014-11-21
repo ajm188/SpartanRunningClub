@@ -18,6 +18,7 @@ Feature: The Home Page
         Then I should see "Upcoming Events"
         And I should see "Quick Links"
 
+    # Carousel
     Scenario: Viewing the carousel
         Given I have no carousel items
         And I create a new carousel item with the caption "Hello!"
@@ -31,3 +32,16 @@ Feature: The Home Page
         When I go to the home page
         And I click the "›" link
         Then I should see "Goodbye!"
+
+    # Accordion
+    Scenario: No events
+        Given I have no events
+        And I am signed in as "abc132@case.edu"
+        When I go to the home page
+        Then I should see "View Profile"
+
+    Scenario: Events
+        Given I have an event with the name "My Event"
+        And I am signed in as "abc231@case.edu"
+        When I go to the home page
+        Then I should see "My Event"
