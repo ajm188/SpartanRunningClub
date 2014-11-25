@@ -12,6 +12,13 @@ Given(/^I have an event with the name "(.*?)"$/) do |name|
   end
 end
 
+Given(/^I have an event with the name "(.*?)" and an? (.*) date$/) do |name, date|
+  unless Event.exists?(name: name)
+    date = date == "upcoming" ? Date.today + 1.week : Date.today - 1.week
+    FactoryGirl.create(:event, name: name, date: date)
+  end
+end
+
 When(/^I go to the home page$/) do
   visit root_path
 end

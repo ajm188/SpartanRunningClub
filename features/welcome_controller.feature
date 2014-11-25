@@ -45,3 +45,12 @@ Feature: The Home Page
         And I am signed in as "abc231@case.edu"
         When I go to the home page
         Then I should see "My Event"
+
+    Scenario: Outdated Events
+        Given I have no events
+        And I have an event with the name "My Event" and an upcoming date
+        And I have an event with the name "My Other Event" and a past date
+        And I am signed in as "aci142@case.edu"
+        When I go to the home page
+        Then I should see "My Event"
+        And I should not see "My Other Event"
