@@ -6,62 +6,76 @@
 			%tr
 				%td Sunday
 				%td No Practice
+				%td
 		-else
 			-@sundays.each do |practice|
 				%tr
 					%td=practice.day
 					%td=practice.time_string
+					%td=practice.location
 		-if @mondays.empty?
 			%tr
 				%td Monday
 				%td No Practice
+				%td
 		-else
 			-@mondays.each do |practice|
 				%tr
 					%td=practice.day
 					%td=practice.time_string
+					%td=practice.location
 		-if @tuesdays.empty?
 			%tr
 				%td Tuesday
 				%td No Practice
+				%td
 		-else
 			-@tuesdays.each do |practice|
 				%tr
 					%td=practice.day
 					%td=practice.time_string
+					%td=practice.location
 		-if @wednesdays.empty?
 			%tr
 				%td Wednesday
 				%td No Practice
+				%td
 		-else
 			-@wednesdays.each do |practice|
 				%tr
 					%td=practice.day
 					%td=practice.time_string
+					%td=practice.location
 		-if @thursdays.empty?
 			%tr
 				%td Thursday
 				%td No Practice
+				%td
 		-else
 			-@thursdays.each do |practice|
 				%tr
 					%td=practice.day
 					%td=practice.time_string
+					%td=practice.location
 		-if @fridays.empty?
 			%tr
 				%td Friday
 				%td No Practice
+				%td
 		-else
 			-@fridays.each do |practice|
 				%tr
 					%td=practice.day
 					%td=practice.time_string
+					%td=practice.location
 		-if @saturdays.empty?
 			%tr
 				%td Saturday
 				%td No Practice
+				%td
 		-else
 			-@saturdays.each do |practice|
 				%tr
 					%td=practice.day
 					%td=practice.time_string
+					%td=practice.location
