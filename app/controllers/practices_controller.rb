@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
   before_filter :authorize_as_officer, except: [:index]
 
-  before_action :set_practice, only: [:destroy]
+  before_action :set_practice, only: [:edit, :update, :destroy]
 
   def index
     @sundays = Practice.sunday.ordered
@@ -27,6 +27,9 @@ class PracticesController < ApplicationController
     @practice = Practice.new
   end
 
+  def edit
+  end
+
   def create
     @practice = Practice.new practice_params
     if @practice.save
@@ -34,6 +37,14 @@ class PracticesController < ApplicationController
     else
       render action: 'new'
     end
+  end
+
+  def update
+ 		if @practice.update practice_params
+			redirect_to edit_practices_path, notice: 'Practice was successfully updated'
+		else
+			render action: 'edit'
+		end
   end
 
   def destroy

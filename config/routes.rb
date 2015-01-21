@@ -49,7 +49,7 @@ SRC::Application.routes.draw do
     end
   end
 
-  resources :practices, except: [:show, :edit, :update] do
+  resources :practices, except: [:show] do
     collection do
       get :edit, action: :edit_all
     end
