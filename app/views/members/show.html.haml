@@ -14,5 +14,5 @@
 	%li=@member.email
 	%li=@member.year
 	%li=@member.competitive ? 'Competitive' : 'Non Competitive'
-	-if @member.officer
+	-if @member.officer && @member.position != ""
 		%li=@member.position

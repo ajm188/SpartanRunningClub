@@ -17,8 +17,6 @@ RSpec.describe Member, type: :model do
   context 'as an officer' do
     subject { FactoryGirl.build(:member, :officer) }
 
-    it { should validate_presence_of(:position) }
-
     it { should ensure_inclusion_of(:position).in_array(Member::OFFICER_POSITIONS)}
   end
 

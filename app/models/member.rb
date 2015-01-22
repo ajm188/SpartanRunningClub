@@ -14,7 +14,7 @@ class Member < ActiveRecord::Base
 	VICE_PRESIDENT = "Vice President"
 	TREASURER = "Treasurer"
 	SECRETARY = "Secretary"
-	OFFICER_POSITIONS = [PRESIDENT, VICE_PRESIDENT, TREASURER, SECRETARY]
+	OFFICER_POSITIONS = [PRESIDENT, VICE_PRESIDENT, TREASURER, SECRETARY, ""]
 
 	default_scope -> { where(request: false) }
 
@@ -47,8 +47,6 @@ class Member < ActiveRecord::Base
 	validates :case_id, :email,
 		uniqueness: true
 	# Validations for officers
-	validates :position,
-		presence: true, allow_blank: false, if: -> { self.officer }
 	validates :position,
 		inclusion: { in: OFFICER_POSITIONS }, if: -> { self.officer }
 	# Password validation
